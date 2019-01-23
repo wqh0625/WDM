@@ -139,6 +139,7 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void initView(View view) {
         image_location = (ImageView) view.findViewById(R.id.image_location);
         txt_location = (TextView) view.findViewById(R.id.txt_location);
