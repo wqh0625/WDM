@@ -3,7 +3,8 @@ package demo.com.wdmoviedemo.view;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import bawei.com.wdmoviedemo.R;
+import com.bw.movie.R;
+
 
 public class DetailsActivity extends AppCompatActivity {
 
