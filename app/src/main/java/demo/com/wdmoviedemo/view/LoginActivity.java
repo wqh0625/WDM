@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -92,8 +93,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void success(Result<LoginData> data) {
             Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.v("登录数据",""+data.getResult().toString());
             if (data.getStatus().equals("0000")) {
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
             }
         }
 
