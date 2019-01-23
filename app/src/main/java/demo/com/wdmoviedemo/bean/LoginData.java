@@ -18,7 +18,16 @@ public class LoginData {
         private int userId;
         private UserInfoBean userInfo;
 
-        public String getSessionId() {
+    @Override
+    public String toString() {
+        return "LoginData{" +
+                "sessionId='" + sessionId + '\'' +
+                ", userId=" + userId +
+                ", userInfo=" + userInfo +
+                '}';
+    }
+
+    public String getSessionId() {
             return sessionId;
         }
 
@@ -43,6 +52,19 @@ public class LoginData {
         }
 
         public static class UserInfoBean {
+            @Override
+            public String toString() {
+                return "UserInfoBean{" +
+                        "birthday=" + birthday +
+                        ", id=" + id +
+                        ", lastLoginTime=" + lastLoginTime +
+                        ", nickName='" + nickName + '\'' +
+                        ", phone='" + phone + '\'' +
+                        ", sex=" + sex +
+                        ", headPic='" + headPic + '\'' +
+                        '}';
+            }
+
             /**
              * birthday : 320256000000
              * id : 3
@@ -52,6 +74,7 @@ public class LoginData {
              * sex : 1
              * headPic : http://172.17.8.100/images/head_pic/bwjy.jpg
              */
+
 
             private long birthday;
             private int id;
