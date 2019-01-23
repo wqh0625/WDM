@@ -1,5 +1,8 @@
 package demo.com.wdmoviedemo.presenter;
 
+import java.util.List;
+
+import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.exception.CustomException;
 import demo.com.wdmoviedemo.core.exception.ResponseTransformer;
@@ -56,7 +59,7 @@ public abstract class BasePresenter  {
                 });
     }
 
-    protected abstract Observable<Result> observable(Object... args);
+    protected abstract Observable<Result<List<CarouselData>>> observable(Object... args);
 
     public void unBind() {
         this.consumer = null;

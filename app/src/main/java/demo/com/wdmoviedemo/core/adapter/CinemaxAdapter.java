@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -17,7 +18,7 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 
 /**
  * date: 2019/1/23.
- * Created by Administrator
+ * Created 王思敏
  * function:
  */
 public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHolder> {
@@ -29,6 +30,15 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
         list = new ArrayList<>();
     }
 
+    //接口回调
+    public interface OnMovieItemClickListener{
+        void onMovieClick(int position);
+    }
+    public OnMovieItemClickListener mOnMovieItemClickListener;
+    public void setOnMovieItemClickListener(OnMovieItemClickListener onMovieItemClickListener){
+        mOnMovieItemClickListener = onMovieItemClickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -38,8 +48,18 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-    viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+        viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
+        viewHolder.txtContent.setText(list.get(i).getName());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = list.get(i).getId();
+                if (mOnMovieItemClickListener !=null){
+                    mOnMovieItemClickListener.onMovieClick(id);
+                }
+            }
+        });
     }
 
     @Override
@@ -56,10 +76,12 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final SimpleDraweeView sdvImage;
+        private final TextView txtContent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdvImage = itemView.findViewById(R.id.sdv_image);
+            txtContent = itemView.findViewById(R.id.txt_content);
         }
     }
 }
