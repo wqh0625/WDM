@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import bawei.com.wdmoviedemo.R;
+import com.bw.movie.R;
 
 
 public class CinemaFragment extends Fragment {

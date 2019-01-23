@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bawei.com.wdmoviedemo.R;
 import demo.com.wdmoviedemo.bean.CarouselData;
 
 /**

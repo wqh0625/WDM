@@ -1,6 +1,7 @@
 package demo.com.wdmoviedemo.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import bawei.com.wdmoviedemo.R;
+import com.bw.movie.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,19 +53,39 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean isHide;
     private LoginPresenter loginPresenter;
+    private SharedPreferences sp0123;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         unBind = ButterKnife.bind(this);
-
+        loginPresenter = new LoginPresenter(new login());
+        sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
+        boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
+        boolean reme_login = sp0123.getBoolean("reme_login", false);
+        if (reme_pwd) {
+            tel_number.setText(sp0123.getString("phone", ""));
+            tel_pwd.setText(sp0123.getString("pwd", ""));
+            this.reme_pwd.setChecked(true);
+            if (reme_login) {
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
+                return;
+            }
+            return;
+        }
         // 设置密码不可见
         tel_pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
         isHide = true;
 
-        loginPresenter = new LoginPresenter(new login());
 
+        SharedPreferences.Editor edit = sp0123.edit();
+        edit.putString("phone", "  ");
+        edit.putString("pwd", "  ");
+        edit.putBoolean("reme_pwd", false);
+        edit.putBoolean("reme_login", false);
+        edit.commit();
     }
 
     class login implements DataCall<Result<LoginData>> {
@@ -88,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         loginPresenter.unBind();
     }
 
-    @OnClick({R.id.tv_register, R.id.button_login, R.id.eye})
+    @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login})
     void onclick(View v) {
         switch (v.getId()) {
             case R.id.eye:
@@ -107,8 +129,25 @@ public class LoginActivity extends AppCompatActivity {
                 String w = tel_pwd.getText().toString().trim();
                 String pwddd = EncryptUtil.encrypt(w);
                 String number = tel_number.getText().toString().trim();
-
-                loginPresenter.requestNet(number, pwddd);
+                if (number.length() > 0 && pwddd.length() > 0) {
+                    // 记住密码
+                    boolean a = reme_pwd.isChecked();
+                    if (a) {
+                        SharedPreferences.Editor edit = sp0123.edit();
+                        edit.putString("phone", tel_number.getText().toString());
+                        edit.putString("pwd", tel_pwd.getText().toString());
+                        edit.putBoolean("reme_pwd", a);
+                        edit.commit();
+                    }
+                    // 自动登录
+                    boolean b = reme_login.isChecked();
+                    if (b) {
+                        SharedPreferences.Editor edit = sp0123.edit();
+                        edit.putBoolean("reme_login", b);
+                        edit.commit();
+                    }
+                    loginPresenter.requestNet(number, pwddd);
+                }
                 break;
             case R.id.tv_register:
                 // 进入注册页
