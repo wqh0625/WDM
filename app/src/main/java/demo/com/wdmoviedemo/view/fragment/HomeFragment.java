@@ -13,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bw.movie.R;
+
 import java.util.List;
 
-import bawei.com.wdmoviedemo.R;
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapter;

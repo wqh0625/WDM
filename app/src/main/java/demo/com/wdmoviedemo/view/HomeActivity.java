@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import bawei.com.wdmoviedemo.R;
+import com.bw.movie.R;
+
 import demo.com.wdmoviedemo.view.fragment.CinemaFragment;
 import demo.com.wdmoviedemo.view.fragment.HomeFragment;
 import demo.com.wdmoviedemo.view.fragment.MyFragment;

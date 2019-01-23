@@ -8,7 +8,8 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import bawei.com.wdmoviedemo.R;
+import com.bw.movie.R;
+
 
 /**
  * 作者: Wang on 2019/1/22 09:36
@@ -20,12 +21,12 @@ import bawei.com.wdmoviedemo.R;
 
 public class StartActivity extends AppCompatActivity {
 
-    int time = 2;
+    int time = 3;
     Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                if (time < 0) {
+                if (time <=0) {
                     startActivity(new Intent(StartActivity.this,GuidanceActivity.class));
                     finish();
                     return;
@@ -42,5 +43,11 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         handler.sendEmptyMessage(1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(1);
     }
 }

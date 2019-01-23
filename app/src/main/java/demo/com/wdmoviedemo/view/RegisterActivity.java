@@ -13,11 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bw.movie.R;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import bawei.com.wdmoviedemo.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -107,15 +108,19 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             s = 2;
         }
+        if (date.length() > 0 && pwdencrypt.length() > 0 && name.length() > 0 && mail.length() > 0 && phone.length() > 0 && sex.length() > 0) {
+            registerPresenter.requestNet(name, phone, pwdencrypt, pwdencrypt, s, date, "123465", "手机", "5.0", "android", mail);
+        }
 
-        registerPresenter.requestNet(name, phone, pwdencrypt, pwdencrypt, s, date, "123465", "手机", "5.0", "android", mail);
     }
 
     class myRegister implements DataCall<Result> {
         @Override
         public void success(Result data) {
             Toast.makeText(RegisterActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.v("data",data.getMessage()+"");
+            if (data.getStatus().equals("0000")) {
+                finish();
+            }
         }
 
         @Override

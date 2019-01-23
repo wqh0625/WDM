@@ -3,6 +3,8 @@ package demo.com.wdmoviedemo.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -14,10 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bw.movie.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import bawei.com.wdmoviedemo.R;
 import demo.com.wdmoviedemo.core.guidancedata.DepthPageTransformer;
 import demo.com.wdmoviedemo.core.guidancedata.ViewPagerAdatper;
 
@@ -41,10 +44,35 @@ public class GuidanceActivity extends AppCompatActivity {
     private SharedPreferences sp0123;
     private LinearLayout linearTiao;
 
+    int time = 2;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 2) {
+
+                linearTiao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
+                        finish();
+                        return;
+                    }
+                });
+                if (time < 0) {
+                    startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
+                    finish();
+                    return;
+                }
+                time--;
+                handler.sendEmptyMessageDelayed(2, 1000);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sp0123 = getSharedPreferences("sp0122", MODE_PRIVATE);
+        sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
         String ydy = sp0123.getString("ydy", "");
         if (ydy.equals("1")) {
             startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
@@ -53,7 +81,7 @@ public class GuidanceActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_guidance);
         sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
-        linearTiao = findViewById(R.id.linearTiao);
+        linearTiao = findViewById(R.id.tiao);
 
         initView();
         initData();
@@ -89,8 +117,8 @@ public class GuidanceActivity extends AppCompatActivity {
                     edit.putString("ydy", "1");
                     edit.commit();
 
-                    startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
-                    finish();
+                    handler.sendEmptyMessage(2);
+
 
                 }
             }
@@ -109,8 +137,7 @@ public class GuidanceActivity extends AppCompatActivity {
                     edit.putString("ydy", "1");
                     edit.commit();
 
-                    startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
-                    finish();
+                    handler.sendEmptyMessage(2);
 
                 }
 
@@ -182,4 +209,9 @@ public class GuidanceActivity extends AppCompatActivity {
         mLight_dots = findViewById(R.id.iv_light_dots);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(2);
+    }
 }
