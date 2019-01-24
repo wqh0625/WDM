@@ -54,8 +54,6 @@ public interface IRequests {
                                                     @Query("count") int count);
     //即将上映
     @GET("movieApi/movie/v1/findComingSoonMovieList")
-    Observable<Result<List<CarouselData>>> getonNext(@Header("userid") int userid,
-                                                    @Header("sessionid") String sessionid,
-                                                    @Query("page") int page,
+    Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
                                                     @Query("count") int count);
 }

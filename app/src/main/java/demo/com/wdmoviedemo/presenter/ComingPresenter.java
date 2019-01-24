@@ -22,6 +22,6 @@ public class ComingPresenter extends BasePresenter {
     @Override
     protected Observable<Result<List<CarouselData>>> observable(Object... args) {
         IRequests iRequest = NetWorks.getRequest().create(IRequests.class);
-        return iRequest.getonNext((int) args[0], (String) args[1], (int) args[2], (int) args[3]);
+        return iRequest.getonNext((int) args[0], (int) args[1]);
     }
 }
