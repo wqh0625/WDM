@@ -19,6 +19,10 @@
         <activity android:name="demo.com.wdmoviedemo.view.RegisterActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.GuidanceActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.DetailsActivity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Messiage_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Attention_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Feedback_Activity" />
 
         <activity android:name="demo.com.wdmoviedemo.view.StartActivity">
             <intent-filter>

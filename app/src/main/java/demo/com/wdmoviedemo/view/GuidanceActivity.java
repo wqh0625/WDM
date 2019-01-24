@@ -72,7 +72,7 @@ public class GuidanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
+        sp0123 = getSharedPreferences("sp0124", MODE_PRIVATE);
         String ydy = sp0123.getString("ydy", "");
         if (ydy.equals("1")) {
             startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
@@ -80,7 +80,7 @@ public class GuidanceActivity extends AppCompatActivity {
             return;
         }
         setContentView(R.layout.activity_guidance);
-        sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
+        sp0123 = getSharedPreferences("sp0124", MODE_PRIVATE);
         linearTiao = findViewById(R.id.tiao);
 
         initView();
@@ -109,18 +109,7 @@ public class GuidanceActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLight_dots.getLayoutParams();
                 params.leftMargin = (int) leftMargin;
                 mLight_dots.setLayoutParams(params);
-                // 点击跳进登录页面
-                if (position == 3) {
 
-
-//                    SharedPreferences.Editor edit = sp0123.edit();
-//                    edit.putString("ydy", "1");
-//                    edit.commit();
-//
-//                    handler.sendEmptyMessage(2);
-
-
-                }
             }
 
             @Override
@@ -132,7 +121,6 @@ public class GuidanceActivity extends AppCompatActivity {
                 mLight_dots.setLayoutParams(params);
                 // 点击跳进登录页面
                 if (position == 3) {
-
                     SharedPreferences.Editor edit = sp0123.edit();
                     edit.putString("ydy", "1");
                     edit.commit();
@@ -140,7 +128,6 @@ public class GuidanceActivity extends AppCompatActivity {
                     handler.sendEmptyMessage(2);
                     return;
                 }
-
             }
 
             @Override

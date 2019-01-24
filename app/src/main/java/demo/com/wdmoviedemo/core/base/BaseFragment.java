@@ -1,8 +1,13 @@
 package demo.com.wdmoviedemo.core.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,42 +21,24 @@ import demo.com.wdmoviedemo.core.dao.DbManager;
  */
 
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseFragment extends Fragment {
 
     private DbManager dbManager;
     public List<UserInfoBean> student;
     public UserInfoBean userInfoBean;
-    public String mail;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try {
-            dbManager = new DbManager(this);
+            dbManager = new DbManager(getContext());
             student = dbManager.getStudent();
             userInfoBean = new UserInfoBean();
-            for (int i = 0; i < student.size(); i++) {
-                if (student.get(i).getStats() == 100) {
-                    userInfoBean = student.get(i);
-                    return;
-                }
-            }
-
+            query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getMail() {
-        if (mail == "") {
-            return "";
-        }
-        return mail;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     // 删除数据
@@ -67,15 +54,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     //// 查询数据
-    public UserInfoBean query() throws SQLException {
+    public void query() throws SQLException {
 
-
-        return new UserInfoBean();
+        for (int i = 0; i < student.size(); i++) {
+            if (student.get(i).getStats() == 1) {
+                userInfoBean = student.get(i);
+                return;
+            }
+        }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
 }

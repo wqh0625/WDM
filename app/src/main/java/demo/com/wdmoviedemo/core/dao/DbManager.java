@@ -45,9 +45,13 @@ public class DbManager {
      * 删除数据
      * @throws SQLException
      */
-    public int  deleteStudent(int id) throws SQLException {
+    public int  deleteStudentByI(int id) throws SQLException {
         //只看id
         return dao.deleteById(String.valueOf(id));
+    }
+    public int  deleteStudentByS(UserInfoBean id) throws SQLException {
+        //只看id
+        return dao.delete(id);
     }
 
 

@@ -75,13 +75,13 @@ public class LoginActivity extends BaseActivity {
         boolean reme_login = sp0123.getBoolean("reme_login", false);
         if (reme_pwd) {
             UserInfoBean user = student.get(0);
-            if (user.getStats()==1) {
+            if (user.getStats() == 1) {
                 Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
             }
             if (user.getPhone() == null) {
                 tel_pwd.setText("");
                 tel_number.setText("");
-                Toast.makeText(this, "nullllll"+ student.size(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "nullllll" + student.size(), Toast.LENGTH_SHORT).show();
                 return;
             }
             tel_number.setText(user.getPhone() + "");
@@ -160,11 +160,13 @@ public class LoginActivity extends BaseActivity {
 
                 UserInfoBean userInfoBean = data.getResult().getUserInfo();
                 //设置状态
-                userInfoBean.setStats(1);
+
                 String w = tel_pwd.getText().toString().trim();
                 String pwddd = EncryptUtil.encrypt(w);
                 // 设置密码
                 userInfoBean.setPwd(pwddd);
+                userInfoBean.setStats(100);
+//                userInfoBean.setMail(getMail());
                 userInfoBean.setSessionId(data.getResult().getSessionId());
 
                 try {

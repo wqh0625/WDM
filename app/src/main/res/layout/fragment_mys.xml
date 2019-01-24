@@ -70,11 +70,12 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/mRb_messiage"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:button="@null"
-                    android:drawableTop="@drawable/my_aixin"
+                    android:drawableTop="@drawable/my_icon_messiage"
 
                     android:gravity="center"
                     android:paddingTop="10dp"
@@ -113,6 +114,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/mRb_aixin"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -124,6 +126,7 @@
                     android:text="我的关注" />
 
                 <RadioButton
+                    android:id="@+id/mRb_rccord"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -159,6 +162,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/mRb_feedback"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -170,6 +174,8 @@
                     android:text="意见反馈" />
 
                 <RadioButton
+
+                    android:id="@+id/mRb_vsersion"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -180,6 +186,7 @@
                     android:text="最新版本" />
 
                 <RadioButton
+                    android:id="@+id/mRb_logout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

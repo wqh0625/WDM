@@ -30,6 +30,7 @@
             android:hint="手机号"
             android:inputType="number"
             android:textColor="#fff"
+            android:singleLine="true"
             android:textColorHint="#fff"
             android:textSize="17sp" />
 
@@ -68,6 +69,7 @@
             android:hint="登录密码"
             android:inputType="textPassword"
             android:textColor="#fff"
+            android:singleLine="true"
             android:textColorHint="#fff"
             android:textSize="17sp" />
 

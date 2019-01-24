@@ -20,10 +20,23 @@ public class UserInfoBean {
     private int sex;
     @DatabaseField
     private String headPic;
+
     @DatabaseField
     private String sessionId;
     @DatabaseField
     private String pwd;
+    @DatabaseField
+    private int stats;
+    @DatabaseField
+    private String mail;
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getMail() {
+        return mail;
+    }
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
@@ -33,7 +46,7 @@ public class UserInfoBean {
         return pwd;
     }
 
-    private int stats;
+
 
     public void setStats(int stats) {
         this.stats = stats;

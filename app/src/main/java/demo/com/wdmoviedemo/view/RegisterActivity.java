@@ -24,9 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.utils.EncryptUtil;
+import demo.com.wdmoviedemo.core.utils.JavaUtils;
 import demo.com.wdmoviedemo.presenter.RegisterPresenter;
 
 /**
@@ -34,7 +36,7 @@ import demo.com.wdmoviedemo.presenter.RegisterPresenter;
  * 寄语：加油！相信自己可以！！！
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private Unbinder unbinder;
 
@@ -102,15 +104,27 @@ public class RegisterActivity extends AppCompatActivity {
         String sex = sexEdt.getText().toString().trim();
 
         String pwdencrypt = EncryptUtil.encrypt(pwd);
-        int s;
+        int s = 0;
         if (sex.equals("男")) {
             s = 1;
         } else {
             s = 2;
         }
-        if (date.length() > 0 && pwdencrypt.length() > 0 && name.length() > 0 && mail.length() > 0 && phone.length() > 0 && sex.length() > 0) {
-            registerPresenter.requestNet(name, phone, pwdencrypt, pwdencrypt, s, date, "123465", "手机", "5.0", "android", mail);
+
+        boolean email = JavaUtils.isEmail(mail);
+//        boolean mobile = JavaUtils.isMobile(phone);
+        boolean password = JavaUtils.isPassword(pwd);
+        boolean username = JavaUtils.isChinese(name);
+        String s1 = date.replaceAll("年", "-");
+        String s2 = s1.replaceAll("月", "-");
+        String rs = s2.replace("日","  ");
+        Log.v("-----",rs);
+        if (email && password && username) {
+            registerPresenter.requestNet(name, phone, pwdencrypt, pwdencrypt, s, rs, "123465", "手机", "5.0", "android", mail);
+        }else{
+            Log.v("-----",email+""+password+""+username+"少时诵诗书水水水水所");
         }
+
 
     }
 
@@ -119,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void success(Result data) {
             Toast.makeText(RegisterActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
+                setMail(mailEdt.getText().toString());
                 finish();
             }
         }
