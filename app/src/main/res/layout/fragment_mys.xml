@@ -16,50 +16,179 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/my_icon_remind" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/my_image_icom"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
+            android:background="@drawable/my_icon" />
+
+        <TextView
+            android:id="@+id/my_tv_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_image_icom"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="冬天来了"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+
+        <Button
+            android:layout_width="66dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/my_tv_nickName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/loginbutton"
+            android:text="签到"
+            android:textColor="#fff"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="24dp"
-        android:background="@drawable/beijingxuhua"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_icon" />
-    </LinearLayout>
+            android:layout_height="86dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/beijingxuhua"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="24dp"
-        android:background="@drawable/beijingxuhua"
-        android:orientation="horizontal">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <ImageView
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/my_aixin"
+
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="我的信息" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+
+                    android:gravity="center" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_icon" />
-    </LinearLayout>
+            android:layout_height="86dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/beijingxuhua"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="24dp"
-        android:background="@drawable/beijingxuhua"
-        android:orientation="horizontal">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <ImageView
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/my_aixin"
+
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="我的关注" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/my_icon_rccord"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="购票记录" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_icon" />
+            android:layout_height="86dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/beijingxuhua"
+            android:orientation="horizontal">
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/my_icon_feedback"
+
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="意见反馈" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/my_icon_version"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="最新版本" />
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableTop="@drawable/my_icon_logout"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="退出登录" />
+            </RadioGroup>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

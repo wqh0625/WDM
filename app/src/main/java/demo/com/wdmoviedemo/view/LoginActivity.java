@@ -18,12 +18,16 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 
+import java.sql.SQLException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.UserInfoBean;
+import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.utils.EncryptUtil;
@@ -35,21 +39,25 @@ import demo.com.wdmoviedemo.presenter.LoginPresenter;
  */
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private Unbinder unBind;
 
-
     @BindView(R.id.et_tel_number)
-    EditText tel_number;// 手机号
+    // 手机号
+            EditText tel_number;
     @BindView(R.id.et_tel_pwd)
-    EditText tel_pwd;// 密码
+    // 密码
+            EditText tel_pwd;
     @BindView(R.id.eye)
-    ImageView eye;// 显示密码或隐藏
+    // 显示密码或隐藏
+            ImageView eye;
     @BindView(R.id.cb_reme_login)
-    CheckBox reme_login;//自动登录
+    //自动登录
+            CheckBox reme_login;
     @BindView(R.id.cb_reme_pwd)
-    CheckBox reme_pwd;//记住密码
+    //记住密码
+            CheckBox reme_pwd;
 
 
     boolean isHide;
@@ -66,8 +74,18 @@ public class LoginActivity extends AppCompatActivity {
         boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
         boolean reme_login = sp0123.getBoolean("reme_login", false);
         if (reme_pwd) {
-            tel_number.setText(sp0123.getString("phone", ""));
-            tel_pwd.setText(sp0123.getString("pwd", ""));
+            UserInfoBean user = student.get(0);
+            if (user.getStats()==1) {
+                Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
+            }
+            if (user.getPhone() == null) {
+                tel_pwd.setText("");
+                tel_number.setText("");
+                Toast.makeText(this, "nullllll"+ student.size(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            tel_number.setText(user.getPhone() + "");
+            tel_pwd.setText(EncryptUtil.decrypt(user.getPwd()) + "");
             this.reme_pwd.setChecked(true);
             if (reme_login) {
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -75,42 +93,16 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             return;
+
         }
         // 设置密码不可见
         tel_pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
         isHide = true;
 
-
         SharedPreferences.Editor edit = sp0123.edit();
-        edit.putString("phone", "  ");
-        edit.putString("pwd", "  ");
         edit.putBoolean("reme_pwd", false);
         edit.putBoolean("reme_login", false);
         edit.commit();
-    }
-
-    class login implements DataCall<Result<LoginData>> {
-        @Override
-        public void success(Result<LoginData> data) {
-            Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.v("登录数据",""+data.getResult().toString());
-            if (data.getStatus().equals("0000")) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
-            }
-        }
-
-        @Override
-        public void fail(ApiException a) {
-
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unBind.unbind();// 解绑
-        loginPresenter.unBind();
     }
 
     @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login})
@@ -135,20 +127,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (number.length() > 0 && pwddd.length() > 0) {
                     // 记住密码
                     boolean a = reme_pwd.isChecked();
+                    SharedPreferences.Editor edit = sp0123.edit();
                     if (a) {
-                        SharedPreferences.Editor edit = sp0123.edit();
-                        edit.putString("phone", tel_number.getText().toString());
-                        edit.putString("pwd", tel_pwd.getText().toString());
                         edit.putBoolean("reme_pwd", a);
-                        edit.commit();
                     }
                     // 自动登录
                     boolean b = reme_login.isChecked();
                     if (b) {
-                        SharedPreferences.Editor edit = sp0123.edit();
                         edit.putBoolean("reme_login", b);
-                        edit.commit();
                     }
+                    edit.commit();
                     loginPresenter.requestNet(number, pwddd);
                 }
                 break;
@@ -161,5 +149,49 @@ public class LoginActivity extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    class login implements DataCall<Result<LoginData>> {
+        @Override
+        public void success(Result<LoginData> data) {
+            Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.v("登录数据", "" + data.getResult().getUserInfo().toString());
+            if (data.getStatus().equals("0000")) {
+
+                UserInfoBean userInfoBean = data.getResult().getUserInfo();
+                //设置状态
+                userInfoBean.setStats(1);
+                String w = tel_pwd.getText().toString().trim();
+                String pwddd = EncryptUtil.encrypt(w);
+                // 设置密码
+                userInfoBean.setPwd(pwddd);
+                userInfoBean.setSessionId(data.getResult().getSessionId());
+
+                try {
+                    boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
+                    if (reme_pwd) {
+                        // 添加数据库
+                        addUser(userInfoBean);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unBind.unbind();// 解绑
+        loginPresenter.unBind();
     }
 }
