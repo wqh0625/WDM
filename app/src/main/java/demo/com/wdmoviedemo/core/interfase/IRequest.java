@@ -41,15 +41,13 @@ public interface IRequest {
 
     //首页轮播,热门电影
     @GET("movieApi/movie/v1/findHotMovieList")
-    Observable<Result<List<CarouselData>>> getcarousel(@Header("userid")int userid,
-                                                   @Header("sessionid")String sessionid,
+    Observable<Result<List<CarouselData>>> getcarousel(
                                                    @Query("page")int page,
                                                    @Query("count")int count);
 
     //首页正在热映
     @GET("movieApi/movie/v1/findReleaseMovieList")
-    Observable<Result<List<CarouselData>>> getisHit(@Header("userid")int userid,
-                                                    @Header("sessionid")String sessionid,
+    Observable<Result<List<CarouselData>>> getisHit(
                                                     @Query("page")int page,
                                                     @Query("count")int count);
 }

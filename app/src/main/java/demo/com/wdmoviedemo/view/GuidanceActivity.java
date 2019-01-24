@@ -113,11 +113,11 @@ public class GuidanceActivity extends AppCompatActivity {
                 if (position == 3) {
 
 
-                    SharedPreferences.Editor edit = sp0123.edit();
-                    edit.putString("ydy", "1");
-                    edit.commit();
-
-                    handler.sendEmptyMessage(2);
+//                    SharedPreferences.Editor edit = sp0123.edit();
+//                    edit.putString("ydy", "1");
+//                    edit.commit();
+//
+//                    handler.sendEmptyMessage(2);
 
 
                 }
@@ -138,7 +138,7 @@ public class GuidanceActivity extends AppCompatActivity {
                     edit.commit();
 
                     handler.sendEmptyMessage(2);
-
+                    return;
                 }
 
             }
