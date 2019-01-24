@@ -17,9 +17,11 @@ import android.widget.Toast;
 import com.bw.movie.R;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.core.adapter.CarouselAdapter;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapter;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
@@ -27,6 +29,7 @@ import demo.com.wdmoviedemo.presenter.CarouselPresenter;
 import demo.com.wdmoviedemo.presenter.ComingPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
 import demo.com.wdmoviedemo.view.DetailsActivity;
+import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
 public class HomeFragment extends Fragment {
@@ -39,10 +42,13 @@ public class HomeFragment extends Fragment {
     private RecyclerView recy_ishit;
     private ImageView image_more3;
     private RecyclerView recy_onnow;
-    private CinemaxAdapter cinemaxAdapter;
     private CarouselPresenter carouselPresenter;
     private IsHitPresenter isHitPresenter;
     private ComingPresenter comingPresenter;
+    private CarouselAdapter carouselAdapter;
+    private CinemaxAdapter cinemaxAdapter;
+    private CinemaxAdapter ishitAdapter;
+    private CinemaxAdapter comingAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,28 +56,63 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initView(view);
         initData();
+        initBanner();
         return view;
     }
 
+    private void initBanner() {
+        carouselAdapter = new CarouselAdapter(getActivity());
+        recy_carousel.setAdapter(carouselAdapter);//设置适配器
+        carouselPresenter = new CarouselPresenter(new Carousel());
+        carouselPresenter.requestNet(1,10);
+        recy_carousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {//滑动监听
+            @Override
+            public void onItemSelected(int position) {
+
+            }
+        });
+    }
+    class Carousel implements DataCall<Result<List<CarouselData>>>{
+
+        @Override
+        public void success(Result<List<CarouselData>> data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getActivity(), "轮播", Toast.LENGTH_SHORT).show();
+                carouselAdapter.setList(data.getResult());
+                carouselAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getActivity(), "shibai", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void initData() {
-        //热门电影
-        cinemaxAdapter = new CinemaxAdapter(getActivity());
-        carouselPresenter = new CarouselPresenter(new CinemaxCall());
-        recy_Cinemax.setAdapter(cinemaxAdapter);
+        //适配器
+        cinemaxAdapter = new CinemaxAdapter(getActivity(),CinemaxAdapter.CAROUSEL_TYPE);
+        ishitAdapter = new CinemaxAdapter(getActivity(),CinemaxAdapter.ISHIT_TYPE);
+        comingAdapter = new CinemaxAdapter(getActivity(),CinemaxAdapter.COMING_TYPE);
+        //布局管理器
         recy_Cinemax.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        recy_ishit.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        recy_onnow.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+
+        recy_Cinemax.setAdapter(cinemaxAdapter);
+        recy_ishit.setAdapter(ishitAdapter);
+        recy_onnow.setAdapter(comingAdapter);
+
+
+        carouselPresenter = new CarouselPresenter(new CinemaxCall());
         carouselPresenter.requestNet( 1,10);
 
-
         //正在热映
-        isHitPresenter = new IsHitPresenter(new IsHitCall());
-        recy_ishit.setAdapter(cinemaxAdapter);
-        recy_ishit.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        isHitPresenter = new IsHitPresenter(new CinemaxCall());
         isHitPresenter.requestNet( 1,10);
 
         //即将上映
-        comingPresenter = new ComingPresenter(new comingCall());
-        recy_onnow.setAdapter(cinemaxAdapter);
-        recy_onnow.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        comingPresenter = new ComingPresenter(new CinemaxCall());
         comingPresenter.requestNet( 1,10);
 
         //接口回调跳转页面
@@ -83,7 +124,6 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
     class CinemaxCall implements DataCall<Result<List<CarouselData>>> {
 
@@ -93,7 +133,8 @@ public class HomeFragment extends Fragment {
                 Log.i("ssssss",data.toString());
                 Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
                 cinemaxAdapter.addAll(data.getResult());
-                cinemaxAdapter.notifyDataSetChanged();
+                ishitAdapter.addAll(data.getResult());
+                comingAdapter.addAll(data.getResult());
 
             }
         }
@@ -104,41 +145,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    class IsHitCall implements DataCall<Result<List<CarouselData>>>{
-
-        @Override
-        public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), "正在上映查询成功", Toast.LENGTH_SHORT).show();
-                cinemaxAdapter.addAll(data.getResult());
-                cinemaxAdapter.notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    class comingCall implements DataCall<Result<List<CarouselData>>> {
-
-        @Override
-        public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")){
-                Log.i("ssssss",data.toString());
-                Toast.makeText(getActivity(), "获取成功", Toast.LENGTH_SHORT).show();
-                cinemaxAdapter.addAll(data.getResult());
-                cinemaxAdapter.notifyDataSetChanged();
-
-            }
-        }
-
-        @Override
-        public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void initView(View view) {
         image_location = (ImageView) view.findViewById(R.id.image_location);

@@ -8,14 +8,15 @@ import java.util.List;
  * function:
  */
 public class CarouselData {
-
     /**
-     * followMovie : 1
-     * id : 20
-     * imageUrl : http://172.17.8.100/images/movie/stills/ws/ws1.jpg
-     * name : 无双
-     * rank : 1
-     * summary : 以代号“画家”（周润发 饰）为首的犯罪团伙，掌握了制造伪钞技术，难辨真伪，并在全球进行交易获取利益，引起警方高度重视。然而“画家”和其他成员的身份一直成谜，警方的破案进度遭受到了前所未有的挑战。在关键时刻，擅长绘画的李问（郭富城 饰）打开了破案的突破口，而“画家”的真实身份却让众人意想不到……
+     * followMovie : 2
+     * id : 17
+     * imageUrl : http://172.17.8.100/images/movie/stills/ftfb3/ftfb(3)1.jpg
+     * name : 反贪风暴3
+     * rank : 0
+     * releaseTime : 1537545600000
+     * releaseTimeShow : 2018-09-22
+     * summary : ICAC (廉政公署) 陆志廉（古天乐 饰），JFIU (联合财富情报组) 刘保强（张智霖 饰）分别侦查贪污及洗黑钱案，但苦无线索，这时廉政公署L组 (内部纪律调查组) 程德明（郑嘉颖 饰）收到举报，指陆志廉收贿1200万，陆无法辩解实时停职。刘发现陆被诬陷，并跟一直调查的洗黑钱案有着千丝万缕关系，同时怀疑银行主任游子新（栢天男 饰）协助罪恶集团洗黑钱；陆冒险搜集罪证却遭禁锢，命悬一线.......
      */
 
     private int followMovie;
@@ -23,6 +24,8 @@ public class CarouselData {
     private String imageUrl;
     private String name;
     private int rank;
+    private long releaseTime;
+    private String releaseTimeShow;
     private String summary;
 
     public int getFollowMovie() {
@@ -63,6 +66,22 @@ public class CarouselData {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public long getReleaseTime() {
+        return releaseTime;
+    }
+
+    public void setReleaseTime(long releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    public String getReleaseTimeShow() {
+        return releaseTimeShow;
+    }
+
+    public void setReleaseTimeShow(String releaseTimeShow) {
+        this.releaseTimeShow = releaseTimeShow;
     }
 
     public String getSummary() {
