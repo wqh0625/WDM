@@ -29,16 +29,17 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
     public static final int ISHIT_TYPE = 1;
     public static final int COMING_TYPE = 2;
 
-    public CinemaxAdapter(Context context,int type) {
+    public CinemaxAdapter(Context context, int type) {
         this.context = context;
         this.type = type;
         list = new ArrayList<>();
     }
 
     //接口回调
-    public interface OnMovieItemClickListener{
+    public interface OnMovieItemClickListener {
         void onMovieClick(int position);
     }
+
     public OnMovieItemClickListener mOnMovieItemClickListener;
     public void setOnMovieItemClickListener(OnMovieItemClickListener onMovieItemClickListener){
         mOnMovieItemClickListener = onMovieItemClickListener;
@@ -47,13 +48,13 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (type ==CAROUSEL_TYPE){
+        if (type == CAROUSEL_TYPE) {
             View view = View.inflate(context, R.layout.recy_carousel, null);
             return new ViewHolder(view);
-        }else if (type ==ISHIT_TYPE){
+        } else if (type == ISHIT_TYPE) {
             View view = View.inflate(context, R.layout.recy_ishit, null);
             return new ViewHolder(view);
-        }else {
+        } else {
             View view = View.inflate(context, R.layout.recy_coming, null);
             return new ViewHolder(view);
         }
@@ -67,7 +68,7 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 int id = list.get(i).getId();
-                if (mOnMovieItemClickListener !=null){
+                if (mOnMovieItemClickListener != null) {
                     mOnMovieItemClickListener.onMovieClick(id);
                 }
             }
@@ -80,8 +81,7 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
     }
 
     public void addAll(List<CarouselData> result) {
-        if (result !=null){
-            list.clear();
+        if (result != null) {
             list.addAll(result);
             notifyDataSetChanged();
         }

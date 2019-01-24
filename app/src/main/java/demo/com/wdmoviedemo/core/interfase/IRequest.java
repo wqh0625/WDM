@@ -50,4 +50,8 @@ public interface IRequest {
     Observable<Result<List<CarouselData>>> getisHit(
                                                     @Query("page")int page,
                                                     @Query("count")int count);
+    //即将上映
+    @GET("movieApi/movie/v1/findComingSoonMovieList")
+    Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
+                                                     @Query("count") int count);
 }

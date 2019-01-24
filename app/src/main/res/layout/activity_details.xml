@@ -11,89 +11,107 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp">
+
         <ImageView
             android:id="@+id/image_location"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/dw"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="6dp"/>
+            android:src="@drawable/dw" />
+
         <TextView
             android:id="@+id/txt_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/image_location"
-            android:text="北京"
-            android:textSize="14sp"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="30dp"
-            />
-        <LinearLayout
-            android:layout_width="220dp"
+            android:layout_toRightOf="@id/image_location"
+            android:text="北京"
+            android:textSize="14sp" />
+        <RelativeLayout
+            android:layout_width="48dp"
             android:layout_height="24dp"
-            android:orientation="horizontal"
+            android:layout_weight="1"
             android:layout_alignParentRight="true"
-            android:background="@drawable/home_searchs"
-            android:layout_marginTop="30dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/search"/>
-            <EditText
+            android:id="@+id/recommend_cinema_linear"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/cinema_search_shape">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="铁血战士"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="12sp"
-                android:textColor="#fff"
-                android:text="搜索"/>
-
-        </LinearLayout>
-
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/recommend_cinem_search_image"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:onClick="onClick"
+                    android:paddingLeft="6dp"
+                    android:src="@drawable/search" />
+                <EditText
+                    android:id="@+id/recommend_cinema_edname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:background="@null"
+                    android:ems="8"
+                    android:padding="5dp"
+                    android:textColor="#f2f2f2"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/recommend_cinema_textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:paddingTop="3dp"
+                    android:onClick="onClick"
+                    android:text="搜索"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
-   <RelativeLayout
-       android:id="@+id/center"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_below="@id/top"
-       android:layout_marginTop="16dp"
-       android:layout_marginLeft="24dp"
-       android:layout_marginRight="24dp">
-       <TextView
-           android:id="@+id/txt_Cinemax"
-           android:layout_width="83dp"
-           android:layout_height="25dp"
-           android:layout_alignParentLeft="true"
-           android:gravity="center"
-           android:background="@drawable/details_bg"
-           android:text="热门电影"/>
-       <TextView
-           android:id="@+id/txt_ishit"
-           android:layout_width="83dp"
-           android:layout_height="25dp"
-           android:gravity="center"
-           android:layout_toRightOf="@id/txt_Cinemax"
-           android:layout_marginLeft="30dp"
-           android:background="@drawable/details_bg"
-           android:text="即将热映"/>
-       <TextView
-           android:id="@+id/txt_coming"
-           android:layout_width="83dp"
-           android:layout_height="25dp"
-           android:layout_alignParentRight="true"
-           android:gravity="center"
-           android:background="@drawable/details_bg"
-           android:text="即将上映"/>
-   </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="24dp">
+
+        <TextView
+            android:id="@+id/txt_Cinemax"
+            android:layout_width="83dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/details_bg"
+            android:gravity="center"
+            android:text="热门电影" />
+
+        <TextView
+            android:id="@+id/txt_ishit"
+            android:layout_width="83dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/txt_Cinemax"
+            android:background="@drawable/details_bg"
+            android:gravity="center"
+            android:text="即将热映" />
+
+        <TextView
+            android:id="@+id/txt_coming"
+            android:layout_width="83dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/details_bg"
+            android:gravity="center"
+            android:text="即将上映" />
+    </RelativeLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/details_vp"
         android:layout_width="match_parent"
@@ -104,16 +122,17 @@
         android:layout_marginRight="24dp"/>
     <RelativeLayout
         android:layout_width="360dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="24dp"
         android:layout_marginBottom="20dp"
-        android:gravity="center_vertical"
         android:background="@drawable/home_lucency"
-        android:layout_height="100dp">
+        android:gravity="center_vertical">
+
         <ImageView
             android:id="@+id/image_back"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/com_icon_my_default"/>
+            android:src="@drawable/com_icon_my_default" />
     </RelativeLayout>
 </RelativeLayout>
