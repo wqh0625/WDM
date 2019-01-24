@@ -24,9 +24,14 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHolder> {
     private Context context;
     private List<CarouselData> list;
+    private int type;
+    public static final int CAROUSEL_TYPE = 0;
+    public static final int ISHIT_TYPE = 1;
+    public static final int COMING_TYPE = 2;
 
-    public CinemaxAdapter(Context context) {
+    public CinemaxAdapter(Context context,int type) {
         this.context = context;
+        this.type = type;
         list = new ArrayList<>();
     }
 
@@ -42,9 +47,16 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = View.inflate(context, R.layout.recy_carousel, null);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        if (type ==CAROUSEL_TYPE){
+            View view = View.inflate(context, R.layout.recy_carousel, null);
+            return new ViewHolder(view);
+        }else if (type ==ISHIT_TYPE){
+            View view = View.inflate(context, R.layout.recy_ishit, null);
+            return new ViewHolder(view);
+        }else {
+            View view = View.inflate(context, R.layout.recy_coming, null);
+            return new ViewHolder(view);
+        }
     }
 
     @Override
@@ -69,7 +81,9 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
 
     public void addAll(List<CarouselData> result) {
         if (result !=null){
+            list.clear();
             list.addAll(result);
+            notifyDataSetChanged();
         }
     }
 
