@@ -6,6 +6,7 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.http.NetWorks;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.core.interfase.IRequest;
 import demo.com.wdmoviedemo.core.interfase.IRequests;
 import io.reactivex.Observable;
 
@@ -21,7 +22,7 @@ public class ComingPresenter extends BasePresenter {
 
     @Override
     protected Observable<Result<List<CarouselData>>> observable(Object... args) {
-        IRequests iRequest = NetWorks.getRequest().create(IRequests.class);
+        IRequest iRequest = NetWorks.getRequest().create(IRequest.class);
         return iRequest.getonNext((int) args[0], (int) args[1]);
     }
 }

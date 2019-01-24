@@ -1,15 +1,25 @@
 package demo.com.wdmoviedemo.view;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -33,6 +43,12 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private ViewPager details_vp;
     private ImageView image_back;
     private List<Fragment> fragments;
+    private ImageView recommend_cinem_search_image;
+    private EditText recommend_cinema_edname;
+    private TextView recommend_cinema_textName;
+    private RelativeLayout recommend_cinema_linear;
+    boolean flag = true;
+    private AutoTransition transition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +105,19 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         txt_ishit.setOnClickListener(this);
         txt_coming.setOnClickListener(this);
         image_back.setOnClickListener(this);
+        recommend_cinem_search_image = (ImageView) findViewById(R.id.recommend_cinem_search_image);
+        recommend_cinem_search_image.setOnClickListener(this);
+        recommend_cinema_edname = (EditText) findViewById(R.id.recommend_cinema_edname);
+        recommend_cinema_edname.setOnClickListener(this);
+        recommend_cinema_textName = (TextView) findViewById(R.id.recommend_cinema_textName);
+        recommend_cinema_textName.setOnClickListener(this);
+        recommend_cinema_linear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
+        recommend_cinema_linear.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.txt_Cinemax:
                 details_vp.setCurrentItem(0);
                 ChangeBackGround(0);
@@ -109,16 +133,103 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.image_back:
                 finish();
                 break;
+            case R.id.recommend_cinem_search_image:
+                if(flag){
+                    initExpand();//点击搜索 伸展
+                }else{
+                    initReduce();//点击text收缩
+                }
+                flag  = !flag;
+                break;
+            case R.id.recommend_cinema_textName:
+                //点击搜索,获取输入的值
+                String editCinema = recommend_cinema_edname.getText().toString().trim();
+//                //判断输入的不能为空
+//                if (!TextUtils.isEmpty(editCinema)){
+//                    Map<String, String> map = new HashMap<>();
+//                    map.put("page", "1");
+//                    map.put("count", "10");
+//                    map.put("cinemaName", editCinema);
+//                    presenter.onFindAllCinemasPresenter(map);
+//                    initReduce();//点击text收缩
+//                }else {
+//                    Toast.makeText(getActivity(), "输入内容不能为空", Toast.LENGTH_SHORT).show();
+//                }
+
+            break;
         }
     }
-    public void ChangeBackGround(int index){
+    /*设置伸展状态时的布局*/
+    public void initExpand() {
+        recommend_cinema_edname.setHint("CGV影城");
+        recommend_cinema_edname.requestFocus();
+        recommend_cinema_edname.setHintTextColor(Color.WHITE);
+        recommend_cinema_textName.setText("搜索");
+        recommend_cinema_textName.setVisibility(View.VISIBLE);
+        recommend_cinema_edname.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recommend_cinema_linear.getLayoutParams();
+        layoutParams.width = dip2px(210);
+        layoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
+        recommend_cinema_linear.setLayoutParams(layoutParams);
+        recommend_cinema_edname.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                recommend_cinema_edname.setFocusable(true);
+                recommend_cinema_edname.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        //开始动画
+        beginDelayedTransition(recommend_cinema_linear);
+
+    }
+    /*设置收缩状态时的布局*/
+    private void initReduce() {
+        recommend_cinema_edname.setCursorVisible(false);
+        recommend_cinema_edname.setVisibility(View.GONE);
+        recommend_cinema_textName.setVisibility(View.GONE);
+        LinearLayout.LayoutParams LayoutParams = (LinearLayout.LayoutParams) recommend_cinema_linear.getLayoutParams();
+        LayoutParams.width = dip2px(40);
+        LayoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
+        recommend_cinema_linear.setLayoutParams(LayoutParams);
+
+        //隐藏键盘
+        InputMethodManager imm = (InputMethodManager) this
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getWindow()
+                .getDecorView().getWindowToken(), 0);
+
+
+        recommend_cinema_edname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recommend_cinema_edname.setCursorVisible(true);
+            }
+        });
+        //开始动画
+        beginDelayedTransition(recommend_cinema_linear);
+    }
+
+
+    private void beginDelayedTransition(ViewGroup view) {
+        transition = new AutoTransition();
+        transition.setDuration(500);
+        TransitionManager.beginDelayedTransition(view, transition);
+    }
+
+    private int dip2px(float dpVale) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpVale * scale + 0.5f);
+    }
+
+    public void ChangeBackGround(int index) {
         //背景颜色
-        txt_Cinemax.setBackgroundResource(index ==0?R.drawable.details_bgs:R.drawable.details_bg);
+        txt_Cinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_bg);
         //字体颜色
-        txt_Cinemax.setTextColor(index ==0?Color.WHITE:Color.BLACK);
-        txt_ishit.setBackgroundResource(index ==1?R.drawable.details_bgs:R.drawable.details_bg);
-        txt_ishit.setTextColor(index ==1?Color.WHITE:Color.BLACK);
-        txt_coming.setBackgroundResource(index ==2?R.drawable.details_bgs:R.drawable.details_bg);
-        txt_coming.setTextColor(index ==2?Color.WHITE:Color.BLACK);
+        txt_Cinemax.setTextColor(index == 0 ? Color.WHITE : Color.BLACK);
+        txt_ishit.setBackgroundResource(index == 1 ? R.drawable.details_bgs : R.drawable.details_bg);
+        txt_ishit.setTextColor(index == 1 ? Color.WHITE : Color.BLACK);
+        txt_coming.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_bg);
+        txt_coming.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
     }
 }

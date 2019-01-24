@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="123dp"
+            android:background="@drawable/bgs"
+            android:paddingRight="10dp">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/cinemax_sdv_image"
+                android:layout_width="103dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/cinemax_txt_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:layout_toRightOf="@id/cinemax_sdv_image"/>
+            <ImageView
+                android:id="@+id/cinemax_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/com_icon_collection_default"/>
+            <TextView
+                android:id="@+id/cinemax_txt_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#fff"
+                android:layout_toRightOf="@id/cinemax_txt_name"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/cinemax_txt_name"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
