@@ -89,7 +89,7 @@
                     android:id="@+id/image_more1"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/com_icon_down_default_hdpi"
+                    android:src="@drawable/com_icon_down_default"
                     android:layout_alignParentRight="true"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recy_Cinemax"
