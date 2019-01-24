@@ -59,20 +59,20 @@ public class HomeFragment extends Fragment {
         carouselPresenter = new CarouselPresenter(new CinemaxCall());
         recy_Cinemax.setAdapter(cinemaxAdapter);
         recy_Cinemax.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        carouselPresenter.requestNet(3823,"15482120944293823",1,10);
+        carouselPresenter.requestNet( 1,10);
 
 
         //正在热映
         isHitPresenter = new IsHitPresenter(new IsHitCall());
         recy_ishit.setAdapter(cinemaxAdapter);
         recy_ishit.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        isHitPresenter.requestNet(3823,"15482120944293823",1,10);
+        isHitPresenter.requestNet( 1,10);
 
         //即将上映
         comingPresenter = new ComingPresenter(new comingCall());
         recy_onnow.setAdapter(cinemaxAdapter);
         recy_onnow.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        comingPresenter.requestNet(3823,"15482120944293823",1,10);
+        comingPresenter.requestNet( 1,10);
 
         //接口回调跳转页面
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
