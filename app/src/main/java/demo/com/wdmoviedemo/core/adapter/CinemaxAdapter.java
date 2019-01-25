@@ -67,9 +67,8 @@ public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHold
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int id = list.get(i).getId();
                 if (mOnMovieItemClickListener != null) {
-                    mOnMovieItemClickListener.onMovieClick(id);
+                    mOnMovieItemClickListener.onMovieClick(type);
                 }
             }
         });

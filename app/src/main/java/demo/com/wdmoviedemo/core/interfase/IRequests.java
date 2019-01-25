@@ -24,4 +24,9 @@ public interface IRequests {
     @GET("movieApi/movie/v1/findComingSoonMovieList")
     Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
                                                     @Query("count") int count);
+
+    //即将上映
+    @GET("movieApi/movie/v1/findMoviesById")
+    Observable<Result<List<CarouselData>>> getmovieId(@Query("movieId") int movieId);
+
 }
