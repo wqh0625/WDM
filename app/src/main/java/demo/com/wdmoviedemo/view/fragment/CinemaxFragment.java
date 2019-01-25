@@ -71,4 +71,10 @@ public class CinemaxFragment extends Fragment {
     private void initView(View view) {
         cinemax_recy = (RecyclerView) view.findViewById(R.id.cinemax_recy);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        carouselPresenter.unBind();
+    }
 }

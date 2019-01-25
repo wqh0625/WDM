@@ -15,12 +15,13 @@ import io.reactivex.Observable;
  * function:搜索
  */
 public class SearchPresenter extends BasePresenter {
+
     public SearchPresenter(DataCall consumer) {
         super(consumer);
     }
 
     @Override
-    protected Observable<Result<List<CarouselData>>> observable(Object... args) {
+    protected Observable observable(Object... args) {
         IRequests iRequests = NetWorks.getRequest().create(IRequests.class);
         return iRequests.getmovieId((int)args[0]);
     }
