@@ -91,6 +91,7 @@
                 android:layout_width="30dp"
                 android:layout_height="3dp"
                 android:background="#e8175e"
+                android:layout_marginTop="4dp"
                 android:layout_below="@id/txt_rmdy"/>
             <ImageView
                 android:id="@+id/image_more1"
@@ -127,6 +128,7 @@
                 android:layout_width="30dp"
                 android:layout_height="3dp"
                 android:background="#e8175e"
+                android:layout_marginTop="4dp"
                 android:layout_below="@id/txt_zzry"/>
             <ImageView
                 android:id="@+id/image_more2"
@@ -161,17 +163,20 @@
                 android:layout_width="30dp"
                 android:layout_height="3dp"
                 android:background="#e8175e"
+                android:layout_marginTop="4dp"
                 android:layout_below="@id/txt_zzsy"/>
             <ImageView
                 android:id="@+id/image_more3"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginTop="4dp"
                 android:src="@drawable/com_icon_next"
                 android:layout_alignParentRight="true"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recy_onnow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_below="@id/txt_view2"/>
 
         </RelativeLayout>
