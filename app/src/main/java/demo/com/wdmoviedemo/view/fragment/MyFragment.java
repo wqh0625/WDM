@@ -19,10 +19,12 @@ import android.widget.Toast;
 import com.bw.movie.R;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.view.LoginActivity;
@@ -32,33 +34,24 @@ import demo.com.wdmoviedemo.view.myactivity.My_Messiage_Activity;
 import demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity;
 
 
-public class MyFragment extends BaseFragment implements View.OnClickListener {
-
-    private Unbinder unbinder;
+public class MyFragment extends BaseFragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mys, container, false);
-        unbinder = ButterKnife.bind(getActivity(), view);
-        view.findViewById(R.id.mRb_messiage).setOnClickListener(this);
-        view.findViewById(R.id.mRb_aixin).setOnClickListener(this);
-        view.findViewById(R.id.mRb_logout).setOnClickListener(this);
-        view.findViewById(R.id.mRb_rccord).setOnClickListener(this);
-        view.findViewById(R.id.mRb_vsersion).setOnClickListener(this);
-        view.findViewById(R.id.mRb_feedback).setOnClickListener(this);
+    public void initView(View view) {
+        if (userInfoBean != null) {
+            int userId = userInfoBean.getUserId();
+            Toast.makeText(getActivity(), "咳咳 " + userId, Toast.LENGTH_SHORT).show();
+        }
 
-        return view;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected int getLayoutId() {
+        return R.layout.fragment_mys;
     }
 
-    @Override
-    public void onClick(View v) {
+    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback})
+    public void onck(View v) {
         if (v.getId() == R.id.mRb_messiage) {
             startActivity(new Intent(getActivity(), My_Messiage_Activity.class));
         } else if (v.getId() == R.id.mRb_aixin) {
@@ -115,8 +108,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 }
 
 /*
-*
-*
-*
-* */
+ *
+ *
+ *
+ * */
 

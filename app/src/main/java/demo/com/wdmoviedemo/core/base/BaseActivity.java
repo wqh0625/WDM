@@ -32,16 +32,18 @@ public class BaseActivity extends AppCompatActivity {
             student = dbManager.getStudent();
             userInfoBean = new UserInfoBean();
 
-            for (int i = student.size()-1; i >= 0; i--) {
-                if (student.get(i).getStats() == 100) {
-                    userInfoBean = student.get(i);
-                    return;
-                }
+            if (student!=null&&student.size()> 0) {
+                userInfoBean=student.get(0);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        initView();
+    }
+
+    private void initView() {
+
     }
 
     // 删除数据

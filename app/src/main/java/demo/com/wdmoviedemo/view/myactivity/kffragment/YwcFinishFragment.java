@@ -1,4 +1,4 @@
-package demo.com.wdmoviedemo.view.myactivity.gzfragment;
+package demo.com.wdmoviedemo.view.myactivity.kffragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,16 +22,17 @@ import demo.com.wdmoviedemo.core.base.BaseFragment;
  */
 
 
-public class GzCinemaFragment extends Fragment {
+public class YwcFinishFragment extends Fragment {
 
     private Unbinder bind;
 
-    @BindView(R.id.gzcinema_rec)
+    @BindView(R.id.ywc_rec)
     RecyclerView rec;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gzcinema, container, false);
+        View view = inflater.inflate(R.layout.fragment_ywcfinish, container, false);
         bind = ButterKnife.bind(this, view);
 
         return view;

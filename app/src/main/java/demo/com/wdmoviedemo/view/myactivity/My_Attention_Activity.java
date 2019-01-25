@@ -45,6 +45,7 @@ public class My_Attention_Activity extends BaseActivity {
         ButterKnife.bind(this);
         ChangeBackGround(0);
         vp.setCurrentItem(0);
+
         initData();
     }
 
@@ -86,23 +87,22 @@ public class My_Attention_Activity extends BaseActivity {
     void on(View v) {
         if (v.getId() == R.id.back_image_a) {
             finish();
-        } else if (v.getId() == R.id.my_attention_yy) {
+        } else if (v.getId() == R.id.my_attention_dy) {
             vp.setCurrentItem(0);
             ChangeBackGround(0);
-        } else if (v.getId() == R.id.my_attention_dy) {
+        } else if (v.getId() == R.id.my_attention_yy) {
             vp.setCurrentItem(1);
             ChangeBackGround(1);
         }
     }
 
 
-    public void ChangeBackGround(int index) {
+    private void ChangeBackGround(int index) {
         //背景颜色
         t_dy.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
         //字体颜色
         t_dy.setTextColor(index == 0 ? Color.WHITE : Color.BLACK);
         t_yy.setBackgroundResource(index == 1 ? R.drawable.details_bgs : R.drawable.details_back);
         t_yy.setTextColor(index == 1 ? Color.WHITE : Color.BLACK);
-
     }
 }
