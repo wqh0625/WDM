@@ -39,10 +39,9 @@ public class BaseActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        initView();
     }
 
-    private void initView() {
+    protected void initView() {
 
     }
 
@@ -57,7 +56,7 @@ public class BaseActivity extends AppCompatActivity {
         student = dbManager.getStudent();
     }
 
-    //// 查询数据
+    //  查询数据
     public List<UserInfoBean> query() throws SQLException {
         List<UserInfoBean> student = dbManager.getStudent();
         this.student = student;

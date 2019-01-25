@@ -47,7 +47,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         }
         Log.v("数据库登录数据--", student.size() + " " + userInfoBeanaaa.toString());
 
-        initView();
+        initV();
         initData();
         initEvent();
 
@@ -90,7 +90,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    private void initView() {
+
+    private void initV() {
         frag = (FrameLayout) findViewById(R.id.frag);
         homeactivity_imagefilm = (ImageView) findViewById(R.id.homeactivity_imagefilm);
         homeactivity_imagecinema = (ImageView) findViewById(R.id.homeactivity_imagecinema);

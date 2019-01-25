@@ -69,4 +69,8 @@ public interface IRequest {
                                      @Field("oldPwd") String oldPwd,
                                      @Field("newPwd") String newPwd,
                                      @Field("newPwd2") String newPwd2);
+
+    // http://172.17.8.100/
+//    @GET("movieApi/cinema/v1/findRecommendCinemas")
+//    Observable<>
 }

@@ -48,7 +48,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private EditText recommend_cinema_edname;
     private TextView recommend_cinema_textName;
     private RelativeLayout recommend_cinema_linear;
-    boolean flag = true;
+    private boolean flag = true;
     private AutoTransition transition;
     private int position;
     private int image;
@@ -128,7 +128,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 //        initImage();
     }
 
-
     private void initPosition() {
         //接受position传递值判断显示页面
         if (position==0){
@@ -142,19 +141,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
             ChangeBackGround(2);
         }
     }
-//    private void initImage() {
-//        //接受首页箭头图片传过来的值
-//        if (image==3){
-//            details_vp.setCurrentItem(0);
-//            ChangeBackGround(0);
-//        }else if (image==4){
-//            details_vp.setCurrentItem(1);
-//            ChangeBackGround(1);
-//        }else {
-//            details_vp.setCurrentItem(2);
-//            ChangeBackGround(2);
-//        }
-//    }
 
     @Override
     public void onClick(View view) {
@@ -187,15 +173,13 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 etName = recommend_cinema_edname.getText().toString().trim();
                 if (TextUtils.isEmpty(etName)){
                     Toast.makeText(this, "输入内容不能为空", Toast.LENGTH_SHORT).show();
-                }else {
-
                 }
 
                 break;
         }
     }
     /*设置伸展状态时的布局*/
-    public void initExpand() {
+    private void initExpand() {
         recommend_cinema_edname.setHint("CGV影城");
         recommend_cinema_edname.requestFocus();
         recommend_cinema_edname.setHintTextColor(Color.WHITE);
@@ -257,7 +241,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         return (int) (dpVale * scale + 0.5f);
     }
 
-    public void ChangeBackGround(int index) {
+    private void ChangeBackGround(int index) {
         //背景颜色
         txt_Cinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
         //字体颜色
