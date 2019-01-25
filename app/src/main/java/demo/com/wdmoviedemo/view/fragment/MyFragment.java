@@ -36,13 +36,13 @@ import demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity;
 
 public class MyFragment extends BaseFragment {
 
+
     @Override
     public void initView(View view) {
         if (userInfoBean != null) {
             int userId = userInfoBean.getUserId();
             Toast.makeText(getActivity(), "咳咳 " + userId, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -52,6 +52,11 @@ public class MyFragment extends BaseFragment {
 
     @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback})
     public void onck(View v) {
+        switch (v.getId()) {
+            case R.id.mRb_logout:
+                Toast.makeText(getActivity(), "啊实打实大", Toast.LENGTH_SHORT).show();
+                break;
+        }
         if (v.getId() == R.id.mRb_messiage) {
             startActivity(new Intent(getActivity(), My_Messiage_Activity.class));
         } else if (v.getId() == R.id.mRb_aixin) {

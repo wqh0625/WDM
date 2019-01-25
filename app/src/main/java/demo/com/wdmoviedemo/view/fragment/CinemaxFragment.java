@@ -32,28 +32,18 @@ public class CinemaxFragment extends BaseFragment {
     private int userId;
 //    private String sessionId;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cinemax, container, false);
-//        userId = userInfoBean.getUserId();
-//        sessionId = userInfoBean.getSessionId();
-        initView(view);
-        initData();
-        return view;
-    }
 
     private void initData() {
-        cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.CAROUSEL_TYPE);
+        cinemaxAdapter = new CinemaxAdapters(getActivity(), CinemaxAdapters.CAROUSEL_TYPE);
         cinemax_recy.setAdapter(cinemaxAdapter);
         carouselPresenter = new CarouselPresenter(new CinemaxCall());
-        cinemax_recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        carouselPresenter.requestNet(1,10);
+        cinemax_recy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        carouselPresenter.requestNet(1, 10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
-                intent.putExtra("position",position);
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
@@ -69,11 +59,11 @@ public class CinemaxFragment extends BaseFragment {
         });
     }
 
-    class CinemaxCall implements DataCall<Result<List<CarouselData>>>{
+    class CinemaxCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }
@@ -84,12 +74,13 @@ public class CinemaxFragment extends BaseFragment {
 
         }
     }
+
     //关注
-    class ConcernCall implements DataCall<Result>{
+    class ConcernCall implements DataCall<Result> {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
             }
         }
@@ -100,7 +91,7 @@ public class CinemaxFragment extends BaseFragment {
         }
     }
 
-    private void initView(View view) {
+    private void init(View view) {
         cinemax_recy = (RecyclerView) view.findViewById(R.id.cinemax_recy);
     }
 
@@ -108,5 +99,16 @@ public class CinemaxFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         carouselPresenter.unBind();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_cinemax;
+    }
+
+    @Override
+    protected void initView(View view) {
+        init(view);
+        initData();
     }
 }
