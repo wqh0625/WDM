@@ -56,7 +56,6 @@ public class Film_Details_Activity extends AppCompatActivity implements View.OnC
         @Override
         public void success(Result<SearchData> data) {
             if (data.getStatus().equals("0000")){
-                Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 details_txt_name.setText(data.getResult().getName());
                 details_sdv_image.setImageURI(data.getResult().getImageUrl());
             }

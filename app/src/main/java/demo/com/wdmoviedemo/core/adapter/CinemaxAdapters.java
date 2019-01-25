@@ -49,6 +49,13 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     public void setOnMovieItemClickListener(OnCinemaxItemClickListener onCinemaxItemClickListener){
         mOnCinemaxItemClickListener= onCinemaxItemClickListener;
     }
+    public interface OnImageClickListener{
+        void OnImageClick(int position);
+    }
+    public OnImageClickListener mOnImageClickListener;
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener){
+        mOnImageClickListener = onImageClickListener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -76,6 +83,15 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
                 int id = list.get(i).getId();
                 if (mOnCinemaxItemClickListener !=null){
                     mOnCinemaxItemClickListener.onMovieClick(id);
+                }
+            }
+        });
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnImageClickListener !=null){
+                    int ids = list.get(i).getId();
+                    mOnImageClickListener.OnImageClick(ids);
                 }
             }
         });

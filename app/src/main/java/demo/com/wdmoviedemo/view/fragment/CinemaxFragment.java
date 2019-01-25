@@ -18,20 +18,26 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapter;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
+import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.CarouselPresenter;
+import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
 
-public class CinemaxFragment extends Fragment {
+public class CinemaxFragment extends BaseFragment {
     private RecyclerView cinemax_recy;
     private CinemaxAdapters cinemaxAdapter;
     private CarouselPresenter carouselPresenter;
+    private int userId;
+//    private String sessionId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cinemax, container, false);
+//        userId = userInfoBean.getUserId();
+//        sessionId = userInfoBean.getSessionId();
         initView(view);
         initData();
         return view;
@@ -51,7 +57,18 @@ public class CinemaxFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
+
+            private ConcernPresenter concernPresenter;
+
+            @Override
+            public void OnImageClick(int position) {
+                concernPresenter = new ConcernPresenter(new ConcernCall());
+//                concernPresenter.requestNet(userId,sessionId,position);
+            }
+        });
     }
+
     class CinemaxCall implements DataCall<Result<List<CarouselData>>>{
 
         @Override
@@ -65,6 +82,21 @@ public class CinemaxFragment extends Fragment {
         @Override
         public void fail(ApiException a) {
 
+        }
+    }
+    //关注
+    class ConcernCall implements DataCall<Result>{
+
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getActivity(), "关注失败", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -11,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -21,13 +22,19 @@ import retrofit2.http.Query;
 
 
 public interface IRequests {
-   //即将上映
-    @GET("movieApi/movie/v1/findComingSoonMovieList")
-    Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
-                                                    @Query("count") int count);
+ //即将上映
+ @GET("movieApi/movie/v1/findComingSoonMovieList")
+ Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
+                                                  @Query("count") int count);
 
-    //即将上映
-    @GET("movieApi/movie/v1/findMoviesById")
-    Observable<Result<SearchData>> getmovieId(@Query("movieId") int movieId);
+ //电影详情
+ @GET("movieApi/movie/v1/findMoviesById")
+ Observable<Result<SearchData>> getmovieId(@Query("movieId") int movieId);
+
+ //关注电影
+ @GET("movieApi/movie/v1/verify/followMovie")
+ Observable<Result> getConcern(@Header("userId")int userId,
+                               @Header("sessionId")String sessionId,
+                               @Query("movieId") int movieId);
 
 }
