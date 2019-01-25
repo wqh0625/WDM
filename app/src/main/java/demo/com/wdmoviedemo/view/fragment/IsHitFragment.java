@@ -71,4 +71,10 @@ public class IsHitFragment extends Fragment {
     private void initView(View view) {
         ishit_recy = (RecyclerView) view.findViewById(R.id.ishit_recy);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isHitPresenter.unBind();
+    }
 }

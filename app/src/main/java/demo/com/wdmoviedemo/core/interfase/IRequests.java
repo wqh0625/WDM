@@ -5,6 +5,7 @@ import java.util.List;
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.SearchData;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,6 +28,6 @@ public interface IRequests {
 
     //即将上映
     @GET("movieApi/movie/v1/findMoviesById")
-    Observable<Result<List<CarouselData>>> getmovieId(@Query("movieId") int movieId);
+    Observable<Result<SearchData>> getmovieId(@Query("movieId") int movieId);
 
 }

@@ -71,4 +71,10 @@ public class ComingFragment extends Fragment {
     private void initView(View view) {
         coming_recy = (RecyclerView) view.findViewById(R.id.coming_recy);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        comingPresenter.unBind();
+    }
 }

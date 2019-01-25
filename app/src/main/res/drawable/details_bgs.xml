@@ -36,7 +36,9 @@
                 android:right="0.5dp"
                 android:top="0.5dp"
                 android:bottom="0.5dp"/>
-            <solid android:color="#e5e9e6" />
+            <gradient android:startColor="#e8175e"
+                android:endColor="#440a33"
+                android:angle="45"/>
             <corners android:radius="4dp" />
         </shape>
     </item>
@@ -52,7 +54,9 @@
     </item>
     <item>
         <shape>
-            <solid android:color="#440a33" />
+            <gradient android:startColor="#e8175e"
+                android:endColor="#440a33"
+                android:angle="45"/>
             <corners android:radius="4dp" />
         </shape>
     </item>

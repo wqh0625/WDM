@@ -41,8 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:textColor="#fff"
-        android:gravity="center"
-        android:text="铁血战士"/>
+        android:textSize="20sp"
+        android:gravity="center"/>
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/details_sdv_image"
         android:layout_width="259dp"
@@ -110,7 +110,7 @@
             android:layout_marginLeft="24dp"
             android:layout_gravity="left"/>
         <TextView
-            android:id="@+id/_details_txt_buy"
+            android:id="@+id/details_txt_buy"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginRight="24dp"
