@@ -8,9 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
@@ -57,7 +60,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.mRb_messiage) {
-            Toast.makeText(getContext(), "1111", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(getActivity(), My_Messiage_Activity.class));
         } else if (v.getId() == R.id.mRb_aixin) {
             // 关注
@@ -73,8 +75,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         } else if (v.getId() == R.id.mRb_logout) {
             // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            //    设置Title的图标
-            builder.setIcon(R.drawable.log_icon);
+
             //    设置Title的内容
             builder.setTitle("退出警告！");
             //    设置Content来显示一个信息
@@ -117,3 +118,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 }
+
+/*
+*
+*
+*
+* */
+

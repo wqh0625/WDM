@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,14 +75,13 @@ public class LoginActivity extends BaseActivity {
         boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
         boolean reme_login = sp0123.getBoolean("reme_login", false);
         if (reme_pwd) {
-            UserInfoBean user = student.get(0);
+            UserInfoBean user = userInfoBean;
             if (user.getStats() == 1) {
-                Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
             }
             if (user.getPhone() == null) {
                 tel_pwd.setText("");
                 tel_number.setText("");
-                Toast.makeText(this, "nullllll" + student.size(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "nullllll" + student.size(), Toast.LENGTH_SHORT).show();
                 return;
             }
             tel_number.setText(user.getPhone() + "");
@@ -155,7 +155,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void success(Result<LoginData> data) {
             Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.v("登录数据", "" + data.getResult().getUserInfo().toString());
+//            Log.v("登录数据", "" + data.getResult().getUserInfo().toString());
             if (data.getStatus().equals("0000")) {
 
                 UserInfoBean userInfoBean = data.getResult().getUserInfo();
@@ -166,15 +166,13 @@ public class LoginActivity extends BaseActivity {
                 // 设置密码
                 userInfoBean.setPwd(pwddd);
                 userInfoBean.setStats(100);
-//                userInfoBean.setMail(getMail());
+                Log.v("登录", "" + data.getResult().getUserId() + "  " + data.getResult().getSessionId());
+                userInfoBean.setUserId(data.getResult().getUserId());
                 userInfoBean.setSessionId(data.getResult().getSessionId());
 
+                // 添加数据库
                 try {
-                    boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
-                    if (reme_pwd) {
-                        // 添加数据库
-                        addUser(userInfoBean);
-                    }
+                    addUser(userInfoBean);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.UserInfoBean;
@@ -21,7 +22,6 @@ public class BaseActivity extends AppCompatActivity {
     private DbManager dbManager;
     public List<UserInfoBean> student;
     public UserInfoBean userInfoBean;
-    public String mail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +31,8 @@ public class BaseActivity extends AppCompatActivity {
             dbManager = new DbManager(this);
             student = dbManager.getStudent();
             userInfoBean = new UserInfoBean();
-            for (int i = 0; i < student.size(); i++) {
+
+            for (int i = student.size()-1; i >= 0; i--) {
                 if (student.get(i).getStats() == 100) {
                     userInfoBean = student.get(i);
                     return;
@@ -43,34 +44,22 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getMail() {
-        if (mail == "") {
-            return "";
-        }
-        return mail;
-    }
-
     // 删除数据
     public int deleteUser(int id) throws SQLException {
-
         return dbManager.deleteStudentByI(id);
     }
 
     // 添加数据
     public void addUser(UserInfoBean userInfoBean) throws SQLException {
-
         dbManager.insertStudent(userInfoBean);
+        student = dbManager.getStudent();
     }
 
     //// 查询数据
-    public UserInfoBean query() throws SQLException {
-
-
-        return new UserInfoBean();
+    public List<UserInfoBean> query() throws SQLException {
+        List<UserInfoBean> student = dbManager.getStudent();
+        this.student = student;
+        return this.student;
     }
 
     @Override

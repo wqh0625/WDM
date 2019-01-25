@@ -12,8 +12,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission> <!-- 用于读取手机当前的状态-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission> <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        xmlns:tools="http://schemas.android.com/tools" tools:ignore="ProtectedPermissions"></uses-permission>
+    <uses-permission xmlns:tools="http://schemas.android.com/tools"
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions"></uses-permission>
 
     <application
         android:name="demo.com.wdmoviedemo.core.utils.MyApp"
@@ -28,9 +29,15 @@
         <activity android:name="demo.com.wdmoviedemo.view.LoginActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.RegisterActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.GuidanceActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.DetailsActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            />
+        <activity
+            android:name="demo.com.wdmoviedemo.view.DetailsActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Messiage_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Attention_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Feedback_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.UpdatePwd_Activity" />
+
 
         <activity android:name="demo.com.wdmoviedemo.view.StartActivity">
             <intent-filter>

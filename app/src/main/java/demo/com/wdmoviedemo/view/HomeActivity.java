@@ -6,17 +6,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bw.movie.R;
 
+import java.util.List;
+
+import demo.com.wdmoviedemo.bean.UserInfoBean;
+import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.view.fragment.CinemaFragment;
 import demo.com.wdmoviedemo.view.fragment.HomeFragment;
 import demo.com.wdmoviedemo.view.fragment.MyFragment;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private FrameLayout frag;
     private ImageView homeactivity_imagefilm;
     private ImageView homeactivity_imagecinema;
@@ -31,6 +36,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        UserInfoBean userInfoBeanaaa = new UserInfoBean();
+        List<UserInfoBean> student = this.student;
+        for (int i = student.size()-1; i >= 0; i--) {
+            if (student.get(i).getStats() == 100) {
+                userInfoBeanaaa = student.get(i);
+                break;
+            }
+        }
+        Log.v("数据库登录数据--",student.size()+" "+userInfoBeanaaa.toString());
+
         initView();
         initData();
         initEvent();

@@ -44,7 +44,7 @@ public class GuidanceActivity extends AppCompatActivity {
     private SharedPreferences sp0123;
     private LinearLayout linearTiao;
 
-    int time = 2;
+    int time = 1;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -58,7 +58,7 @@ public class GuidanceActivity extends AppCompatActivity {
                         return;
                     }
                 });
-                if (time < 0) {
+                if (time <= 0) {
                     startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
                     finish();
                     return;

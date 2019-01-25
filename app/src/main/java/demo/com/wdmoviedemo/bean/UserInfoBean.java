@@ -28,14 +28,14 @@ public class UserInfoBean {
     @DatabaseField
     private int stats;
     @DatabaseField
-    private String mail;
+    private int userId;
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getMail() {
-        return mail;
+    public int getUserId() {
+        return userId;
     }
 
     public void setPwd(String pwd) {
@@ -45,7 +45,6 @@ public class UserInfoBean {
     public String getPwd() {
         return pwd;
     }
-
 
 
     public void setStats(int stats) {
@@ -133,6 +132,7 @@ public class UserInfoBean {
                 ", sessionId='" + sessionId + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", stats=" + stats +
+                ", userId=" + userId +
                 '}';
     }
 }

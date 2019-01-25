@@ -133,7 +133,6 @@ public class RegisterActivity extends BaseActivity {
         public void success(Result data) {
             Toast.makeText(RegisterActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
-                setMail(mailEdt.getText().toString());
                 finish();
             }
         }

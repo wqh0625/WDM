@@ -4,6 +4,7 @@ import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.LoginData;
+import demo.com.wdmoviedemo.bean.MyMessageData;
 import demo.com.wdmoviedemo.bean.Result;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -54,4 +55,18 @@ public interface IRequest {
     @GET("movieApi/movie/v1/findComingSoonMovieList")
     Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
                                                      @Query("count") int count);
+
+    // 查询我的页面movieApi/user/v1/verify/getUserInfoByUserId
+    @GET("movieApi/user/v1/verify/getUserInfoByUserId")
+    Observable<Result<MyMessageData>> getUserInfoByUserId(@Header("userId") int userId,
+                                                          @Header("sessionId") String sessionID);
+
+    // 修改密码
+    @POST("movieApi/user/v1/verify/modifyUserPwd")
+    @FormUrlEncoded
+    Observable<Result> modifyUserPwd(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionID,
+                                     @Field("oldPwd") String oldPwd,
+                                     @Field("newPwd") String newPwd,
+                                     @Field("newPwd2") String newPwd2);
 }
