@@ -106,12 +106,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
             //    设置一个NegativeButton
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
+            builder.setNegativeButton("取消", null);
 
             //    显示出该对话框
             builder.show();

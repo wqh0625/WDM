@@ -5,9 +5,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/lla"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -18,7 +19,9 @@
             android:layout_alignParentLeft="true"
             android:background="@drawable/details_bg"
             android:gravity="center"
-            android:text="电影" />
+            android:text="电影"
+            android:textColor="#333333"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/my_attention_yy"
@@ -28,6 +31,8 @@
             android:layout_toRightOf="@id/txt_Cinemax"
             android:background="@drawable/details_bg"
             android:gravity="center"
+            android:textColor="#333333"
+            android:textSize="14sp"
             android:text="影院" />
     </LinearLayout>
 
@@ -35,13 +40,14 @@
         android:id="@+id/my_attention_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/lla"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="24dp" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/back_image_a"
