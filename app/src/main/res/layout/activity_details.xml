@@ -88,7 +88,7 @@
             android:layout_width="83dp"
             android:layout_height="25dp"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/details_bg"
+            android:background="@drawable/details_back"
             android:gravity="center"
             android:text="热门电影" />
 
@@ -98,7 +98,7 @@
             android:layout_height="25dp"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/txt_Cinemax"
-            android:background="@drawable/details_bg"
+            android:background="@drawable/details_back"
             android:gravity="center"
             android:text="即将热映" />
 
@@ -107,7 +107,7 @@
             android:layout_width="83dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/details_bg"
+            android:background="@drawable/details_back"
             android:gravity="center"
             android:text="即将上映" />
     </RelativeLayout>

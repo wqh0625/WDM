@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="demo.com.wdmoviedemo.view.Film_Details_Activity"
-    android:background="@drawable/details_bg"
+    android:background="@drawable/details_details"
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/top"
@@ -39,14 +39,14 @@
         android:id="@+id/details_txt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:textColor="#fff"
         android:gravity="center"
         android:text="铁血战士"/>
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/details_sdv_image"
         android:layout_width="259dp"
-        android:layout_height="360dp"
+        android:layout_height="330dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
         />
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/details_txt_details"
@@ -96,10 +96,12 @@
             android:background="@drawable/firm_details_txt_bg"
             android:textColor="#fff"/>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/details_transparent">
         <ImageView
             android:id="@+id/details_image_back"
             android:layout_width="60dp"
@@ -114,9 +116,9 @@
             android:layout_marginRight="24dp"
             android:background="@drawable/firm_details_txt_bgs"
             android:text="购票"
-            android:gravity="center"
-            android:layout_gravity="right"/>
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:gravity="center"/>
+    </RelativeLayout>
 
 
 </LinearLayout>
