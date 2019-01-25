@@ -36,6 +36,7 @@ import demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity;
 
 public class MyFragment extends BaseFragment {
 
+    private Unbinder unbinder;
 
     @Override
     public void initView(View view) {
@@ -43,6 +44,8 @@ public class MyFragment extends BaseFragment {
             int userId = userInfoBean.getUserId();
             Toast.makeText(getActivity(), "咳咳 " + userId, Toast.LENGTH_SHORT).show();
         }
+        unbinder = ButterKnife.bind(getActivity(), view);
+
     }
 
     @Override
@@ -52,11 +55,6 @@ public class MyFragment extends BaseFragment {
 
     @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback})
     public void onck(View v) {
-        switch (v.getId()) {
-            case R.id.mRb_logout:
-                Toast.makeText(getActivity(), "啊实打实大", Toast.LENGTH_SHORT).show();
-                break;
-        }
         if (v.getId() == R.id.mRb_messiage) {
             startActivity(new Intent(getActivity(), My_Messiage_Activity.class));
         } else if (v.getId() == R.id.mRb_aixin) {
@@ -73,7 +71,6 @@ public class MyFragment extends BaseFragment {
         } else if (v.getId() == R.id.mRb_logout) {
             // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
             //    设置Title的内容
             builder.setTitle("退出警告！");
             //    设置Content来显示一个信息
@@ -85,14 +82,11 @@ public class MyFragment extends BaseFragment {
                     DbManager dbManager = null;
                     try {
                         dbManager = new DbManager(getContext());
-
                         int i = dbManager.deleteStudentByS(userInfoBean);
                         Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
-
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
                     // 删除用户
                     SharedPreferences sp0123 = getActivity().getSharedPreferences("sp0123", Context.MODE_PRIVATE);
                     sp0123.edit().clear().commit();
@@ -105,16 +99,8 @@ public class MyFragment extends BaseFragment {
             });
             //    设置一个NegativeButton
             builder.setNegativeButton("取消", null);
-
             //    显示出该对话框
             builder.show();
         }
     }
 }
-
-/*
- *
- *
- *
- * */
-

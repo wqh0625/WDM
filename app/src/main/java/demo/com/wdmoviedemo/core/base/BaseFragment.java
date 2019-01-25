@@ -45,7 +45,7 @@ public abstract class BaseFragment extends Fragment {
             e.printStackTrace();
         }
         View view = inflater.inflate(getLayoutId(), container, false);
-        unbinder = ButterKnife.bind(getActivity(), view);
+        unbinder = ButterKnife.bind(this, view);
         initView(view);
         return view;
     }
