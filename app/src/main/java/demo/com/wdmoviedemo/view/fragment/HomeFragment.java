@@ -1,27 +1,16 @@
 package demo.com.wdmoviedemo.view.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -30,9 +19,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.MapView;
 import com.bw.movie.R;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
@@ -48,15 +35,15 @@ import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-    private ImageView image_location;
-    private TextView txt_location;
-    private RecyclerCoverFlow recy_carousel;
-    private ImageView image_more1;
-    private RecyclerView recy_Cinemax;
-    private ImageView image_more2;
-    private RecyclerView recy_ishit;
-    private ImageView image_more3;
-    private RecyclerView recy_onnow;
+    private ImageView imageLocation;
+    private TextView txtLocation;
+    private RecyclerCoverFlow recycarousel;
+    private ImageView imagemore1;
+    private RecyclerView recyCinemax;
+    private ImageView imageMore2;
+    private RecyclerView recyIshit;
+    private ImageView imageMore3;
+    private RecyclerView recyOnnow;
     private CarouselPresenter carouselPresenter;
     private IsHitPresenter isHitPresenter;
     private ComingPresenter comingPresenter;
@@ -66,9 +53,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
     private RelativeLayout relativeLayout;
-    private int image1=3;
-    private int image2=4;
-    private int image3=5;
+    private int image1=0;
+    private int image2=1;
+    private int image3=2;
 
 
     @Override
@@ -114,17 +101,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             if (addr == null) {
                 return;
             }
-            txt_location.setText(addr);
+            txtLocation.setText(addr);
 
         }
     }
 
     private void initBanner() {
         carouselAdapter = new CarouselAdapter(getActivity());
-        recy_carousel.setAdapter(carouselAdapter);//设置适配器
+        recycarousel.setAdapter(carouselAdapter);//设置适配器
         carouselPresenter = new CarouselPresenter(new Carousel());
         carouselPresenter.requestNet(1, 10);
-        recy_carousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {//滑动监听
+        recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {//滑动监听
             @Override
             public void onItemSelected(int position) {
 
@@ -153,13 +140,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ishitAdapter = new CinemaxAdapter(getActivity(), CinemaxAdapter.ISHIT_TYPE);
         comingAdapter = new CinemaxAdapter(getActivity(), CinemaxAdapter.COMING_TYPE);
         //布局管理器
-        recy_Cinemax.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        recy_ishit.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        recy_onnow.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyCinemax.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyIshit.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyOnnow.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        recy_Cinemax.setAdapter(cinemaxAdapter);
-        recy_ishit.setAdapter(ishitAdapter);
-        recy_onnow.setAdapter(comingAdapter);
+        recyCinemax.setAdapter(cinemaxAdapter);
+        recyIshit.setAdapter(ishitAdapter);
+        recyOnnow.setAdapter(comingAdapter);
 
 
         carouselPresenter = new CarouselPresenter(new CarouselCall());
@@ -248,20 +235,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private void initView(View view) {
-        image_location = (ImageView) view.findViewById(R.id.image_location);
-        txt_location = (TextView) view.findViewById(R.id.txt_location);
-        recy_carousel = (RecyclerCoverFlow) view.findViewById(R.id.recy_carousel);
-        image_more1 = (ImageView) view.findViewById(R.id.image_more1);
-        recy_Cinemax = (RecyclerView) view.findViewById(R.id.recy_Cinemax);
-        image_more2 = (ImageView) view.findViewById(R.id.image_more2);
-        recy_ishit = (RecyclerView) view.findViewById(R.id.recy_ishit);
-        image_more3 = (ImageView) view.findViewById(R.id.image_more3);
-        recy_onnow = (RecyclerView) view.findViewById(R.id.recy_onnow);
+        imageLocation = (ImageView) view.findViewById(R.id.image_location);
+        txtLocation = (TextView) view.findViewById(R.id.txt_location);
+        recycarousel = (RecyclerCoverFlow) view.findViewById(R.id.recy_carousel);
+        imagemore1 = (ImageView) view.findViewById(R.id.image_more1);
+        recyCinemax = (RecyclerView) view.findViewById(R.id.recy_Cinemax);
+        imageMore2 = (ImageView) view.findViewById(R.id.image_more2);
+        recyIshit = (RecyclerView) view.findViewById(R.id.recy_ishit);
+        imageMore3 = (ImageView) view.findViewById(R.id.image_more3);
+        recyOnnow = (RecyclerView) view.findViewById(R.id.recy_onnow);
         relativeLayout = view.findViewById(R.id.recommend_cinema_linear);
         relativeLayout.setOnClickListener(this);
-        image_more1.setOnClickListener(this);
-        image_more2.setOnClickListener(this);
-        image_more3.setOnClickListener(this);
+        imagemore1.setOnClickListener(this);
+        imageMore2.setOnClickListener(this);
+        imageMore3.setOnClickListener(this);
     }
 
     @Override

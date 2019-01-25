@@ -34,21 +34,21 @@ import demo.com.wdmoviedemo.view.fragment.IsHitFragment;
 
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView image_location;
-    private TextView txt_location;
+    private ImageView imageLocation;
+    private TextView txtLocation;
     private RelativeLayout top;
-    private TextView txt_Cinemax;
-    private TextView txt_ishit;
-    private TextView txt_coming;
+    private TextView txtCinemax;
+    private TextView txtIshit;
+    private TextView txtComing;
     private RelativeLayout center;
-    private ViewPager details_vp;
-    private ImageView image_back;
+    private ViewPager detailsVp;
+    private ImageView imageBack;
     private List<Fragment> fragments;
-    private ImageView recommend_cinem_search_image;
-    private EditText recommend_cinema_edname;
-    private TextView recommend_cinema_textName;
-    private RelativeLayout recommend_cinema_linear;
-    private boolean flag = true;
+    private ImageView recommendCinemSearchImage;
+    private EditText recommendCinemaEdname;
+    private TextView recommendCinemaTextName;
+    private RelativeLayout recommendCinemaLinear;
+    boolean flag = true;
     private AutoTransition transition;
     private int position;
     private int image;
@@ -68,7 +68,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         fragments.add(new CinemaxFragment());
         fragments.add(new IsHitFragment());
         fragments.add(new ComingFragment());
-        details_vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+        detailsVp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
                 return fragments.get(i);
@@ -79,7 +79,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 return fragments.size();
             }
         });
-        details_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        detailsVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
@@ -99,45 +99,59 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initView() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", 0);
-//        image = intent.getIntExtra("image", 0);
-        image_location = (ImageView) findViewById(R.id.image_location);
-        txt_location = (TextView) findViewById(R.id.txt_location);
+        position = intent.getExtras().getInt("position");
+        image = intent.getExtras().getInt("image");
+        imageLocation = (ImageView) findViewById(R.id.image_location);
+        txtLocation = (TextView) findViewById(R.id.txt_location);
         top = (RelativeLayout) findViewById(R.id.top);
-        txt_Cinemax = (TextView) findViewById(R.id.txt_Cinemax);
-        txt_ishit = (TextView) findViewById(R.id.txt_ishit);
-        txt_coming = (TextView) findViewById(R.id.txt_coming);
+        txtCinemax = (TextView) findViewById(R.id.txt_Cinemax);
+        txtIshit = (TextView) findViewById(R.id.txt_ishit);
+        txtComing = (TextView) findViewById(R.id.txt_coming);
         center = (RelativeLayout) findViewById(R.id.center);
-        details_vp = (ViewPager) findViewById(R.id.details_vp);
-        image_back = (ImageView) findViewById(R.id.image_back);
-        txt_Cinemax.setOnClickListener(this);
-        txt_ishit.setOnClickListener(this);
-        txt_coming.setOnClickListener(this);
-        image_back.setOnClickListener(this);
-        recommend_cinem_search_image = (ImageView) findViewById(R.id.recommend_cinem_search_image);
-        recommend_cinem_search_image.setOnClickListener(this);
-        recommend_cinema_edname = (EditText) findViewById(R.id.recommend_cinema_edname);
-        recommend_cinema_edname.setOnClickListener(this);
-        recommend_cinema_textName = (TextView) findViewById(R.id.recommend_cinema_textName);
-        recommend_cinema_textName.setOnClickListener(this);
-        recommend_cinema_linear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
-        recommend_cinema_linear.setOnClickListener(this);
+        detailsVp = (ViewPager) findViewById(R.id.details_vp);
+        imageBack = (ImageView) findViewById(R.id.image_back);
+        txtCinemax.setOnClickListener(this);
+        txtIshit.setOnClickListener(this);
+        txtComing.setOnClickListener(this);
+        imageBack.setOnClickListener(this);
+        recommendCinemSearchImage = (ImageView) findViewById(R.id.recommend_cinem_search_image);
+        recommendCinemSearchImage.setOnClickListener(this);
+        recommendCinemaEdname = (EditText) findViewById(R.id.recommend_cinema_edname);
+        recommendCinemaEdname.setOnClickListener(this);
+        recommendCinemaTextName = (TextView) findViewById(R.id.recommend_cinema_textName);
+        recommendCinemaTextName.setOnClickListener(this);
+        recommendCinemaLinear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
+        recommendCinemaLinear.setOnClickListener(this);
         //适配器接口回调
         initPosition();
         //图片
 //        initImage();
     }
 
+
     private void initPosition() {
         //接受position传递值判断显示页面
         if (position==0){
-            details_vp.setCurrentItem(0);
+            detailsVp.setCurrentItem(0);
             ChangeBackGround(0);
         }else if (position==1){
-            details_vp.setCurrentItem(1);
+            detailsVp.setCurrentItem(1);
             ChangeBackGround(1);
         }else if (position==2){
-            details_vp.setCurrentItem(2);
+            detailsVp.setCurrentItem(2);
+            ChangeBackGround(2);
+        }
+    }
+    private void initImage() {
+        //接受首页箭头图片传过来的值
+        if (image==0){
+            detailsVp.setCurrentItem(0);
+            ChangeBackGround(0);
+        }else if (image==1){
+            detailsVp.setCurrentItem(1);
+            ChangeBackGround(1);
+        }else {
+            detailsVp.setCurrentItem(2);
             ChangeBackGround(2);
         }
     }
@@ -146,15 +160,15 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_Cinemax:
-                details_vp.setCurrentItem(0);
+                detailsVp.setCurrentItem(0);
                 ChangeBackGround(0);
                 break;
             case R.id.txt_ishit:
-                details_vp.setCurrentItem(1);
+                detailsVp.setCurrentItem(1);
                 ChangeBackGround(1);
                 break;
             case R.id.txt_coming:
-                details_vp.setCurrentItem(2);
+                detailsVp.setCurrentItem(2);
                 ChangeBackGround(2);
                 break;
             case R.id.image_back:
@@ -170,47 +184,49 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.recommend_cinema_textName:
                 //点击搜索,获取输入的值
-                etName = recommend_cinema_edname.getText().toString().trim();
+                etName = recommendCinemaEdname.getText().toString().trim();
                 if (TextUtils.isEmpty(etName)){
                     Toast.makeText(this, "输入内容不能为空", Toast.LENGTH_SHORT).show();
+                }else {
+
                 }
 
                 break;
         }
     }
     /*设置伸展状态时的布局*/
-    private void initExpand() {
-        recommend_cinema_edname.setHint("CGV影城");
-        recommend_cinema_edname.requestFocus();
-        recommend_cinema_edname.setHintTextColor(Color.WHITE);
-        recommend_cinema_textName.setText("搜索");
-        recommend_cinema_textName.setVisibility(View.VISIBLE);
-        recommend_cinema_edname.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recommend_cinema_linear.getLayoutParams();
+    public void initExpand() {
+        recommendCinemaEdname.setHint("CGV影城");
+        recommendCinemaEdname.requestFocus();
+        recommendCinemaEdname.setHintTextColor(Color.WHITE);
+        recommendCinemaTextName.setText("搜索");
+        recommendCinemaTextName.setVisibility(View.VISIBLE);
+        recommendCinemaEdname.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recommendCinemaLinear.getLayoutParams();
         layoutParams.width = dip2px(210);
         layoutParams.setMargins(dip2px(0), dip2px(20), dip2px(0), dip2px(0));
-        recommend_cinema_linear.setLayoutParams(layoutParams);
-        recommend_cinema_edname.setOnTouchListener(new View.OnTouchListener() {
+        recommendCinemaLinear.setLayoutParams(layoutParams);
+        recommendCinemaEdname.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                recommend_cinema_edname.setFocusable(true);
-                recommend_cinema_edname.setFocusableInTouchMode(true);
+                recommendCinemaEdname.setFocusable(true);
+                recommendCinemaEdname.setFocusableInTouchMode(true);
                 return false;
             }
         });
         //开始动画
-        beginDelayedTransition(recommend_cinema_linear);
+        beginDelayedTransition(recommendCinemaLinear);
 
     }
     /*设置收缩状态时的布局*/
     private void initReduce() {
-        recommend_cinema_edname.setCursorVisible(false);
-        recommend_cinema_edname.setVisibility(View.GONE);
-        recommend_cinema_textName.setVisibility(View.GONE);
-        LinearLayout.LayoutParams LayoutParams = (LinearLayout.LayoutParams) recommend_cinema_linear.getLayoutParams();
+        recommendCinemaEdname.setCursorVisible(false);
+        recommendCinemaEdname.setVisibility(View.GONE);
+        recommendCinemaTextName.setVisibility(View.GONE);
+        LinearLayout.LayoutParams LayoutParams = (LinearLayout.LayoutParams) recommendCinemaLinear.getLayoutParams();
         LayoutParams.width = dip2px(40);
         LayoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
-        recommend_cinema_linear.setLayoutParams(LayoutParams);
+        recommendCinemaLinear.setLayoutParams(LayoutParams);
 
         //隐藏键盘
         InputMethodManager imm = (InputMethodManager) this
@@ -219,14 +235,14 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 .getDecorView().getWindowToken(), 0);
 
 
-        recommend_cinema_edname.setOnClickListener(new View.OnClickListener() {
+        recommendCinemaEdname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recommend_cinema_edname.setCursorVisible(true);
+                recommendCinemaEdname.setCursorVisible(true);
             }
         });
         //开始动画
-        beginDelayedTransition(recommend_cinema_linear);
+        beginDelayedTransition(recommendCinemaLinear);
     }
 
 
@@ -241,15 +257,15 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         return (int) (dpVale * scale + 0.5f);
     }
 
-    private void ChangeBackGround(int index) {
+    public void ChangeBackGround(int index) {
         //背景颜色
-        txt_Cinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
+        txtCinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
         //字体颜色
-        txt_Cinemax.setTextColor(index == 0 ? Color.WHITE : Color.BLACK);
-        txt_ishit.setBackgroundResource(index == 1 ? R.drawable.details_bgs : R.drawable.details_back);
-        txt_ishit.setTextColor(index == 1 ? Color.WHITE : Color.BLACK);
-        txt_coming.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_back);
-        txt_coming.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
+        txtCinemax.setTextColor(index == 0 ? Color.WHITE : Color.BLACK);
+        txtIshit.setBackgroundResource(index == 1 ? R.drawable.details_bgs : R.drawable.details_back);
+        txtIshit.setTextColor(index == 1 ? Color.WHITE : Color.BLACK);
+        txtComing.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_back);
+        txtComing.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
     }
 
 }

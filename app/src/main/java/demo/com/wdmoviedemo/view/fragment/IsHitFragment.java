@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -19,12 +18,11 @@ import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
-import demo.com.wdmoviedemo.presenter.CarouselPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
 
 public class IsHitFragment extends Fragment {
-    private RecyclerView ishit_recy;
+    private RecyclerView ishitRecy;
     private CinemaxAdapters cinemaxAdapter;
     private IsHitPresenter isHitPresenter;
 
@@ -39,9 +37,9 @@ public class IsHitFragment extends Fragment {
 
     private void initData() {
         cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.ISHIT_TYPE);
-        ishit_recy.setAdapter(cinemaxAdapter);
+        ishitRecy.setAdapter(cinemaxAdapter);
         isHitPresenter = new IsHitPresenter(new IsHitCall());
-        ishit_recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        ishitRecy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         isHitPresenter.requestNet(1,10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
@@ -69,7 +67,7 @@ public class IsHitFragment extends Fragment {
     }
 
     private void initView(View view) {
-        ishit_recy = (RecyclerView) view.findViewById(R.id.ishit_recy);
+        ishitRecy = (RecyclerView) view.findViewById(R.id.ishit_recy);
     }
 
     @Override

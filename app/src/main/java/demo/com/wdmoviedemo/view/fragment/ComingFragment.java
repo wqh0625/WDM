@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -20,11 +19,10 @@ import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.ComingPresenter;
-import demo.com.wdmoviedemo.presenter.IsHitPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
 
 public class ComingFragment extends Fragment {
-    private RecyclerView coming_recy;
+    private RecyclerView comingrecy;
     private CinemaxAdapters cinemaxAdapter;
     private ComingPresenter comingPresenter;
 
@@ -39,9 +37,9 @@ public class ComingFragment extends Fragment {
 
     private void initData() {
         cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.COMING_TYPE);
-        coming_recy.setAdapter(cinemaxAdapter);
+        comingrecy.setAdapter(cinemaxAdapter);
         comingPresenter = new ComingPresenter(new ComingCall());
-        coming_recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        comingrecy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         comingPresenter.requestNet(1,10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
@@ -69,7 +67,7 @@ public class ComingFragment extends Fragment {
     }
 
     private void initView(View view) {
-        coming_recy = (RecyclerView) view.findViewById(R.id.coming_recy);
+        comingrecy = (RecyclerView) view.findViewById(R.id.coming_recy);
     }
 
     @Override

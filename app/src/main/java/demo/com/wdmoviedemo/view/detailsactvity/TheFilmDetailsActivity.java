@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.bw.movie.R;
 
-public class The_Film_DetailsActivity extends AppCompatActivity {
+public class TheFilmDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

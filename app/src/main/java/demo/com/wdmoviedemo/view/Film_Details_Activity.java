@@ -12,8 +12,6 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.List;
-
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.SearchData;
 import demo.com.wdmoviedemo.core.exception.ApiException;
@@ -22,17 +20,17 @@ import demo.com.wdmoviedemo.presenter.SearchPresenter;
 
 public class Film_Details_Activity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView image_details;
-    private TextView txt_details;
+    private ImageView imageDetails;
+    private TextView txtDetails;
     private RelativeLayout top;
-    private TextView details_txt_name;
-    private SimpleDraweeView details_sdv_image;
-    private TextView details_txt_details;
-    private TextView details_txt_prediction;
-    private TextView details_txt_stills;
-    private TextView details_txt_review;
-    private ImageView details_image_back;
-    private TextView details_txt_buy;
+    private TextView detailsTxtName;
+    private SimpleDraweeView detailsSdvImage;
+    private TextView detailsTxtDetails;
+    private TextView detailsTxtPrediction;
+    private TextView detailsTxtStills;
+    private TextView detailsTxtReview;
+    private ImageView detailsImageBack;
+    private TextView detailsTxtBuy;
     private int position;
     private SearchPresenter searchPresenter;
 
@@ -56,8 +54,8 @@ public class Film_Details_Activity extends AppCompatActivity implements View.OnC
         @Override
         public void success(Result<SearchData> data) {
             if (data.getStatus().equals("0000")){
-                details_txt_name.setText(data.getResult().getName());
-                details_sdv_image.setImageURI(data.getResult().getImageUrl());
+                detailsTxtName.setText(data.getResult().getName());
+                detailsSdvImage.setImageURI(data.getResult().getImageUrl());
             }
         }
 
@@ -70,23 +68,23 @@ public class Film_Details_Activity extends AppCompatActivity implements View.OnC
     private void initView() {
         Intent intent = getIntent();
         position = intent.getExtras().getInt("position");
-        image_details = (ImageView) findViewById(R.id.image_details);
-        txt_details = (TextView) findViewById(R.id.txt_details);
+        imageDetails = (ImageView) findViewById(R.id.image_details);
+        txtDetails = (TextView) findViewById(R.id.txt_details);
         top = (RelativeLayout) findViewById(R.id.top);
-        details_txt_name = (TextView) findViewById(R.id.details_txt_name);
-        details_sdv_image = (SimpleDraweeView) findViewById(R.id.details_sdv_image);
-        details_txt_details = (TextView) findViewById(R.id.details_txt_details);
-        details_txt_prediction = (TextView) findViewById(R.id.details_txt_prediction);
-        details_txt_stills = (TextView) findViewById(R.id.details_txt_stills);
-        details_txt_review = (TextView) findViewById(R.id.details_txt_review);
-        details_image_back = (ImageView) findViewById(R.id.details_image_back);
-        details_txt_buy = (TextView) findViewById(R.id.details_txt_buy);
-        details_txt_details.setOnClickListener(this);
-        details_txt_prediction.setOnClickListener(this);
-        details_txt_stills.setOnClickListener(this);
-        details_txt_review.setOnClickListener(this);
-        details_image_back.setOnClickListener(this);
-        details_txt_buy.setOnClickListener(this);
+        detailsTxtName = (TextView) findViewById(R.id.details_txt_name);
+        detailsSdvImage = (SimpleDraweeView) findViewById(R.id.details_sdv_image);
+        detailsTxtDetails = (TextView) findViewById(R.id.details_txt_details);
+        detailsTxtPrediction = (TextView) findViewById(R.id.details_txt_prediction);
+        detailsTxtStills = (TextView) findViewById(R.id.details_txt_stills);
+        detailsTxtReview = (TextView) findViewById(R.id.details_txt_review);
+        detailsImageBack = (ImageView) findViewById(R.id.details_image_back);
+        detailsTxtBuy = (TextView) findViewById(R.id.details_txt_buy);
+        detailsTxtDetails.setOnClickListener(this);
+        detailsTxtPrediction.setOnClickListener(this);
+        detailsTxtStills.setOnClickListener(this);
+        detailsTxtReview.setOnClickListener(this);
+        detailsImageBack.setOnClickListener(this);
+        detailsTxtBuy.setOnClickListener(this);
     }
     @Override
     public void onClick(View view) {
