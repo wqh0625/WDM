@@ -39,13 +39,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
         UserInfoBean userInfoBeanaaa = new UserInfoBean();
         List<UserInfoBean> student = this.student;
-        for (int i = student.size()-1; i >= 0; i--) {
+        for (int i = student.size() - 1; i >= 0; i--) {
             if (student.get(i).getStats() == 100) {
                 userInfoBeanaaa = student.get(i);
                 break;
             }
         }
-        Log.v("数据库登录数据--",student.size()+" "+userInfoBeanaaa.toString());
+        Log.v("数据库登录数据--", student.size() + " " + userInfoBeanaaa.toString());
 
         initView();
         initData();
@@ -59,17 +59,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         beginTransaction = supportFragmentManager
                 .beginTransaction();
         //Fragment非空判断
-        if(homeFragment == null){
+        if (homeFragment == null) {
 
             beginTransaction = supportFragmentManager.beginTransaction();
 
 
             homeFragment = new HomeFragment();
         }
-        if(cinemaFragment == null){
+        if (cinemaFragment == null) {
             cinemaFragment = new CinemaFragment();
         }
-        if(myFragment == null){
+        if (myFragment == null) {
             myFragment = new MyFragment();
         }
 
@@ -113,7 +113,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View view) {
         FragmentTransaction transaction = supportFragmentManager
                 .beginTransaction();
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.homeactivity_imagefilm:
                 //切换电影页
                 isimagefilm(transaction);
@@ -142,22 +142,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         homeactivity_imagemy.setImageResource(R.drawable.my);
         //属性动画改变图片大小
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX",1.17f);
-        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX",1.0f );
-        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX",1.0f );
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.17f);
+        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX", 1.0f);
+        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX", 1.0f);
 
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm,"scaleY",1.17f);
-        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema,"scaleY",1.0f);
-        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy,"scaleY",1.0f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.17f);
+        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleY", 1.0f);
+        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleY", 1.0f);
 
         //存入集合
-        set.playTogether(o1,o2,o3,o4,o5,o6);
+        set.playTogether(o1, o2, o3, o4, o5, o6);
         //开始执行
         set.start();
     }
 
     //切换影院页
-    public  void isimagecinema(FragmentTransaction transaction) {
+    public void isimagecinema(FragmentTransaction transaction) {
         //显示和隐藏
         transaction.show(cinemaFragment);
         transaction.hide(myFragment);
@@ -169,20 +169,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
         //属性动画改变图片大小
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX",1.0f);
-        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX",1.17f );
-        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX",1.0f );
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.0f);
+        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX", 1.17f);
+        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX", 1.0f);
 
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm,"scaleY",1.0f);
-        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema,"scaleY",1.17f);
-        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy,"scaleY",1.0f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.0f);
+        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleY", 1.17f);
+        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleY", 1.0f);
 
         //存入集合
-        set.playTogether(o1,o2,o3,o4,o5,o6);
+        set.playTogether(o1, o2, o3, o4, o5, o6);
         //开始执行
         set.start();
 
     }
+
     //切换我的页面
     private void isimagemy(FragmentTransaction transaction) {
         //显示和隐藏
@@ -196,16 +197,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
         //属性动画改变图片大小
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX",1.0f);
-        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX",1.0f );
-        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX",1.17f );
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.0f);
+        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX", 1.0f);
+        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX", 1.17f);
 
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm,"scaleY",1.0f);
-        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema,"scaleY",1.0f);
-        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy,"scaleY",1.17f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.0f);
+        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleY", 1.0f);
+        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleY", 1.17f);
 
         //存入集合
-        set.playTogether(o1,o2,o3,o4,o5,o6);
+        set.playTogether(o1, o2, o3, o4, o5, o6);
         //开始执行
         set.start();
 
