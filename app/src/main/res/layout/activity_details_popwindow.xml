@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--详情-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/the_film_details_shape" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/activity_details_simpledraweeview"
+        android:layout_marginTop="66dp"
+        android:layout_width="111dp"
+        android:layout_height="149dp"
+        android:layout_marginLeft="24dp"/>
+
+    <TextView
+        android:id="@+id/activity_details_type"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:text="类型"/>
+
+    <TextView
+        android:id="@+id/popwindow_details_direct"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_below="@id/activity_details_type"
+        android:text="导演"/>
+
+    <TextView
+        android:id="@+id/activity_details_time"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_below="@id/popwindow_details_direct"
+        android:text="时长"/>
+
+    <TextView
+        android:id="@+id/activity_details_location"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_below="@id/activity_details_time"
+        android:text="产地"/>
+
+    <ImageView
+        android:id="@+id/activity_details_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/com_icon_down_default"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="110dp" />
+
+    <TextView
+        android:id="@+id/activity_details_jianjiel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="24dp"
+        android:text="剧情简介"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:layout_below="@id/activity_details_simpledraweeview"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="30dp"
+        android:layout_height="3dp"
+        android:layout_below="@id/activity_details_jianjiel"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/details_bgs"/>
+
+    <TextView
+        android:id="@+id/activity_details_jianjie"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="简介"
+        android:textSize="12sp"
+        android:textColor="#333333"
+        android:layout_marginRight="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_below="@id/view"
+        android:ellipsize="end"
+        android:singleLine="false"
+        android:lines="4"/>
+
+    <TextView
+        android:id="@+id/textview_pr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="24dp"
+        android:text="演职人员"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:layout_below="@id/activity_details_jianjie"/>
+
+    <View
+        android:id="@+id/view_pr"
+        android:layout_width="30dp"
+        android:layout_height="3dp"
+        android:layout_below="@id/textview_pr"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/details_bgs"/>
+
+    <Button
+        android:id="@+id/activity_details_actorname"
+        android:layout_width="75dp"
+        android:layout_height="32dp"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:text="演员名字"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_below="@id/view_pr"
+        android:background="@drawable/details_cctor_name"/>
+
+    <Button
+        android:id="@+id/activity_details_role"
+        android:layout_width="75dp"
+        android:layout_height="32dp"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:text="饰演角色"
+        android:layout_marginRight="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/view_pr"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/details_cctor_name"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_details_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_details_role"
+        android:layout_marginTop="10dp"
+        ></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
+

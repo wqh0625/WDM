@@ -4,7 +4,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,9 +22,9 @@ import demo.com.wdmoviedemo.view.fragment.MyFragment;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private FrameLayout frag;
-    private ImageView homeactivity_imagefilm;
-    private ImageView homeactivity_imagecinema;
-    private ImageView homeactivity_imagemy;
+    private ImageView homeactivityImagefilm;
+    private ImageView homeactivityImagecinema;
+    private ImageView homeactivityImagemy;
     private FragmentManager supportFragmentManager;
     private FragmentTransaction beginTransaction;
     private HomeFragment homeFragment;
@@ -92,17 +91,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private void initView() {
         frag = (FrameLayout) findViewById(R.id.frag);
-        homeactivity_imagefilm = (ImageView) findViewById(R.id.homeactivity_imagefilm);
-        homeactivity_imagecinema = (ImageView) findViewById(R.id.homeactivity_imagecinema);
-        homeactivity_imagemy = (ImageView) findViewById(R.id.homeactivity_imagemy);
-        homeactivity_imagefilm.setOnClickListener(this);
-        homeactivity_imagecinema.setOnClickListener(this);
-        homeactivity_imagemy.setOnClickListener(this);
-        homeactivity_imagefilm.setImageResource(R.drawable.homes);
+        homeactivityImagefilm = (ImageView) findViewById(R.id.homeactivity_imagefilm);
+        homeactivityImagecinema = (ImageView) findViewById(R.id.homeactivity_imagecinema);
+        homeactivityImagemy = (ImageView) findViewById(R.id.homeactivity_imagemy);
+        homeactivityImagefilm.setOnClickListener(this);
+        homeactivityImagecinema.setOnClickListener(this);
+        homeactivityImagemy.setOnClickListener(this);
+        homeactivityImagefilm.setImageResource(R.drawable.homes);
 
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.17f);
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.17f);
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleX", 1.17f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleY", 1.17f);
         //存入集合
         set.playTogether(o1, o4);
         //开始执行
@@ -137,18 +136,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         transaction.hide(myFragment);
         transaction.show(homeFragment);
         //切换图片
-        homeactivity_imagefilm.setImageResource(R.drawable.homes);
-        homeactivity_imagecinema.setImageResource(R.drawable.cinema);
-        homeactivity_imagemy.setImageResource(R.drawable.my);
+        homeactivityImagefilm.setImageResource(R.drawable.homes);
+        homeactivityImagecinema.setImageResource(R.drawable.cinema);
+        homeactivityImagemy.setImageResource(R.drawable.my);
         //属性动画改变图片大小
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.17f);
-        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX", 1.0f);
-        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX", 1.0f);
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleX", 1.17f);
+        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivityImagecinema, "scaleX", 1.0f);
+        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivityImagemy, "scaleX", 1.0f);
 
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.17f);
-        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleY", 1.0f);
-        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleY", 1.0f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleY", 1.17f);
+        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivityImagecinema, "scaleY", 1.0f);
+        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivityImagemy, "scaleY", 1.0f);
 
         //存入集合
         set.playTogether(o1, o2, o3, o4, o5, o6);
@@ -163,19 +162,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         transaction.hide(myFragment);
         transaction.hide(homeFragment);
         //切换图片
-        homeactivity_imagefilm.setImageResource(R.drawable.home);
-        homeactivity_imagecinema.setImageResource(R.drawable.cinemas);
-        homeactivity_imagemy.setImageResource(R.drawable.my);
+        homeactivityImagefilm.setImageResource(R.drawable.home);
+        homeactivityImagecinema.setImageResource(R.drawable.cinemas);
+        homeactivityImagemy.setImageResource(R.drawable.my);
 
         //属性动画改变图片大小
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.0f);
-        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX", 1.17f);
-        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX", 1.0f);
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleX", 1.0f);
+        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivityImagecinema, "scaleX", 1.17f);
+        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivityImagemy, "scaleX", 1.0f);
 
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.0f);
-        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleY", 1.17f);
-        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleY", 1.0f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleY", 1.0f);
+        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivityImagecinema, "scaleY", 1.17f);
+        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivityImagemy, "scaleY", 1.0f);
 
         //存入集合
         set.playTogether(o1, o2, o3, o4, o5, o6);
@@ -191,19 +190,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         transaction.show(myFragment);
         transaction.hide(homeFragment);
         //切换图片
-        homeactivity_imagefilm.setImageResource(R.drawable.home);
-        homeactivity_imagecinema.setImageResource(R.drawable.cinema);
-        homeactivity_imagemy.setImageResource(R.drawable.mys);
+        homeactivityImagefilm.setImageResource(R.drawable.home);
+        homeactivityImagecinema.setImageResource(R.drawable.cinema);
+        homeactivityImagemy.setImageResource(R.drawable.mys);
 
         //属性动画改变图片大小
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleX", 1.0f);
-        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleX", 1.0f);
-        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleX", 1.17f);
+        ObjectAnimator o1 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleX", 1.0f);
+        ObjectAnimator o2 = ObjectAnimator.ofFloat(homeactivityImagecinema, "scaleX", 1.0f);
+        ObjectAnimator o3 = ObjectAnimator.ofFloat(homeactivityImagemy, "scaleX", 1.17f);
 
-        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivity_imagefilm, "scaleY", 1.0f);
-        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivity_imagecinema, "scaleY", 1.0f);
-        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivity_imagemy, "scaleY", 1.17f);
+        ObjectAnimator o4 = ObjectAnimator.ofFloat(homeactivityImagefilm, "scaleY", 1.0f);
+        ObjectAnimator o5 = ObjectAnimator.ofFloat(homeactivityImagecinema, "scaleY", 1.0f);
+        ObjectAnimator o6 = ObjectAnimator.ofFloat(homeactivityImagemy, "scaleY", 1.17f);
 
         //存入集合
         set.playTogether(o1, o2, o3, o4, o5, o6);

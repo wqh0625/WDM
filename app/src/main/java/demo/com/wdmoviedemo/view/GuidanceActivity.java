@@ -14,7 +14,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -32,15 +31,15 @@ import demo.com.wdmoviedemo.core.guidancedata.ViewPagerAdatper;
 
 public class GuidanceActivity extends AppCompatActivity {
 
-    private ViewPager mIn_vp;
-    private LinearLayout mIn_ll;
+    private ViewPager mInVp;
+    private LinearLayout mInLl;
     private List<View> mViewList;
-    private ImageView mLight_dots;
+    private ImageView mLightDots;
     private int mDistance;
-    private ImageView mOne_dot;
-    private ImageView mTwo_dot;
-    private ImageView mThree_dot;
-    private ImageView mFour_dot;
+    private ImageView mOneDot;
+    private ImageView mTwoDot;
+    private ImageView mThreeDot;
+    private ImageView mFourDot;
     private SharedPreferences sp0123;
     private LinearLayout linearTiao;
 
@@ -85,30 +84,30 @@ public class GuidanceActivity extends AppCompatActivity {
 
         initView();
         initData();
-        mIn_vp.setAdapter(new ViewPagerAdatper(mViewList));
+        mInVp.setAdapter(new ViewPagerAdatper(mViewList));
         addDots();
         moveDots();
-        mIn_vp.setPageTransformer(true, new DepthPageTransformer());
+        mInVp.setPageTransformer(true, new DepthPageTransformer());
     }
 
     private void moveDots() {
-        mLight_dots.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        mLightDots.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 //获得两个圆点之间的距离
-                mDistance = mIn_ll.getChildAt(1).getLeft() - mIn_ll.getChildAt(0).getLeft();
-                mLight_dots.getViewTreeObserver()
+                mDistance = mInLl.getChildAt(1).getLeft() - mInLl.getChildAt(0).getLeft();
+                mLightDots.getViewTreeObserver()
                         .removeGlobalOnLayoutListener(this);
             }
         });
-        mIn_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mInVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //页面滚动时小白点移动的距离，并通过setLayoutParams(params)不断更新其位置
                 float leftMargin = mDistance * (position + positionOffset);
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLight_dots.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLightDots.getLayoutParams();
                 params.leftMargin = (int) leftMargin;
-                mLight_dots.setLayoutParams(params);
+                mLightDots.setLayoutParams(params);
 
             }
 
@@ -116,9 +115,9 @@ public class GuidanceActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 //页面跳转时，设置小圆点的margin
                 float leftMargin = mDistance * position;
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLight_dots.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mLightDots.getLayoutParams();
                 params.leftMargin = (int) leftMargin;
-                mLight_dots.setLayoutParams(params);
+                mLightDots.setLayoutParams(params);
                 // 点击跳进登录页面
                 if (position == 3) {
                     SharedPreferences.Editor edit = sp0123.edit();
@@ -138,41 +137,41 @@ public class GuidanceActivity extends AppCompatActivity {
     }
 
     private void addDots() {
-        mOne_dot = new ImageView(this);
-        mOne_dot.setImageResource(R.drawable.gray_dot);
+        mOneDot = new ImageView(this);
+        mOneDot.setImageResource(R.drawable.gray_dot);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, 40, 0);
-        mIn_ll.addView(mOne_dot, layoutParams);
-        mTwo_dot = new ImageView(this);
-        mTwo_dot.setImageResource(R.drawable.gray_dot);
-        mIn_ll.addView(mTwo_dot, layoutParams);
-        mThree_dot = new ImageView(this);
-        mThree_dot.setImageResource(R.drawable.gray_dot);
-        mIn_ll.addView(mThree_dot, layoutParams);
-        mFour_dot = new ImageView(this);
-        mFour_dot.setImageResource(R.drawable.gray_dot);
-        mIn_ll.addView(mFour_dot, layoutParams);
+        mInLl.addView(mOneDot, layoutParams);
+        mTwoDot = new ImageView(this);
+        mTwoDot.setImageResource(R.drawable.gray_dot);
+        mInLl.addView(mTwoDot, layoutParams);
+        mThreeDot = new ImageView(this);
+        mThreeDot.setImageResource(R.drawable.gray_dot);
+        mInLl.addView(mThreeDot, layoutParams);
+        mFourDot = new ImageView(this);
+        mFourDot.setImageResource(R.drawable.gray_dot);
+        mInLl.addView(mFourDot, layoutParams);
         setClickListener();
 
     }
 
     private void setClickListener() {
-        mOne_dot.setOnClickListener(new View.OnClickListener() {
+        mOneDot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mIn_vp.setCurrentItem(0);
+                mInVp.setCurrentItem(0);
             }
         });
-        mTwo_dot.setOnClickListener(new View.OnClickListener() {
+        mTwoDot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mIn_vp.setCurrentItem(1);
+                mInVp.setCurrentItem(1);
             }
         });
-        mThree_dot.setOnClickListener(new View.OnClickListener() {
+        mThreeDot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mIn_vp.setCurrentItem(3);
+                mInVp.setCurrentItem(3);
             }
         });
     }
@@ -191,9 +190,9 @@ public class GuidanceActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mIn_vp = findViewById(R.id.in_viewpager);
-        mIn_ll = findViewById(R.id.in_ll);
-        mLight_dots = findViewById(R.id.iv_light_dots);
+        mInVp = findViewById(R.id.in_viewpager);
+        mInLl = findViewById(R.id.in_ll);
+        mLightDots = findViewById(R.id.iv_light_dots);
     }
 
     @Override

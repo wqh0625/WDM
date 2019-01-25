@@ -1,13 +1,9 @@
 package demo.com.wdmoviedemo.view.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bw.movie.R;
@@ -16,7 +12,6 @@ import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
-import demo.com.wdmoviedemo.core.adapter.CinemaxAdapter;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
@@ -26,15 +21,20 @@ import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
 
 public class CinemaxFragment extends BaseFragment {
-    private RecyclerView cinemax_recy;
+    private RecyclerView cinemaxrecy;
     private CinemaxAdapters cinemaxAdapter;
     private CarouselPresenter carouselPresenter;
+    private int userId;
+    private String sessionId;
 
     private void initData() {
+        userId = userInfoBean.getUserId();
+        sessionId = userInfoBean.getSessionId();
+
         cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.CAROUSEL_TYPE);
-        cinemax_recy.setAdapter(cinemaxAdapter);
+        cinemaxrecy.setAdapter(cinemaxAdapter);
         carouselPresenter = new CarouselPresenter(new CinemaxCall());
-        cinemax_recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        cinemaxrecy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         carouselPresenter.requestNet(1,10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
@@ -51,7 +51,7 @@ public class CinemaxFragment extends BaseFragment {
             @Override
             public void OnImageClick(int position) {
                 concernPresenter = new ConcernPresenter(new ConcernCall());
-//                concernPresenter.requestNet(userId,sessionId,position);
+                concernPresenter.requestNet(userId,sessionId,position);
             }
         });
     }
@@ -88,7 +88,7 @@ public class CinemaxFragment extends BaseFragment {
     }
 
     private void init(View view) {
-        cinemax_recy = (RecyclerView) view.findViewById(R.id.cinemax_recy);
+        cinemaxrecy = (RecyclerView) view.findViewById(R.id.cinemax_recy);
     }
 
     @Override
