@@ -129,7 +129,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     private void initPosition() {
         //接受position传递值判断显示页面
         if (position==0){
@@ -260,12 +259,12 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     public void ChangeBackGround(int index) {
         //背景颜色
-        txt_Cinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_bgs);
+        txt_Cinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
         //字体颜色
         txt_Cinemax.setTextColor(index == 0 ? Color.WHITE : Color.BLACK);
-        txt_ishit.setBackgroundResource(index == 1 ? R.drawable.details_bgs : R.drawable.details_bgs);
+        txt_ishit.setBackgroundResource(index == 1 ? R.drawable.details_bgs : R.drawable.details_back);
         txt_ishit.setTextColor(index == 1 ? Color.WHITE : Color.BLACK);
-        txt_coming.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_bgs);
+        txt_coming.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_back);
         txt_coming.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
     }
 
