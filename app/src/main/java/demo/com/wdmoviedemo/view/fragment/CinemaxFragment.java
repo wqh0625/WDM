@@ -29,19 +29,6 @@ public class CinemaxFragment extends BaseFragment {
     private RecyclerView cinemax_recy;
     private CinemaxAdapters cinemaxAdapter;
     private CarouselPresenter carouselPresenter;
-    private int userId;
-//    private String sessionId;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cinemax, container, false);
-//        userId = userInfoBean.getUserId();
-//        sessionId = userInfoBean.getSessionId();
-        initView(view);
-        initData();
-        return view;
-    }
 
     private void initData() {
         cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.CAROUSEL_TYPE);
@@ -100,7 +87,7 @@ public class CinemaxFragment extends BaseFragment {
         }
     }
 
-    private void initView(View view) {
+    private void init(View view) {
         cinemax_recy = (RecyclerView) view.findViewById(R.id.cinemax_recy);
     }
 
@@ -108,5 +95,17 @@ public class CinemaxFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         carouselPresenter.unBind();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_cinemax;
+    }
+
+    @Override
+    protected void initView(View view) {
+        init(view);
+        initData();
+
     }
 }
