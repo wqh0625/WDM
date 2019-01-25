@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,14 +23,17 @@
                 android:layout_marginBottom="10dp"/>
             <TextView
                 android:id="@+id/cinemax_txt_name"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
-                android:layout_toRightOf="@id/cinemax_sdv_image"/>
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/cinemax_sdv_image"
+                android:layout_toLeftOf="@id/cinemax_image"/>
             <ImageView
                 android:id="@+id/cinemax_image"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/com_icon_collection_default"/>
             <TextView
@@ -37,8 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="#fff"
-                android:layout_toRightOf="@id/cinemax_txt_name"
+                android:layout_toRightOf="@id/cinemax_sdv_image"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_below="@id/cinemax_txt_name"/>
         </RelativeLayout>
     </RelativeLayout>

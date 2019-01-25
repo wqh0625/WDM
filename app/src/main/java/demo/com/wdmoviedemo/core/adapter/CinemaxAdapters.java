@@ -24,7 +24,7 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 /**
  * date: 2019/1/24.
  * Created 王思敏
- * function:
+ * function:详情适配器
  */
 public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHolder> {
     private Context context;
@@ -39,7 +39,16 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
         this.type = type;
         list = new ArrayList<>();
     }
+    //接口回调
+    public interface OnCinemaxItemClickListener {
+        void onMovieClick(int position);
+    }
 
+    public OnCinemaxItemClickListener mOnCinemaxItemClickListener;
+
+    public void setOnMovieItemClickListener(OnCinemaxItemClickListener onCinemaxItemClickListener){
+        mOnCinemaxItemClickListener= onCinemaxItemClickListener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -56,10 +65,20 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-    viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
-    viewHolder.txtName.setText(list.get(i).getName());
-    viewHolder.txtContent.setText(list.get(i).getSummary());
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
+        viewHolder.txtName.setText(list.get(i).getName());
+        viewHolder.txtContent.setText(list.get(i).getSummary());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //根据id获取
+                int id = list.get(i).getId();
+                if (mOnCinemaxItemClickListener !=null){
+                    mOnCinemaxItemClickListener.onMovieClick(id);
+                }
+            }
+        });
     }
 
     @Override

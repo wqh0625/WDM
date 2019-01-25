@@ -1,5 +1,6 @@
 package demo.com.wdmoviedemo.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.CarouselPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
+import demo.com.wdmoviedemo.view.Film_Details_Activity;
 
 public class IsHitFragment extends Fragment {
     private RecyclerView ishit_recy;
@@ -41,13 +43,20 @@ public class IsHitFragment extends Fragment {
         isHitPresenter = new IsHitPresenter(new IsHitCall());
         ishit_recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         isHitPresenter.requestNet(1,10);
+        cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
+            @Override
+            public void onMovieClick(int position) {
+                Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
+                intent.putExtra("position",position);
+                startActivity(intent);
+            }
+        });
     }
     class IsHitCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
             if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }

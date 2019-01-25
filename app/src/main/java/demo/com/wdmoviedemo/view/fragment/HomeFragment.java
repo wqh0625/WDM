@@ -66,6 +66,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
     private RelativeLayout relativeLayout;
+    private int image1=3;
+    private int image2=4;
+    private int image3=5;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -174,6 +178,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onMovieClick(int position) {
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra("position",position);
+                startActivity(intent);
+            }
+        });
+        ishitAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
+            @Override
+            public void onMovieClick(int position) {
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
+        comingAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
+            @Override
+            public void onMovieClick(int position) {
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
             }
@@ -239,6 +259,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         recy_onnow = (RecyclerView) view.findViewById(R.id.recy_onnow);
         relativeLayout = view.findViewById(R.id.recommend_cinema_linear);
         relativeLayout.setOnClickListener(this);
+        image_more1.setOnClickListener(this);
+        image_more2.setOnClickListener(this);
+        image_more3.setOnClickListener(this);
     }
 
     @Override
@@ -247,6 +270,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.recommend_cinema_linear:
                 Intent intent = new Intent(getActivity(),DetailsActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.image_more1:
+                Intent intent1 = new Intent(getActivity(),DetailsActivity.class);
+                intent1.putExtra("image",image1);
+                startActivity(intent1);
+                break;
+            case R.id.image_more2:
+                Intent intent2 = new Intent(getActivity(),DetailsActivity.class);
+                intent2.putExtra("image",image2);
+                startActivity(intent2);
+                break;
+            case R.id.image_more3:
+                Intent intent3 = new Intent(getActivity(),DetailsActivity.class);
+                intent3.putExtra("image",image3);
+                startActivity(intent3);
                 break;
         }
     }

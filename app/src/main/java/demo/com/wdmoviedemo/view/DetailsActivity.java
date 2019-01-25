@@ -1,6 +1,7 @@
 package demo.com.wdmoviedemo.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -49,6 +50,9 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private RelativeLayout recommend_cinema_linear;
     boolean flag = true;
     private AutoTransition transition;
+    private int position;
+    private int image;
+    private String etName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_details);
         initView();
         initData();
+
     }
 
     private void initData() {
@@ -82,6 +87,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onPageSelected(int i) {
+                ChangeBackGround(i);
             }
 
             @Override
@@ -92,6 +98,9 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
+        Intent intent = getIntent();
+        position = intent.getIntExtra("position", 0);
+//        image = intent.getIntExtra("image", 0);
         image_location = (ImageView) findViewById(R.id.image_location);
         txt_location = (TextView) findViewById(R.id.txt_location);
         top = (RelativeLayout) findViewById(R.id.top);
@@ -113,7 +122,40 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         recommend_cinema_textName.setOnClickListener(this);
         recommend_cinema_linear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
         recommend_cinema_linear.setOnClickListener(this);
+        //适配器接口回调
+        initPosition();
+        //图片
+//        initImage();
     }
+
+
+
+    private void initPosition() {
+        //接受position传递值判断显示页面
+        if (position==0){
+            details_vp.setCurrentItem(0);
+            ChangeBackGround(0);
+        }else if (position==1){
+            details_vp.setCurrentItem(1);
+            ChangeBackGround(1);
+        }else if (position==2){
+            details_vp.setCurrentItem(2);
+            ChangeBackGround(2);
+        }
+    }
+//    private void initImage() {
+//        //接受首页箭头图片传过来的值
+//        if (image==3){
+//            details_vp.setCurrentItem(0);
+//            ChangeBackGround(0);
+//        }else if (image==4){
+//            details_vp.setCurrentItem(1);
+//            ChangeBackGround(1);
+//        }else {
+//            details_vp.setCurrentItem(2);
+//            ChangeBackGround(2);
+//        }
+//    }
 
     @Override
     public void onClick(View view) {
@@ -143,20 +185,14 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.recommend_cinema_textName:
                 //点击搜索,获取输入的值
-                String editCinema = recommend_cinema_edname.getText().toString().trim();
-//                //判断输入的不能为空
-//                if (!TextUtils.isEmpty(editCinema)){
-//                    Map<String, String> map = new HashMap<>();
-//                    map.put("page", "1");
-//                    map.put("count", "10");
-//                    map.put("cinemaName", editCinema);
-//                    presenter.onFindAllCinemasPresenter(map);
-//                    initReduce();//点击text收缩
-//                }else {
-//                    Toast.makeText(getActivity(), "输入内容不能为空", Toast.LENGTH_SHORT).show();
-//                }
+                etName = recommend_cinema_edname.getText().toString().trim();
+                if (TextUtils.isEmpty(etName)){
+                    Toast.makeText(this, "输入内容不能为空", Toast.LENGTH_SHORT).show();
+                }else {
 
-            break;
+                }
+
+                break;
         }
     }
     /*设置伸展状态时的布局*/
@@ -169,7 +205,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         recommend_cinema_edname.setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recommend_cinema_linear.getLayoutParams();
         layoutParams.width = dip2px(210);
-        layoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
+        layoutParams.setMargins(dip2px(0), dip2px(20), dip2px(0), dip2px(0));
         recommend_cinema_linear.setLayoutParams(layoutParams);
         recommend_cinema_edname.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -232,4 +268,5 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         txt_coming.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_bg);
         txt_coming.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
     }
+
 }
