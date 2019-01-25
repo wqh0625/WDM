@@ -4,51 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="30dp">
-
+    android:layout_marginBottom="30dp"
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp">
-
         <RelativeLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="186dp"
                 android:background="@drawable/bg">
-
                 <ImageView
                     android:id="@+id/image_location"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_marginLeft="6dp"
+                    android:src="@drawable/dw"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/dw" />
-
+                    android:layout_marginLeft="6dp"/>
                 <TextView
                     android:id="@+id/txt_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="30dp"
                     android:layout_toRightOf="@id/image_location"
                     android:text="未定位.."
+                    android:textSize="14sp"
                     android:textColor="#fff"
-                    android:textSize="14sp" />
-
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="30dp"
+                    />
                 <RelativeLayout
-                    android:id="@+id/recommend_cinema_linear"
                     android:layout_width="45dp"
                     android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/recommend_cinema_linear"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/cinema_search_shape">
-
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
@@ -57,102 +53,51 @@
                 </RelativeLayout>
 
             </RelativeLayout>
-
             <recycler.coverflow.RecyclerCoverFlow
                 android:id="@+id/recy_carousel"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginLeft="24dp"
                 android:layout_marginTop="85dp"
+                android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"/>
 
-            </RelativeLayout>
-            <View
-                android:id="@+id/views"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#b3adad"
-                android:layout_below="@id/top"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"/>
-            <RelativeLayout
-                android:id="@+id/relat_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/views"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp">
-                <TextView
-                    android:id="@+id/txt_rmdy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="热门电影"/>
-                <View
-                    android:id="@+id/txt_view"
-                    android:layout_width="30dp"
-                    android:layout_height="3dp"
-                    android:background="#e8175e"
-                    android:layout_below="@id/txt_rmdy"></View>
-                <ImageView
-                    android:id="@+id/image_more1"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/com_icon_next"
-                    android:layout_alignParentRight="true"/>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recy_Cinemax"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_view"
-                    android:layout_marginTop="20dp"></android.support.v7.widget.RecyclerView>
         </RelativeLayout>
-
         <View
             android:id="@+id/views"
             android:layout_width="match_parent"
             android:layout_height="3dp"
+            android:background="#b3adad"
             android:layout_below="@id/top"
-            android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:background="#b3adad" />
-
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"/>
         <RelativeLayout
             android:id="@+id/relat_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@id/views"
-            android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:orientation="horizontal">
-
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp">
             <TextView
                 android:id="@+id/txt_rmdy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="热门电影"
-                android:textSize="16sp" />
-
+                android:textSize="16sp"
+                android:text="热门电影"/>
             <View
                 android:id="@+id/txt_view"
                 android:layout_width="30dp"
                 android:layout_height="3dp"
-                android:layout_below="@id/txt_rmdy"
-                android:layout_marginTop="4dp"
-                android:background="#e8175e"/>
-
+                android:background="#e8175e"
+                android:layout_below="@id/txt_rmdy"/>
             <ImageView
                 android:id="@+id/image_more1"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/com_icon_next" />
-
+                android:src="@drawable/com_icon_next"
+                android:layout_alignParentRight="true"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recy_Cinemax"
                 android:layout_width="match_parent"
@@ -160,113 +105,74 @@
                 android:layout_below="@id/txt_view"
                 android:layout_marginTop="20dp"/>
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/relat_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/relat_1"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                >
-                <TextView
-                    android:id="@+id/txt_zzry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="正在热映"/>
-                <View
-                    android:id="@+id/txt_view1"
-                    android:layout_width="30dp"
-                    android:layout_height="3dp"
-                    android:background="#e8175e"
-                    android:layout_below="@id/txt_zzry"></View>
-                <ImageView
-                    android:id="@+id/image_more2"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/com_icon_next"
-                    android:layout_alignParentRight="true"/>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recy_ishit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_view1"
-                    android:layout_marginTop="20dp"></android.support.v7.widget.RecyclerView>
-
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/relat_2"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp">
-                <TextView
-                    android:id="@+id/txt_zzsy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="正在上映"/>
-                <View
-                    android:id="@+id/txt_view2"
-                    android:layout_width="30dp"
-                    android:layout_height="3dp"
-                    android:background="#e8175e"
-                    android:layout_below="@id/txt_zzsy"></View>
-                <ImageView
-                    android:id="@+id/image_more3"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/com_icon_next"
-                    android:layout_alignParentRight="true"/>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recy_onnow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txt_view2"></android.support.v7.widget.RecyclerView>
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relat_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/relat_1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            >
+            <TextView
+                android:id="@+id/txt_zzry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="正在热映"/>
+            <View
+                android:id="@+id/txt_view1"
+                android:layout_width="30dp"
+                android:layout_height="3dp"
+                android:background="#e8175e"
+                android:layout_below="@id/txt_zzry"/>
+            <ImageView
+                android:id="@+id/image_more2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/com_icon_next"
+                android:layout_alignParentRight="true"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recy_ishit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_view1"
+                android:layout_marginTop="20dp"/>
 
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@id/relat_2"
-            android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:orientation="horizontal">
-
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp">
             <TextView
                 android:id="@+id/txt_zzsy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="正在上映"
-                android:textSize="16sp" />
-
+                android:textSize="16sp"
+                android:text="正在上映"/>
             <View
                 android:id="@+id/txt_view2"
                 android:layout_width="30dp"
                 android:layout_height="3dp"
-                android:layout_below="@id/txt_zzsy"
-                android:layout_marginTop="4dp"
-                android:background="#e8175e"/>
-
+                android:background="#e8175e"
+                android:layout_below="@id/txt_zzsy"/>
             <ImageView
                 android:id="@+id/image_more3"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/com_icon_next" />
-
+                android:src="@drawable/com_icon_next"
+                android:layout_alignParentRight="true"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recy_onnow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_view2"
-                android:layout_marginTop="20dp"/>
+                android:layout_below="@id/txt_view2"/>
 
         </RelativeLayout>
     </RelativeLayout>

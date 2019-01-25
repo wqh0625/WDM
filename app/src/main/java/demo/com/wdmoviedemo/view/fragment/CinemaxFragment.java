@@ -29,21 +29,18 @@ public class CinemaxFragment extends BaseFragment {
     private RecyclerView cinemax_recy;
     private CinemaxAdapters cinemaxAdapter;
     private CarouselPresenter carouselPresenter;
-    private int userId;
-//    private String sessionId;
-
 
     private void initData() {
-        cinemaxAdapter = new CinemaxAdapters(getActivity(), CinemaxAdapters.CAROUSEL_TYPE);
+        cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.CAROUSEL_TYPE);
         cinemax_recy.setAdapter(cinemaxAdapter);
         carouselPresenter = new CarouselPresenter(new CinemaxCall());
-        cinemax_recy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        carouselPresenter.requestNet(1, 10);
+        cinemax_recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        carouselPresenter.requestNet(1,10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
-                intent.putExtra("position", position);
+                Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
+                intent.putExtra("position",position);
                 startActivity(intent);
             }
         });
@@ -59,11 +56,11 @@ public class CinemaxFragment extends BaseFragment {
         });
     }
 
-    class CinemaxCall implements DataCall<Result<List<CarouselData>>> {
+    class CinemaxCall implements DataCall<Result<List<CarouselData>>>{
 
         @Override
         public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")) {
+            if (data.getStatus().equals("0000")){
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }
@@ -74,13 +71,12 @@ public class CinemaxFragment extends BaseFragment {
 
         }
     }
-
     //关注
-    class ConcernCall implements DataCall<Result> {
+    class ConcernCall implements DataCall<Result>{
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")) {
+            if (data.getStatus().equals("0000")){
                 Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
             }
         }
@@ -110,5 +106,6 @@ public class CinemaxFragment extends BaseFragment {
     protected void initView(View view) {
         init(view);
         initData();
+
     }
 }
