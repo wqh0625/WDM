@@ -1,9 +1,16 @@
 package demo.com.wdmoviedemo.core.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+
+import demo.com.wdmoviedemo.bean.FindMoviePageListData;
 
 /**
  * 作者: Wang on 2019/1/25 14:40
@@ -12,6 +19,18 @@ import android.view.ViewGroup;
 
 
 public class GzMovieAdapter extends RecyclerView.Adapter<GzMovieAdapter.Vh> {
+    private Context context;
+    private List<FindMoviePageListData> listData;
+
+    public void setListData(List<FindMoviePageListData> listData) {
+        this.listData = listData;
+    }
+
+    public GzMovieAdapter(Context context ) {
+        this.context = context;
+        this.listData = new ArrayList<>();
+    }
+
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -26,7 +45,7 @@ public class GzMovieAdapter extends RecyclerView.Adapter<GzMovieAdapter.Vh> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listData.size();
     }
 
     public class Vh extends RecyclerView.ViewHolder {

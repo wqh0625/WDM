@@ -8,8 +8,8 @@ import io.reactivex.Observable;
 /**
  *
  */
-public class FindRecommendCinemasPresenter extends BasePresenter{
-    public FindRecommendCinemasPresenter(DataCall consumer) {
+public class FindCinemaPageListPresenter extends BasePresenter{
+    public FindCinemaPageListPresenter(DataCall consumer) {
         super(consumer);
     }
 
@@ -24,6 +24,6 @@ public class FindRecommendCinemasPresenter extends BasePresenter{
         }else{
             page++;
         }
-        return iRequest.findRecommendCinemas( (int) args[0], (String) args[1],page,10);
+        return iRequest.findCinemaPageList( (int) args[0], (String) args[1],page,10);
     }
 }

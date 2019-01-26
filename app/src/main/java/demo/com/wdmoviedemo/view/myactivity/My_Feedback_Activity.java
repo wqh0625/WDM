@@ -3,14 +3,20 @@ package demo.com.wdmoviedemo.view.myactivity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bw.movie.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
+import demo.com.wdmoviedemo.core.exception.ApiException;
+import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.RecordFeedBackPresenter;
 
 /**
  * 作者: Wang on 2019/1/24 20:31
@@ -23,20 +29,50 @@ import demo.com.wdmoviedemo.core.base.BaseActivity;
 @SuppressWarnings("ALL")
 public class My_Feedback_Activity extends BaseActivity {
 
+    @BindView(R.id.feedback_ed)
+    EditText e;
+    private RecordFeedBackPresenter recordFeedBackPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_feedback_);
         ButterKnife.bind(this);
+        recordFeedBackPresenter = new RecordFeedBackPresenter(new record());
     }
 
-    @OnClick(R.id.back_image_f)
-    void on() {
-        finish();
+    @OnClick({R.id.back_image_f, R.id.feedback_tijiao_btn})
+    void on(View view) {
+        if (view.getId() == R.id.back_image_f) {
+            finish();
+        } else if (view.getId() == R.id.feedback_tijiao_btn) {
+            String s = e.getText().toString();
+            if (s == "") {
+                Toast.makeText(this, "不可反馈空", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            recordFeedBackPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), s);
+        }
+    }
+
+    class record implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            Toast.makeText(My_Feedback_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                e.setText("");
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        recordFeedBackPresenter.unBind();
     }
 }

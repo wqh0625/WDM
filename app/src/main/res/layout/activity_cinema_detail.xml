@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/gzmovie_rec"
+    <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Button" />
 </LinearLayout>

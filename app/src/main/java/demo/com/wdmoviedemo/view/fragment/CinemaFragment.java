@@ -18,6 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
 
 import java.util.ArrayList;
@@ -43,9 +47,12 @@ public class CinemaFragment extends BaseFragment {
     EditText edname;
     @BindView(R.id.cinema_textName)
     TextView textName;
-
+    @BindView(R.id.cinema_location)
+    TextView txtLocation;
     @BindView(R.id.serch_line_ref)
     RelativeLayout cineatRel;
+    private MyLocationListener myListener = new MyLocationListener();
+    private LocationClient mLocationClient = null;
 
     @Override
     protected int getLayoutId() {
@@ -55,6 +62,7 @@ public class CinemaFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         initData();
+        initMap();
     }
 
     private void initData() {
@@ -92,6 +100,40 @@ public class CinemaFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void initMap() {
+        mLocationClient = new LocationClient(getActivity());
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);
+        //注册监听函数
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        //如果开发者需要获得当前点的位置信息，此处必须为true
+        option.setIsNeedLocationDescribe(true);
+        //可选，设置是否需要地址信息，默认不需要
+        option.setIsNeedAddress(true);
+        //可选，默认false,设置是否使用gps
+        option.setOpenGps(true);
+        //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+        option.setLocationNotify(true);
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
+    }
+
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+//            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
+            String addr = location.getCity();    //获取详细地址信息
+            if (addr == null) {
+                return;
+            }
+            txtLocation.setText(addr);
+        }
+
     }
 
     @OnClick({R.id.cinema_coming, R.id.cinema_txt_ishit, R.id.cinema_search_image, R.id.serch_line_ref})

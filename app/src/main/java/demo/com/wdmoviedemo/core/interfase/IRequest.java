@@ -3,6 +3,8 @@ package demo.com.wdmoviedemo.core.interfase;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
+import demo.com.wdmoviedemo.bean.FindCinemaPageListData;
+import demo.com.wdmoviedemo.bean.FindMoviePageListData;
 import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.MyMessageData;
 import demo.com.wdmoviedemo.bean.NearbyData;
@@ -71,10 +73,37 @@ public interface IRequest {
                                      @Field("newPwd") String newPwd,
                                      @Field("newPwd2") String newPwd2);
 
-    // http://172.17.8.100/
+    // http://172.17.8.100/  推荐影院
     @GET("movieApi/cinema/v1/findRecommendCinemas")
     Observable<Result<List<NearbyData>>> findRecommendCinemas(@Header("userId") int userId,
                                                               @Header("sessionId") String Id,
                                                               @Query("page") int page,
                                                               @Query("count") int count);
+    // http://172.17.8.100/  附近影院
+    @GET("movieApi/cinema/v1/findNearbyCinemas")
+    Observable<Result<List<NearbyData>>> findNearbyCinemas(@Header("userId") int userId,
+                                                              @Header("sessionId") String Id,
+                                                              @Query("page") int page,
+                                                              @Query("count") int count);
+    //http://172.17.8.100/  意见反馈
+    @POST("movieApi/tool/v1/verify/recordFeedBack")
+    @FormUrlEncoded
+    Observable<Result> recordFeedBack(@Header("userId") int userId,
+                                     @Header("sessionId") String sessionID,
+                                     @Field("content") String content);
+
+    //查询用户关注的影院信息 http://172.17.8.100/movieApi/cinema/v1/verify/findCinemaPageList
+    @GET("movieApi/cinema/v1/verify/findCinemaPageList")
+    Observable<Result<List<FindCinemaPageListData>>> findCinemaPageList(@Header("userId") int userId,
+                                                                        @Header("sessionId") String Id,
+                                                                        @Query("page") int page,
+                                                                        @Query("count") int count);
+
+    //http://172.17.8.100/movieApi/movie/v1/verify/findMoviePageList
+    @GET("movieApi/cinema/v1/verify/findMoviePageList")
+    Observable<Result<List<FindMoviePageListData>>> findMoviePageList(@Header("userId") int userId,
+                                                                      @Header("sessionId") String Id,
+                                                                      @Query("page") int page,
+                                                                      @Query("count") int count);
+
 }

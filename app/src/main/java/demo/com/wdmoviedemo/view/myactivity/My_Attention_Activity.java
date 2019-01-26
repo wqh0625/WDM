@@ -64,7 +64,6 @@ public class My_Attention_Activity extends BaseActivity {
                 return fragments.size();
             }
         });
-        vp.setCurrentItem(0);
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {

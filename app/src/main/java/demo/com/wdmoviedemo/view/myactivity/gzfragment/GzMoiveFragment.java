@@ -1,21 +1,24 @@
 package demo.com.wdmoviedemo.view.myactivity.gzfragment;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.Toast;
 import com.bw.movie.R;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import demo.com.wdmoviedemo.bean.FindCinemaPageListData;
+import demo.com.wdmoviedemo.bean.FindMoviePageListData;
+import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.core.adapter.GzMovieAdapter;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
+import demo.com.wdmoviedemo.core.exception.ApiException;
+import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.FindMoviePageListPresenter;
 
 /**
  * 作者: Wang on 2019/1/25 14:15
@@ -23,27 +26,90 @@ import demo.com.wdmoviedemo.core.base.BaseFragment;
  */
 
 
-public class GzMoiveFragment extends Fragment {
+public class GzMoiveFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
-    private Unbinder bind;
-
+    private int userId;
+    private String sessionId;
     @BindView(R.id.gzmovie_rec)
-    RecyclerView rec;
+    XRecyclerView rec;
+    private FindMoviePageListPresenter findMoviePageListPresenter;
+    private GzMovieAdapter gzMovieAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gzmovie, container, false);
-        bind = ButterKnife.bind(this, view);
+    protected int getLayoutId() {
+        return R.layout.fragment_gzmovie;
+    }
 
-        rec.setLayoutManager(new LinearLayoutManager(getActivity()));
+    @Override
+    protected void initView(View view) {
+        rec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rec.setLoadingListener(this);
+        rec.setLoadingMoreEnabled(true);
 
-        return view;
+        gzMovieAdapter = new GzMovieAdapter(getActivity());
+        rec.setAdapter(gzMovieAdapter);
+        findMoviePageListPresenter = new FindMoviePageListPresenter(new find());
+//        findMoviePageListPresenter.requestNet(userId, sessionId, true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userId = userInfoBean.getUserId();
+        sessionId = userInfoBean.getSessionId();
+        if (sessionId.length() > 0 && userId != 0) {
+            rec.refresh();
+        } else {
+            userId = 0;
+            sessionId = "";
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if (findMoviePageListPresenter.isRuning()) {
+            rec.refreshComplete();
+            return;
+        }
+        rec.refreshComplete();
+        rec.loadMoreComplete();
+        findMoviePageListPresenter.requestNet(userId, sessionId, true);
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (findMoviePageListPresenter.isRuning()) {
+            rec.loadMoreComplete();
+            return;
+        }
+        rec.refreshComplete();
+        rec.loadMoreComplete();
+//        findCinemaPageListPresenter.requestNet(userId,sessionId,false);
+    }
+
+    class find implements DataCall<Result<List<FindMoviePageListData>>> {
+        @Override
+        public void success(Result<List<FindMoviePageListData>> data) {
+            rec.refreshComplete();
+            rec.loadMoreComplete();
+            Toast.makeText(getContext(), "2222222"+data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                gzMovieAdapter.setListData(data.getResult());
+                gzMovieAdapter.notifyDataSetChanged();
+            }
+//            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void fail(ApiException a) {
+
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        bind.unbind();
+        findMoviePageListPresenter.unBind();
     }
 }
