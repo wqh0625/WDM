@@ -99,7 +99,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initView() {
         Intent intent = getIntent();
-        position = intent.getExtras().getInt("position");
         image = intent.getExtras().getInt("image");
         imageLocation = (ImageView) findViewById(R.id.image_location);
         txtLocation = (TextView) findViewById(R.id.txt_location);
@@ -122,25 +121,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         recommendCinemaTextName.setOnClickListener(this);
         recommendCinemaLinear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
         recommendCinemaLinear.setOnClickListener(this);
-        //适配器接口回调
-        initPosition();
         //图片
 //        initImage();
-    }
-
-
-    private void initPosition() {
-        //接受position传递值判断显示页面
-        if (position==0){
-            detailsVp.setCurrentItem(0);
-            ChangeBackGround(0);
-        }else if (position==1){
-            detailsVp.setCurrentItem(1);
-            ChangeBackGround(1);
-        }else if (position==2){
-            detailsVp.setCurrentItem(2);
-            ChangeBackGround(2);
-        }
     }
     private void initImage() {
         //接受首页箭头图片传过来的值

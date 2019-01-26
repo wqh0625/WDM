@@ -191,4 +191,5 @@ public class CinemaFragment extends BaseFragment {
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (dpVale * scale + 0.5f);
     }
+
 }
