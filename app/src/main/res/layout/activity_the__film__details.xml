@@ -4,145 +4,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/details_details">
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="24dp">
-        <ImageView
-            android:id="@+id/the_film_detalis"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/com_icon_movie_default"/>
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/the_film_details_name"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/list_txt_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#fff"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="6dp"/>
-        <ImageView
-            android:id="@+id/the_film_details_image"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@drawable/com_icon_collection_default"/>
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:layout_marginTop="35dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请选择合适的影院"
+            android:textSize="10sp"
+            android:textColor="#b11450"
+            android:layout_marginTop="10dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_recy_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/the_film_details_sdv_image"
-        android:layout_width="111dp"
-        android:layout_height="169dp"
-        android:layout_below="@id/top"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="24dp"/>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/top"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/the_film_details_sdv_image"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/the_film_details_shape">
+        android:layout_height="100dp"
+        android:background="@drawable/home_lucency"
+        android:layout_alignParentBottom="true">
         <ImageView
-            android:id="@+id/the_film_details_down"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/com_icon_down_default"/>
-        <TextView
-            android:id="@+id/the_film_details_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="154dp"
-            android:layout_toLeftOf="@id/the_film_details_down"
-            android:text="类型"/>
-        <TextView
-            android:id="@+id/the_film_details_director"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="154dp"
-            android:layout_below="@id/the_film_details_type"
-            android:layout_toLeftOf="@id/the_film_details_down"
-            android:text="导演"/>
-        <TextView
-            android:id="@+id/the_film_details_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="154dp"
-            android:layout_below="@id/the_film_details_director"
-            android:layout_toLeftOf="@id/the_film_details_down"
-            android:text="时长"/>
-        <TextView
-            android:id="@+id/the_film_details_place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="154dp"
-            android:layout_below="@id/the_film_details_time"
-            android:layout_toLeftOf="@id/the_film_details_down"
-            android:text="产地"/>
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/synopsis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/the_film_details_sdv_image"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="24dp"
-        android:textSize="16sp"
-        android:textColor="#333333"
-        android:text="剧情简介"/>
-    <View
-        android:id="@+id/view1"
-        android:layout_width="30dp"
-        android:layout_height="3dp"
-        android:background="#e8175e"
-        android:layout_below="@id/synopsis"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="6dp"/>
-    <TextView
-        android:id="@+id/the_film_details_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/view1"
-        android:layout_marginTop="10dp"
-        android:textSize="12sp"
-        android:maxLines="4"
-        android:ellipsize="end"/>
-    <TextView
-        android:id="@+id/cast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"
-        android:text="演职人员"
-        android:textColor="#333333"
-        android:layout_marginLeft="24dp"
-        android:layout_below="@id/the_film_details_content"/>
-    <View
-        android:id="@+id/view2"
-        android:layout_width="30dp"
-        android:layout_height="3dp"
-        android:background="#e8175e"
-        android:layout_below="@id/cast"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="6dp"
-        />
-
-
+            android:id="@+id/list_image_back"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="24dp"
+            android:src="@drawable/com_icon_my_default" />
+    </LinearLayout>
 
 </RelativeLayout>

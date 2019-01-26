@@ -70,6 +70,8 @@ public class IsHitFragment extends BaseFragment {
 
 
             }
+
+
         });
     }
     class IsHitCall implements DataCall<Result<List<CarouselData>>> {

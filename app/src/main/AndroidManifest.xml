@@ -48,8 +48,9 @@
             </intent-filter>
         </activity>
         <activity android:name="demo.com.wdmoviedemo.view.Film_Details_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TheFilmDetailsActivity"/>
-        <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity"/>
+        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.ListofCinemaActivity" />
+        <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity" />
+        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity"></activity>
     </application>
 
 </manifest>

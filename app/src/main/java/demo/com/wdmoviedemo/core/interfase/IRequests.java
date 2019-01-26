@@ -4,6 +4,7 @@ import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.FilmDetailsData;
+import demo.com.wdmoviedemo.bean.ListofCinemaData;
 import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.ReviewData;
@@ -48,6 +49,10 @@ public interface IRequests {
  Observable<Result<List<ReviewData>>> getReciew(@Query("movieId") int movieId,
                                           @Query("page")int page,
                                           @Query("count")int count);
+
+ //电影详情影院
+ @GET("movieApi/movie/v1/findCinemasListByMovieId")
+ Observable<Result<List<ListofCinemaData>>> getListofCinema(@Query("movieId") int movieId);
 
 
 }
