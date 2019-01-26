@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -16,26 +17,24 @@ import java.util.List;
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
+import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
+import demo.com.wdmoviedemo.view.LoginActivity;
 
-public class IsHitFragment extends Fragment {
+public class IsHitFragment extends BaseFragment {
     private RecyclerView ishitRecy;
     private CinemaxAdapters cinemaxAdapter;
     private IsHitPresenter isHitPresenter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_is_hit, container, false);
-        initView(view);
-        initData();
-        return view;
-    }
+    private int userId;
+    private String sessionId;
 
     private void initData() {
+        userId = userInfoBean.getUserId();
+        sessionId = userInfoBean.getSessionId();
         cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.ISHIT_TYPE);
         ishitRecy.setAdapter(cinemaxAdapter);
         isHitPresenter = new IsHitPresenter(new IsHitCall());
@@ -48,6 +47,26 @@ public class IsHitFragment extends Fragment {
                 intent.putExtra("position",position);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
+        });
+        cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
+
+            private ConcernPresenter concernPresenter;
+
+            @Override
+            public void OnImageClick(int position, int followMovie) {
+                if (userId ==0 || sessionId==null || sessionId==""){
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    if (followMovie ==2){
+                        concernPresenter = new ConcernPresenter(new ConcernCall());
+                        concernPresenter.requestNet(userId,sessionId,position);
+                    }else {
+                        Toast.makeText(getActivity(), "已关注", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -66,14 +85,37 @@ public class IsHitFragment extends Fragment {
 
         }
     }
+    //关注
+    class ConcernCall implements DataCall<Result>{
 
-    private void initView(View view) {
-        ishitRecy = (RecyclerView) view.findViewById(R.id.ishit_recy);
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getActivity(), "关注失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         isHitPresenter.unBind();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_is_hit;
+    }
+
+    @Override
+    protected void initView(View view) {
+        ishitRecy = (RecyclerView) view.findViewById(R.id.ishit_recy);
+        initData();
+
     }
 }

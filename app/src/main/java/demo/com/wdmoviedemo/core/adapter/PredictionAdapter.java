@@ -12,7 +12,8 @@ import com.bw.movie.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 import demo.com.wdmoviedemo.bean.ShortFilmListBean;
 
 /**
@@ -39,7 +40,8 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-//    viewHolder.predictionJzplayer.setUp(list.get(i).getVideoUrl(),JZVideoPlayer.SCREEN_WINDOW_NORMAL);
+
+        viewHolder.predictionJzplayer.setUp(list.get(i).getVideoUrl(),JZVideoPlayer.SCREEN_WINDOW_NORMAL,"");
     }
 
     @Override
@@ -55,11 +57,11 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-//        private final JZVideoPlayerStandard predictionJzplayer;
+        private final JZVideoPlayerStandard predictionJzplayer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            predictionJzplayer = itemView.findViewById(R.id.prediction_jzplayer);
+            predictionJzplayer = itemView.findViewById(R.id.prediction_jzplayer);
         }
     }
 }

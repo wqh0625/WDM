@@ -21,42 +21,55 @@ import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.ComingPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
 
-public class ComingFragment extends Fragment {
+public class ComingFragment extends BaseFragment {
     private RecyclerView comingrecy;
     private CinemaxAdapters cinemaxAdapter;
     private ComingPresenter comingPresenter;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_coming, container, false);
-        initView(view);
-        initData();
-        return view;
-    }
+    private int userId;
+    private String sessionId;
 
     private void initData() {
-        cinemaxAdapter = new CinemaxAdapters(getActivity(), CinemaxAdapters.COMING_TYPE);
+        userId = userInfoBean.getUserId();
+        sessionId = userInfoBean.getSessionId();
+        cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.COMING_TYPE);
         comingrecy.setAdapter(cinemaxAdapter);
         comingPresenter = new ComingPresenter(new ComingCall());
-        comingrecy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        comingPresenter.requestNet(1, 10);
+        comingrecy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        comingPresenter.requestNet(1,10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
-                intent.putExtra("position", position);
+                Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
+                intent.putExtra("position",position);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
+        });
+        cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
+
+            private ConcernPresenter concernPresenter;
+
+            @Override
+            public void OnImageClick(int position, int followMovie) {
+                if (userId ==0 || sessionId==null || sessionId==""){
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    if (followMovie ==2){
+                        concernPresenter = new ConcernPresenter(new ConcernCall());
+                        concernPresenter.requestNet(userId,sessionId,position);
+                    }else {
+                        Toast.makeText(getActivity(), "已关注", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
-
     class ComingCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")) {
+            if (data.getStatus().equals("0000")){
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }
@@ -67,14 +80,37 @@ public class ComingFragment extends Fragment {
 
         }
     }
+    //关注
+    class ConcernCall implements DataCall<Result>{
 
-    private void initView(View view) {
-        comingrecy = (RecyclerView) view.findViewById(R.id.coming_recy);
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getActivity(), "关注失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         comingPresenter.unBind();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_coming;
+    }
+
+    @Override
+    protected void initView(View view) {
+        comingrecy = (RecyclerView) view.findViewById(R.id.coming_recy);
+        initData();
+
     }
 }

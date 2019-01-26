@@ -279,6 +279,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             default:
                 break;
+                default:
         }
     }
 

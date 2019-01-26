@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,19 +26,24 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.FilmDetailsData;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.ReviewData;
 import demo.com.wdmoviedemo.bean.SearchData;
 import demo.com.wdmoviedemo.bean.ShortFilmListBean;
 import demo.com.wdmoviedemo.core.adapter.ActornameAdapter;
 import demo.com.wdmoviedemo.core.adapter.PredictionAdapter;
+import demo.com.wdmoviedemo.core.adapter.ReviewAdapter;
+import demo.com.wdmoviedemo.core.adapter.StillsAdapter;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.presenter.FilmDetailsPresenter;
+import demo.com.wdmoviedemo.presenter.ReviewPresenter;
 import demo.com.wdmoviedemo.presenter.SearchPresenter;
 
 public class Film_Details_Activity extends BaseActivity implements View.OnClickListener {
@@ -78,6 +84,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private RecyclerView activityStillsPopwindowRecy;
     private ImageView activityReviewPopwindowDown;
     private RecyclerView activityreviewpopwindowrecy;
+    private StillsAdapter stillsAdapter;
+    private FilmDetailsPresenter filmDetailsPresenter1;
+    private ReviewAdapter reviewAdapter;
+    private ReviewPresenter reviewPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +197,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 filmDetailsPresenter.requestNet(position);
 
+
                 //设置关闭popupWindow的点击事件
                 activityDetailsBack.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -217,7 +228,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 activityPredictionPopwindowRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-                filmDetailsPresenter = new FilmDetailsPresenter(new PredictionCall());
+                filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
+
 
                 filmDetailsPresenter.requestNet(position);
 
@@ -245,6 +257,12 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityStillsPopwindowRecy = view3.findViewById(R.id.activity_stills_popwindow_recy);
                 popupWindow3.showAtLocation(rootview3, Gravity.BOTTOM, 0, 0);
 
+
+                stillsAdapter = new StillsAdapter(this);
+                activityStillsPopwindowRecy.setAdapter(stillsAdapter);
+                activityStillsPopwindowRecy.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+
+
                 //设置关闭popupWindow的点击事件
                 activityStillsPopwindowDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -269,6 +287,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityreviewpopwindowrecy = view4.findViewById(R.id.activity_review_popwindow_recy);
 
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
+
+                reviewAdapter = new ReviewAdapter(this);
+                activityreviewpopwindowrecy.setAdapter(reviewAdapter);
+                activityreviewpopwindowrecy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+                reviewPresenter = new ReviewPresenter(new ReviewCall());
+                reviewPresenter.requestNet(position,1,20);
+
                 //设置关闭popupWindow的点击事件
                 activityReviewPopwindowDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -292,6 +317,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         }
 
     }
+    //详情
     class FilmDetailsCall implements DataCall<Result<FilmDetailsData>>{
 
         @Override
@@ -300,35 +326,29 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //设置popupWindow内部的数据
                 Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 FilmDetailsData result = data.getResult();
+                //activityDetailsSimpledraweeview.setImageURI(result.getImageUrl());
+                activityDetailsType.setText("类型:"+ result.getMovieTypes());
+                popwindowDetailsDirect.setText("导演:"+ result.getDirector());
+                activityDetailsTime.setText("时长:"+ result.getDuration());
+                activityDetailsLocation.setText("产地:"+ result.getPlaceOrigin());
+                activityDetailsJianjie.setText("简介:"+ result.getSummary());
+
+                //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
-//                activityDetailsSimpledraweeview.setImageURI(Uri.parse(shortFilmList.get(0).getImageUrl()));
-                popwindowDetailsDirect.setText("导演:"+result.getDirector());
-                activityDetailsType.setText("类型:"+result.getMovieTypes());
-                activityDetailsTime.setText("时长:"+result.getDuration());
-                activityDetailsLocation.setText("产地:"+result.getPlaceOrigin());
-                activityDetailsJianjie.setText("简介:"+result.getSummary());
+                predictionAdapter.addAll(shortFilmList);
+                predictionAdapter.notifyDataSetChanged();
+
+                //剧照
+                List<String> posterList = result.getPosterList();
+                stillsAdapter.addAll(posterList);
+                stillsAdapter.notifyDataSetChanged();
+
             }
         }
 
         @Override
         public void fail(ApiException a) {
             Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
-        }
-    }
-    class PredictionCall implements DataCall<Result<FilmDetailsData>>{
-
-        @Override
-        public void success(Result<FilmDetailsData> data) {
-            if (data.getResult().equals("0000")){
-                List<ShortFilmListBean> shortFilmList = data.getResult().getShortFilmList();
-                predictionAdapter.addAll(shortFilmList);
-                predictionAdapter.notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "预告片失败", Toast.LENGTH_SHORT).show();
         }
     }
     //关注
@@ -346,6 +366,21 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         public void fail(ApiException a) {
             Toast.makeText(Film_Details_Activity.this, "关注失败", Toast.LENGTH_SHORT).show();
             actvityImageDetails.setBackgroundResource(R.drawable.com_icon_collection_default);
+        }
+    }
+
+    class ReviewCall implements DataCall<Result<List<ReviewData>>>{
+
+        @Override
+        public void success(Result<List<ReviewData>> data) {
+            if (data.getStatus().equals("0000")){
+                reviewAdapter.addAll(data.getResult());
+                reviewAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
         }
     }
 

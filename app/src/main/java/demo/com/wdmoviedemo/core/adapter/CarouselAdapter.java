@@ -24,7 +24,7 @@ import demo.com.wdmoviedemo.core.utils.ToDate;
 /**
  * date: 2019/1/24.
  * Created 王思敏
- * function:
+ * function:正在热映
  */
 public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHolder> {
     public static final String FORMAT_DATE_TIME_PATTERN = "mm";
