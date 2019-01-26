@@ -27,8 +27,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
 
     @BindView(R.id.recommend_rec)
     XRecyclerView rec;
-    private int userId;
-    private String sessionId;
+
     private NearbyCinemaAdapter adapter;
     private FindRecommendCinemasPresenter findRecommendCinemasPresenter;
 
@@ -44,21 +43,16 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
 
         findRecommendCinemasPresenter = new FindRecommendCinemasPresenter(new find());
 
-        adapter = new NearbyCinemaAdapter(getContext());
+        adapter = new NearbyCinemaAdapter(getActivity());
         rec.setAdapter(adapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        userId = userInfoBean.getUserId();
-        sessionId = userInfoBean.getSessionId();
-        if (sessionId != "" && userId != 0) {
-            rec.refresh();
-        } else {
-            userId = 0;
-            sessionId = "";
-        }
+        rec.refresh();
+
+
     }
 
     @Override
@@ -69,7 +63,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-        findRecommendCinemasPresenter.requestNet(userId, sessionId, true);
+        findRecommendCinemasPresenter.requestNet(0, "", true);
     }
 
     @Override
@@ -80,7 +74,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-//        findRecommendCinemasPresenter.requestNet(userId, sessionId, true);
+//        findRecommendCinemasPresenter.requestNet(0, "", true);
     }
 
     class find implements DataCall<Result<List<NearbyData>>> {

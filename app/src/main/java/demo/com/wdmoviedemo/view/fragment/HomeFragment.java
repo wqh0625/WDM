@@ -54,8 +54,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private int image3 = 2;
 
 
-
-
     private void initBanner() {
         carouselAdapter = new CarouselAdapter(getActivity());
         recycarousel.setAdapter(carouselAdapter);//设置适配器
@@ -73,6 +71,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }
@@ -106,7 +105,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         recyIshit.setAdapter(ishitAdapter);
         recyOnnow.setAdapter(comingAdapter);
 
-
         carouselPresenter = new CarouselPresenter(new CarouselCall());
         carouselPresenter.requestNet(1, 10);
 
@@ -125,6 +123,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
         ishitAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
@@ -133,6 +132,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
         comingAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
@@ -141,6 +141,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }
@@ -193,15 +194,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initView(View view) {
-        imageLocation = (ImageView) view.findViewById(R.id.image_location);
-        txtLocation = (TextView) view.findViewById(R.id.atxt_location);
-        recycarousel = (RecyclerCoverFlow) view.findViewById(R.id.recy_carousel);
-        imagemore1 = (ImageView) view.findViewById(R.id.image_more1);
-        recyCinemax = (RecyclerView) view.findViewById(R.id.recy_Cinemax);
-        imageMore2 = (ImageView) view.findViewById(R.id.image_more2);
-        recyIshit = (RecyclerView) view.findViewById(R.id.recy_ishit);
-        imageMore3 = (ImageView) view.findViewById(R.id.image_more3);
-        recyOnnow = (RecyclerView) view.findViewById(R.id.recy_onnow);
+        imageLocation = view.findViewById(R.id.image_location);
+        txtLocation = view.findViewById(R.id.atxt_location);
+        recycarousel = view.findViewById(R.id.recy_carousel);
+        imagemore1 = view.findViewById(R.id.image_more1);
+        recyCinemax = view.findViewById(R.id.recy_Cinemax);
+        imageMore2 = view.findViewById(R.id.image_more2);
+        recyIshit = view.findViewById(R.id.recy_ishit);
+        imageMore3 = view.findViewById(R.id.image_more3);
+        recyOnnow = view.findViewById(R.id.recy_onnow);
         relativeLayout = view.findViewById(R.id.recommend_cinema_linear);
         relativeLayout.setOnClickListener(this);
         imagemore1.setOnClickListener(this);
@@ -256,21 +257,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.recommend_cinema_linear:
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.image_more1:
                 Intent intent1 = new Intent(getActivity(), DetailsActivity.class);
                 intent1.putExtra("image", image1);
                 startActivity(intent1);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.image_more2:
                 Intent intent2 = new Intent(getActivity(), DetailsActivity.class);
                 intent2.putExtra("image", image2);
                 startActivity(intent2);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.image_more3:
                 Intent intent3 = new Intent(getActivity(), DetailsActivity.class);
                 intent3.putExtra("image", image3);
                 startActivity(intent3);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                break;
+            default:
                 break;
         }
     }

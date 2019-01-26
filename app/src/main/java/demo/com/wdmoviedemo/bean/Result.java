@@ -17,6 +17,15 @@ public class Result<T> {
     private T result;
     private String message;
     private String status;
+    private Object[] args;
+
+    public Object[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
 
     public T getResult() {
         return result;

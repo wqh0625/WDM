@@ -47,6 +47,7 @@ public class IsHitFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
                 intent.putExtra("position",position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }

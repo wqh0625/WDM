@@ -65,6 +65,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
         initView();
         initData();
         initMap();
@@ -107,6 +108,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private void initView() {
         Intent intent = getIntent();
         image = intent.getExtras().getInt("image");
+
         imageLocation = (ImageView) findViewById(R.id.image_location);
         txtLocation = (TextView) findViewById(R.id.txt_location);
         top = (RelativeLayout) findViewById(R.id.top);
@@ -128,8 +130,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         recommendCinemaTextName.setOnClickListener(this);
         recommendCinemaLinear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
         recommendCinemaLinear.setOnClickListener(this);
-        //图片
-//        initImage();
+        detailsVp.setCurrentItem(image);
+        ChangeBackGround(image);
     }
 
     private void initMap() {
@@ -168,6 +170,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.txt_Cinemax:
                 detailsVp.setCurrentItem(0);
@@ -201,6 +204,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
                 }
 
+                initReduce();//点击text收缩
                 break;
         }
     }
@@ -257,7 +261,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         beginDelayedTransition(recommendCinemaLinear);
     }
 
-
     private void beginDelayedTransition(ViewGroup view) {
         transition = new AutoTransition();
         transition.setDuration(500);
@@ -270,6 +273,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void ChangeBackGround(int index) {
+
         //背景颜色
         txtCinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
         //字体颜色

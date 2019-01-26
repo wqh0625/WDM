@@ -1,5 +1,10 @@
 package demo.com.wdmoviedemo.view.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +13,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -16,9 +22,11 @@ import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.NearbyCinemaAdapter;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
+import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.FindNearbyCinemasPresenter;
+import demo.com.wdmoviedemo.view.LoginActivity;
 
 /**
  * 作者: Wang on 2019/1/25 18:28
@@ -29,8 +37,8 @@ import demo.com.wdmoviedemo.presenter.FindNearbyCinemasPresenter;
 public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.LoadingListener {
     @BindView(R.id.nearby_rec)
     XRecyclerView rec;
-    private int userId;
-    private String sessionId;
+
+
     private NearbyCinemaAdapter adapter;
     private FindNearbyCinemasPresenter findNearbyCinemasPresenter;
 
@@ -47,21 +55,16 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
         findNearbyCinemasPresenter = new FindNearbyCinemasPresenter(new find());
 
-        adapter = new NearbyCinemaAdapter(getContext());
+        adapter = new NearbyCinemaAdapter(getActivity());
         rec.setAdapter(adapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        userId = userInfoBean.getUserId();
-        sessionId = userInfoBean.getSessionId();
-        if (sessionId.length() > 0 && userId != 0) {
-            rec.refresh();
-        } else {
-            userId = 0;
-            sessionId = "";
-        }
+
+        rec.refresh();
+
     }
 
     @Override
@@ -72,7 +75,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-        findNearbyCinemasPresenter.requestNet(userId, sessionId, true);
+        findNearbyCinemasPresenter.requestNet(0, "", true);
     }
 
     @Override
@@ -83,7 +86,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-//        findRecommendCinemasPresenter.requestNet(userId,sessionId,false);
+//        findNearbyCinemasPresenter.requestNet(0,"",false);
     }
 
     class find implements DataCall<Result<List<NearbyData>>> {

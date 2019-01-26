@@ -36,25 +36,27 @@ public class ComingFragment extends Fragment {
     }
 
     private void initData() {
-        cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.COMING_TYPE);
+        cinemaxAdapter = new CinemaxAdapters(getActivity(), CinemaxAdapters.COMING_TYPE);
         comingrecy.setAdapter(cinemaxAdapter);
         comingPresenter = new ComingPresenter(new ComingCall());
-        comingrecy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        comingPresenter.requestNet(1,10);
+        comingrecy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        comingPresenter.requestNet(1, 10);
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
-                intent.putExtra("position",position);
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
+                intent.putExtra("position", position);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }
+
     class ComingCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }

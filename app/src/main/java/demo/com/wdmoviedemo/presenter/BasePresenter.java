@@ -47,7 +47,7 @@ public abstract class BasePresenter  {
                 .subscribe(new Consumer<Result>() {
                     @Override
                     public void accept(Result o) throws Exception {
-//                        o.setArgs(args);
+                        o.setArgs(args);
                         consumer.success(o);
                         runing = false;
                     }

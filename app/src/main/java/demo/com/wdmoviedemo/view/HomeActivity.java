@@ -2,23 +2,31 @@ package demo.com.wdmoviedemo.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
+import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.view.fragment.CinemaFragment;
 import demo.com.wdmoviedemo.view.fragment.HomeFragment;
 import demo.com.wdmoviedemo.view.fragment.MyFragment;
+
+import static demo.com.wdmoviedemo.core.utils.MyApp.getContext;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private FrameLayout frag;
@@ -124,7 +132,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.homeactivity_imagemy:
                 //切换我的页面
-                isimagemy(transaction);
+                if (userInfoBean.getUserId() == 0) {
+
+                    DbManager dbManager = null;
+                    try {
+                        dbManager = new DbManager(getContext());
+                        int i = dbManager.deleteStudentByS(userInfoBean);
+                        Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+
+                    // 跳转
+                    startActivity(intent);
+                     overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+
+                } else {
+                    isimagemy(transaction);
+                }
                 break;
         }
         transaction.commit();

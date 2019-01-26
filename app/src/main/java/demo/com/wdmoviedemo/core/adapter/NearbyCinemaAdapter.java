@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +28,13 @@ import demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity;
 
 public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapter.Vh> {
     private List<NearbyData> list;
-    private Context context;
+    private FragmentActivity context;
 
     public void setList(List<NearbyData> list) {
         this.list = list;
     }
 
-    public NearbyCinemaAdapter(Context context) {
+    public NearbyCinemaAdapter(FragmentActivity context) {
         this.list = new ArrayList<>();
         this.context = context;
     }
@@ -65,6 +66,7 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
                 Intent intent = new Intent(context, CinemaDetailActivity.class);
                 intent.putExtra("cinemaID",nearbyData.getId()+"");
                 context.startActivity(intent);
+                context.overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }

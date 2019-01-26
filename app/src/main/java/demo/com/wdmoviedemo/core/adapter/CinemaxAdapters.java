@@ -34,11 +34,12 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     public static final int ISHIT_TYPE = 1;
     public static final int COMING_TYPE = 2;
 
-    public CinemaxAdapters(Context context,int type) {
+    public CinemaxAdapters(Context context, int type) {
         this.context = context;
         this.type = type;
         list = new ArrayList<>();
     }
+
     //接口回调
     public interface OnCinemaxItemClickListener {
         void onMovieClick(int position);
@@ -46,16 +47,20 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
 
     public OnCinemaxItemClickListener mOnCinemaxItemClickListener;
 
-    public void setOnMovieItemClickListener(OnCinemaxItemClickListener onCinemaxItemClickListener){
-        mOnCinemaxItemClickListener= onCinemaxItemClickListener;
+    public void setOnMovieItemClickListener(OnCinemaxItemClickListener onCinemaxItemClickListener) {
+        mOnCinemaxItemClickListener = onCinemaxItemClickListener;
     }
-    public interface OnImageClickListener{
-        void OnImageClick(int position,int followMovie);
+
+    public interface OnImageClickListener {
+        void OnImageClick(int position, CarouselData carouselData);
     }
+
     public OnImageClickListener mOnImageClickListener;
-    public void setOnImageClickListener(OnImageClickListener onImageClickListener){
+
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
         mOnImageClickListener = onImageClickListener;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -76,33 +81,32 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
         viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
         viewHolder.txtName.setText(list.get(i).getName());
         viewHolder.txtContent.setText(list.get(i).getSummary());
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int ids = list.get(i).getId();
+                if (mOnImageClickListener != null) {
+                    mOnImageClickListener.OnImageClick(ids, list.get(i));
+                }
+            }
+        });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //根据id获取
                 int id = list.get(i).getId();
-                if (mOnCinemaxItemClickListener !=null){
+                if (mOnCinemaxItemClickListener != null) {
                     mOnCinemaxItemClickListener.onMovieClick(id);
                 }
             }
         });
-        viewHolder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int ids = list.get(i).getId();
-                int followMovie = list.get(i).getFollowMovie();
-                if (mOnImageClickListener !=null){
-                    mOnImageClickListener.OnImageClick(ids,followMovie);
-                    if (followMovie ==1){
-                        viewHolder.image.setBackgroundResource(R.drawable.icon_collection_selected);
-                    }else {
-                        viewHolder.image.setBackgroundResource(R.drawable.com_icon_collection_default);
-                    }
+         int followMovie = list.get(i).getFollowMovie();
+        if (followMovie == 2) {
+            viewHolder.image.setBackgroundResource(R.drawable.icon_collection_selected);
+        } else {
+            viewHolder.image.setBackgroundResource(R.drawable.com_icon_collection_default);
+        }
 
-                }
-
-            }
-        });
     }
 
     @Override
@@ -111,7 +115,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     }
 
     public void addAll(List<CarouselData> result) {
-        if (result!=null){
+        if (result != null) {
             list.addAll(result);
         }
     }

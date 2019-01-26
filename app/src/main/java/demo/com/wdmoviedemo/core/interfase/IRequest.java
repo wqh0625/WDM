@@ -28,6 +28,7 @@ public interface IRequest {
     @POST("movieApi/user/v1/login")
     @FormUrlEncoded
     Observable<Result<LoginData>> login(@Field("phone") String phone, @Field("pwd") String pwd);
+
     // 注册
     @POST("movieApi/user/v1/registerUser")
     @FormUrlEncoded
@@ -46,14 +47,15 @@ public interface IRequest {
     //首页轮播,热门电影
     @GET("movieApi/movie/v1/findHotMovieList")
     Observable<Result<List<CarouselData>>> getcarousel(
-                                                   @Query("page")int page,
-                                                   @Query("count")int count);
+            @Query("page") int page,
+            @Query("count") int count);
 
     //首页正在热映
     @GET("movieApi/movie/v1/findReleaseMovieList")
     Observable<Result<List<CarouselData>>> getisHit(
-                                                    @Query("page")int page,
-                                                    @Query("count")int count);
+            @Query("page") int page,
+            @Query("count") int count);
+
     //即将上映
     @GET("movieApi/movie/v1/findComingSoonMovieList")
     Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
@@ -79,18 +81,20 @@ public interface IRequest {
                                                               @Header("sessionId") String Id,
                                                               @Query("page") int page,
                                                               @Query("count") int count);
+
     // http://172.17.8.100/  附近影院
     @GET("movieApi/cinema/v1/findNearbyCinemas")
     Observable<Result<List<NearbyData>>> findNearbyCinemas(@Header("userId") int userId,
-                                                              @Header("sessionId") String Id,
-                                                              @Query("page") int page,
-                                                              @Query("count") int count);
+                                                           @Header("sessionId") String Id,
+                                                           @Query("page") int page,
+                                                           @Query("count") int count);
+
     //http://172.17.8.100/  意见反馈
     @POST("movieApi/tool/v1/verify/recordFeedBack")
     @FormUrlEncoded
     Observable<Result> recordFeedBack(@Header("userId") int userId,
-                                     @Header("sessionId") String sessionID,
-                                     @Field("content") String content);
+                                      @Header("sessionId") String sessionID,
+                                      @Field("content") String content);
 
     //查询用户关注的影院信息 http://172.17.8.100/movieApi/cinema/v1/verify/findCinemaPageList
     @GET("movieApi/cinema/v1/verify/findCinemaPageList")
@@ -106,4 +110,9 @@ public interface IRequest {
                                                                       @Query("page") int page,
                                                                       @Query("count") int count);
 
+    // 取消关注 movieApi/movie/v1/verify/cancelFollowMovie
+    @GET("movieApi/movie/v1/verify/cancelFollowMovie")
+    Observable<Result> cancelFollowMovie(@Header("userId") int userId,
+                                         @Header("sessionId") String sessionId,
+                                         @Query("movieId") int movieId);
 }

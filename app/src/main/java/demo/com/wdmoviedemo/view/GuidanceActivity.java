@@ -52,14 +52,16 @@ public class GuidanceActivity extends AppCompatActivity {
                 linearTiao.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
+                        startActivity(new Intent(GuidanceActivity.this, HomeActivity.class));
                         finish();
+                        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                         return;
                     }
                 });
                 if (time <= 0) {
-                    startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
+                    startActivity(new Intent(GuidanceActivity.this, HomeActivity.class));
                     finish();
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                     return;
                 }
                 time--;
@@ -74,8 +76,9 @@ public class GuidanceActivity extends AppCompatActivity {
         sp0123 = getSharedPreferences("sp0124", MODE_PRIVATE);
         String ydy = sp0123.getString("ydy", "");
         if (ydy.equals("1")) {
-            startActivity(new Intent(GuidanceActivity.this, LoginActivity.class));
+            startActivity(new Intent(GuidanceActivity.this, HomeActivity.class));
             finish();
+            overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             return;
         }
         setContentView(R.layout.activity_guidance);

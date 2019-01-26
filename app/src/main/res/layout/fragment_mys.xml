@@ -32,11 +32,12 @@
             android:layout_below="@id/my_image_icom"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="冬天来了"
+            android:text="未登录"
             android:textColor="#fff"
             android:textSize="14sp" />
 
         <Button
+            android:id="@+id/my_btn_qd"
             android:layout_width="66dp"
             android:layout_height="28dp"
             android:layout_below="@id/my_tv_nickName"

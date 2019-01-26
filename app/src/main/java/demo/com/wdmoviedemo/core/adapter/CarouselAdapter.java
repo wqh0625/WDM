@@ -13,10 +13,13 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
+import demo.com.wdmoviedemo.core.utils.ToDate;
 
 /**
  * date: 2019/1/24.
@@ -32,14 +35,17 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
         this.context = context;
         list = new ArrayList<>();
     }
-    public interface OnCarouselClickListener{
+
+    public interface OnCarouselClickListener {
         void OnCarouselClick(int position);
     }
+
     public OnCarouselClickListener mOnCarouselClickListener;
 
-    public void setOnCarouselClickListener(OnCarouselClickListener onCarouselClickListener){
+    public void setOnCarouselClickListener(OnCarouselClickListener onCarouselClickListener) {
         mOnCarouselClickListener = onCarouselClickListener;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -50,16 +56,19 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-    viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
-    viewHolder.txtName.setText(list.get(i).getName());
+        viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
+        viewHolder.txtName.setText(list.get(i).getName());
         //转换成日期格式
-        SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME_PATTERN,Locale.getDefault());
-        viewHolder.txtTime.setText(dateFormat.format(list.get(i).getReleaseTime()));
+        long releaseTime = list.get(i).getReleaseTime();
+
+        String s1 = ToDate.formatTimeS(releaseTime);
+
+        viewHolder.txtTime.setText(s1+"分钟");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int id = list.get(i).getId();
-                if (mOnCarouselClickListener !=null){
+                if (mOnCarouselClickListener != null) {
                     mOnCarouselClickListener.OnCarouselClick(id);
                 }
             }
@@ -72,7 +81,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
     }
 
     public void setList(List<CarouselData> result) {
-        if (result !=null){
+        if (result != null) {
             list.clear();
             list.addAll(result);
             notifyDataSetChanged();

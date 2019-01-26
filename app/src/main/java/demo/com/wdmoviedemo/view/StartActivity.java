@@ -14,7 +14,7 @@ import com.bw.movie.R;
 /**
  * 作者: Wang on 2019/1/22 09:36
  * 寄语：加油！相信自己可以！！！
- *
+ * <p>
  * 倒计时页面
  */
 
@@ -26,9 +26,10 @@ public class StartActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                if (time <=0) {
-                    startActivity(new Intent(StartActivity.this,GuidanceActivity.class));
+                if (time <= 0) {
+                    startActivity(new Intent(StartActivity.this, GuidanceActivity.class));
                     finish();
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                     return;
                 }
                 time--;

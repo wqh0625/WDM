@@ -134,6 +134,7 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(RegisterActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         }
 

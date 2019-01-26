@@ -45,4 +45,42 @@ public class ToDate {
     public static long dateToLong(Date date) {
         return date.getTime();
     }
+
+    public static String timeParse(long duration) {
+        String time = "";
+        long minute = duration / 60000;
+        long seconds = duration % 60000;
+        long second = Math.round((float) seconds / 1000);
+        if (minute < 10) {
+            time += "0";
+        }
+        time += minute + ":";
+        if (second < 10) {
+            time += "0";
+        }
+        time += second;
+        return time;
+    }
+
+    public static String formatTimeS(long seconds) {
+        int temp = 0;
+        StringBuffer sb = new StringBuffer();
+        if (seconds > 3600) {
+            temp = (int) (seconds / 3600);
+            sb.append((seconds / 3600) < 10 ? "0" + temp + ":" : temp + ":");
+            temp = (int) (seconds % 3600 / 60);
+            changeSeconds(seconds, temp, sb);
+        } else {
+            temp = (int) (seconds % 3600 / 60);
+            changeSeconds(seconds, temp, sb);
+        }
+        return sb.toString();
+    }
+
+    private static void changeSeconds(long seconds, int temp, StringBuffer sb) {
+        sb.append((temp < 10) ? "0" + temp + ":" : "" + temp + ":");
+        temp = (int) (seconds % 3600 % 60);
+        sb.append((temp < 10) ? "0" + temp : "" + temp);
+    }
+
 }

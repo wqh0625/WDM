@@ -179,6 +179,7 @@ public class LoginActivity extends BaseActivity {
 
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         }
 

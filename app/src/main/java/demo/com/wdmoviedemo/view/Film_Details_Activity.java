@@ -94,8 +94,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         searchPresenter.requestNet(position);
     }
 
-
-
     class SearchCall implements DataCall<Result<FilmDetailsData>>{
 
         @Override
@@ -146,9 +144,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.actvity_image_details:
                 //点击关注
                 if (userId==0 || sessionId==null || sessionId==""){
-                    Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(this,LoginActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 }else {
                     ConcernPresenter  concernPresenter = new ConcernPresenter(new ConcernCall());
                     concernPresenter.requestNet(position);
