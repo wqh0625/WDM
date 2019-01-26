@@ -49,7 +49,7 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
         gzMovieAdapter = new GzMovieAdapter(getActivity());
         rec.setAdapter(gzMovieAdapter);
         findMoviePageListPresenter = new FindMoviePageListPresenter(new find());
-//        findMoviePageListPresenter.requestNet(userId, sessionId, true);
+        findMoviePageListPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), true);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
         public void success(Result<List<FindMoviePageListData>> data) {
             rec.refreshComplete();
             rec.loadMoreComplete();
-            Toast.makeText(getContext(), "2222222"+data.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 gzMovieAdapter.setListData(data.getResult());
                 gzMovieAdapter.notifyDataSetChanged();
@@ -103,7 +103,7 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
 
         @Override
         public void fail(ApiException a) {
-
+            Toast.makeText(getContext(), "失败", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -306,6 +306,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.details_image_back:
                 //返回
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.details_btn_buy:
                 //购票

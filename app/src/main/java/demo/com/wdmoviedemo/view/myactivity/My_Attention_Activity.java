@@ -67,7 +67,6 @@ public class My_Attention_Activity extends BaseActivity {
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
 
             @Override
@@ -86,6 +85,7 @@ public class My_Attention_Activity extends BaseActivity {
     void on(View v) {
         if (v.getId() == R.id.back_image_a) {
             finish();
+              overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
         } else if (v.getId() == R.id.my_attention_dy) {
             vp.setCurrentItem(0);
             ChangeBackGround(0);

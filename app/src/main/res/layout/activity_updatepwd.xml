@@ -27,9 +27,9 @@
                 android:text="当前密码"
                 android:textColor="#333333" />
 
-            <TextView
+            <EditText
                 android:id="@+id/te_number"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="20dp"

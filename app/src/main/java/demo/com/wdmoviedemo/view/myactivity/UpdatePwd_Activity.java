@@ -38,7 +38,7 @@ public class UpdatePwd_Activity extends BaseActivity {
     @BindView(R.id.pwd_02)
     EditText pwd2;
     @BindView(R.id.te_number)
-    TextView t;
+    EditText t;
     private ModifyUserPwdPresenter modifyUserPwdPresenter;
 
     @Override
@@ -46,7 +46,7 @@ public class UpdatePwd_Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updatepwd);
         ButterKnife.bind(this);
-        t.setText(EncryptUtil.decrypt(userInfoBean.getPwd()));
+
 
         modifyUserPwdPresenter = new ModifyUserPwdPresenter(new modify());
     }
@@ -61,8 +61,6 @@ public class UpdatePwd_Activity extends BaseActivity {
                     dbManager = new DbManager(UpdatePwd_Activity.this);
 
                     dbManager.deleteStudentByS(userInfoBean);
-
-
                     // 删除用户
                     SharedPreferences sp0123 = getSharedPreferences("sp0123", Context.MODE_PRIVATE);
                     sp0123.edit().clear().commit();
@@ -79,7 +77,6 @@ public class UpdatePwd_Activity extends BaseActivity {
 
         @Override
         public void fail(ApiException a) {
-
         }
     }
 
@@ -98,6 +95,7 @@ public class UpdatePwd_Activity extends BaseActivity {
     @OnClick(R.id.back_image_upwd)
     void ba(){
         finish();
+        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
     }
 //    public static void main(String[] args) {
 //        new Runnable() {

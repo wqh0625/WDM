@@ -186,6 +186,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.image_back:
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.recommend_cinem_search_image:
                 if (flag) {

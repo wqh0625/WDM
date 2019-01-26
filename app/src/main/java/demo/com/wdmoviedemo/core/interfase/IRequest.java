@@ -9,6 +9,7 @@ import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.MyMessageData;
 import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.Result2;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -104,8 +105,8 @@ public interface IRequest {
                                                                         @Query("count") int count);
 
     //http://172.17.8.100/movieApi/movie/v1/verify/findMoviePageList
-    @GET("movieApi/cinema/v1/verify/findMoviePageList")
-    Observable<Result<List<FindMoviePageListData>>> findMoviePageList(@Header("userId") int userId,
+    @GET("movieApi/movie/v1/verify/findMoviePageList")
+    Observable<Result<List<FindMoviePageListData>>> findMoviePageList(@Header("userId")int userId,
                                                                       @Header("sessionId") String Id,
                                                                       @Query("page") int page,
                                                                       @Query("count") int count);
@@ -115,4 +116,9 @@ public interface IRequest {
     Observable<Result> cancelFollowMovie(@Header("userId") int userId,
                                          @Header("sessionId") String sessionId,
                                          @Query("movieId") int movieId);
+
+    // 3.查询会员首页信息movieApi/user/v1/verify/findUserHomeInfo
+    @GET("movieApi/user/v1/verify/findUserHomeInfo")
+    Observable<Result<Result2>> findUserHomeInfo(@Header("userId") int userId,
+                                                @Header("sessionId") String sessionId);
 }

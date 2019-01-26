@@ -13,7 +13,8 @@ public class FindMoviePageListPresenter extends BasePresenter{
         super(consumer);
     }
 
-    int page;
+    int page=1;
+    int count = 10;
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NetWorks.getRequest().create(IRequest.class);
@@ -24,6 +25,6 @@ public class FindMoviePageListPresenter extends BasePresenter{
         }else{
             page++;
         }
-        return iRequest.findMoviePageList( (int) args[0], (String) args[1],page,10);
+        return iRequest.findMoviePageList( (int) args[0], (String) args[1],page,count);
     }
 }

@@ -102,7 +102,7 @@ public class GzCinemaFragment extends BaseFragment implements XRecyclerView.Load
         public void success(Result<List<FindCinemaPageListData>> data) {
             rec.refreshComplete();
             rec.loadMoreComplete();
-            Toast.makeText(getContext(), "11111111"+data.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "11111111"+data.getMessage(), Toast.LENGTH_SHORT).show();
 
             if (data.getStatus().equals("0000")) {
                 gzCinemaAdapter.setListData(data.getResult());

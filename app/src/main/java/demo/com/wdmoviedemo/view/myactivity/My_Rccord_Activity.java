@@ -98,6 +98,7 @@ public class My_Rccord_Activity extends BaseActivity {
     @OnClick(R.id.back_image_r)
     void on() {
         finish();
+        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
     }
 
     private void ChangeBackGround(int index) {

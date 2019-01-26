@@ -1,6 +1,11 @@
 package demo.com.wdmoviedemo.core.base;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,7 +33,8 @@ import demo.com.wdmoviedemo.core.utils.MyApp;
 
 
 public abstract class BaseFragment extends Fragment {
-
+    public final static int PHOTO = 0;// 相册选取
+    public final static int CAMERA = 1;// 拍照
     private DbManager dbManager;
     public UserInfoBean userInfoBean;
     private Unbinder unbinder;
@@ -63,5 +69,24 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutId();
 
     protected abstract void initView(View view);
-
+    public String getFilePath(String fileName, int requestCode, Intent data) {
+        if (requestCode == CAMERA) {
+            return fileName;
+        } else if (requestCode == PHOTO) {
+            Uri uri = data.getData();
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor actualimagecursor = getActivity().managedQuery(uri, proj, null, null, null);
+            int actual_image_column_index = actualimagecursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            actualimagecursor.moveToFirst();
+            String img_path = actualimagecursor
+                    .getString(actual_image_column_index);
+            // 4.0以上平台会自动关闭cursor,所以加上版本判断,OK
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                actualimagecursor.close();
+            }
+            return img_path;
+        }
+        return null;
+    }
 }

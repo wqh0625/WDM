@@ -92,6 +92,7 @@ public class My_Messiage_Activity extends BaseActivity {
     @OnClick(R.id.back_image)
     void o() {
         finish();//关闭页面
+        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
     }
 
     @OnClick(R.id.go_updapwd)

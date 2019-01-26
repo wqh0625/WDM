@@ -45,6 +45,7 @@ public class My_Feedback_Activity extends BaseActivity {
     void on(View view) {
         if (view.getId() == R.id.back_image_f) {
             finish();
+            overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
         } else if (view.getId() == R.id.feedback_tijiao_btn) {
             String s = e.getText().toString();
             if (s == "") {

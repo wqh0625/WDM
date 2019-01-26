@@ -9,7 +9,7 @@ public class FindMoviePageListData {
     private int id;
     private String imageurl;
     private String name;
-    private int releasetime;
+    private long releasetime;
     private String summary;
 
     public int getId() {
@@ -36,11 +36,11 @@ public class FindMoviePageListData {
         this.name = name;
     }
 
-    public int getReleasetime() {
+    public long getReleasetime() {
         return releasetime;
     }
 
-    public void setReleasetime(int releasetime) {
+    public void setReleasetime(long releasetime) {
         this.releasetime = releasetime;
     }
 
