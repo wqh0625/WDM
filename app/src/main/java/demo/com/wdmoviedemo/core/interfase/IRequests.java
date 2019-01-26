@@ -3,6 +3,7 @@ package demo.com.wdmoviedemo.core.interfase;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
+import demo.com.wdmoviedemo.bean.FilmDetailsData;
 import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.SearchData;
@@ -36,5 +37,11 @@ public interface IRequests {
  Observable<Result> getConcern(@Header("userId")int userId,
                                @Header("sessionId")String sessionId,
                                @Query("movieId") int movieId);
+
+ //电影详情
+ @GET("movieApi/movie/v1/findMoviesDetail")
+ Observable<Result<FilmDetailsData>> getFilmDetails(@Header("userId")int userId,
+                                                    @Header("sessionId")String sessionId,
+                                                    @Query("movieId") int movieId);
 
 }

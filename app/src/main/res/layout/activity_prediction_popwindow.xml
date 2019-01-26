@@ -24,10 +24,10 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="2dp"
             android:layout_below="@id/activity_details_timesss"
-            android:background="#cf09e9"
+            android:background="@drawable/details_bgs"
             />
         <ImageView
-            android:id="@+id/activity_forshow_popwindow_down"
+            android:id="@+id/activity_prediction_popwindow_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/com_icon_down_default"
@@ -35,7 +35,7 @@
             android:layout_marginLeft="300dp"
             />
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/activity_forshow_popwindow_recyclerview"
+            android:id="@+id/activity_prediction_popwindow_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="60dp"

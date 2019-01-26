@@ -32,7 +32,14 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
         this.context = context;
         list = new ArrayList<>();
     }
+    public interface OnCarouselClickListener{
+        void OnCarouselClick(int position);
+    }
+    public OnCarouselClickListener mOnCarouselClickListener;
 
+    public void setOnCarouselClickListener(OnCarouselClickListener onCarouselClickListener){
+        mOnCarouselClickListener = onCarouselClickListener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,12 +49,21 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
     viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
     viewHolder.txtName.setText(list.get(i).getName());
         //转换成日期格式
         SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME_PATTERN,Locale.getDefault());
         viewHolder.txtTime.setText(dateFormat.format(list.get(i).getReleaseTime()));
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = list.get(i).getId();
+                if (mOnCarouselClickListener !=null){
+                    mOnCarouselClickListener.OnCarouselClick(id);
+                }
+            }
+        });
     }
 
     @Override

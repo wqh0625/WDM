@@ -31,6 +31,7 @@ import demo.com.wdmoviedemo.presenter.CarouselPresenter;
 import demo.com.wdmoviedemo.presenter.ComingPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
 import demo.com.wdmoviedemo.view.DetailsActivity;
+import demo.com.wdmoviedemo.view.Film_Details_Activity;
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
@@ -117,6 +118,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+        carouselAdapter.setOnCarouselClickListener(new CarouselAdapter.OnCarouselClickListener() {
+            @Override
+            public void OnCarouselClick(int position) {
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
     }
 
     class Carousel implements DataCall<Result<List<CarouselData>>> {
@@ -164,7 +173,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position",position);
                 startActivity(intent);
             }
@@ -172,7 +181,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ishitAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
             }
@@ -180,7 +189,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         comingAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
             }
