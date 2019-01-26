@@ -17,7 +17,7 @@ import demo.com.wdmoviedemo.bean.FilmDetailsData;
 /**
  * date: 2019/1/26.
  * Created 王思敏
- * function:
+ * function:演员名字
  */
 public class ActornameAdapter extends RecyclerView.Adapter<ActornameAdapter.ViewHolder> {
     private Context context;

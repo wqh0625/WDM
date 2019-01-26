@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -18,11 +20,11 @@ import demo.com.wdmoviedemo.bean.FilmDetailsData;
 /**
  * date: 2019/1/26.
  * Created 王思敏
- * function:
+ * function:剧照
  */
 public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.ViewHolder> {
     private Context context;
-    private List<FilmDetailsData> list;
+    private List<String> list;
 
     public StillsAdapter(Context context) {
         this.context = context;
@@ -40,9 +42,7 @@ public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        for (int j = 0; j < list.get(i).getPosterList().size() ; j++) {
-
-        }
+        Glide.with(context).load(list.get(i)).into(viewHolder.sdvImage);
     }
 
     @Override
@@ -50,9 +50,15 @@ public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.ViewHolder
         return list.size();
     }
 
+    public void addAll(List<String> posterList) {
+        if (posterList !=null){
+            list.addAll(posterList);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final SimpleDraweeView sdvImage;
+        private final ImageView sdvImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

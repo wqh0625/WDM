@@ -40,7 +40,8 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-    viewHolder.predictionJzplayer.setUp(list.get(i).getVideoUrl(),JZVideoPlayer.SCREEN_WINDOW_NORMAL);
+
+        viewHolder.predictionJzplayer.setUp(list.get(i).getVideoUrl(),JZVideoPlayer.SCREEN_WINDOW_NORMAL,"");
     }
 
     @Override

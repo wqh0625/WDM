@@ -272,6 +272,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 intent3.putExtra("image", image3);
                 startActivity(intent3);
                 break;
+                default:
         }
     }
 

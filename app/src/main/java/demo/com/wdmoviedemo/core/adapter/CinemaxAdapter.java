@@ -19,7 +19,7 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 /**
  * date: 2019/1/23.
  * Created 王思敏
- * function:
+ * function:首页多条目
  */
 public class CinemaxAdapter extends RecyclerView.Adapter<CinemaxAdapter.ViewHolder> {
     private Context context;
