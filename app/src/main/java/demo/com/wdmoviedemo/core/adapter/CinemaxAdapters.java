@@ -53,6 +53,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
 
     public interface OnImageClickListener {
         void OnImageClick(int position, CarouselData carouselData);
+
     }
 
     public OnImageClickListener mOnImageClickListener;
