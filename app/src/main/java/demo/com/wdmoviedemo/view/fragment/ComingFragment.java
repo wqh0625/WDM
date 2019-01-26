@@ -57,7 +57,6 @@ public class ComingFragment extends BaseFragment {
 
             }
 
-
         });
     }
     class ComingCall implements DataCall<Result<List<CarouselData>>> {

@@ -18,7 +18,6 @@ import java.util.zip.ZipOutputStream;
 
 import android.os.Environment;
 
-import com.dingtao.rrmmp.core.WDApplication;
 
 
 /**
@@ -217,7 +216,7 @@ public class FileUtils {
     public static void copyAssestToSD(String sdcardFile, String assets) throws IOException {
         InputStream myInput;
         OutputStream myOutput = new FileOutputStream(sdcardFile);
-        myInput = WDApplication.getContext().getAssets().open(assets);
+        myInput = MyApp.getContext().getAssets().open(assets);
         byte[] buffer = new byte[1024];
         int length = myInput.read(buffer);
         while (length > 0) {
