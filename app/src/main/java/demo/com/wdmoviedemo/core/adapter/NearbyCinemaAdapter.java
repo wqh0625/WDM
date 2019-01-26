@@ -1,6 +1,7 @@
 package demo.com.wdmoviedemo.core.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.NearbyData;
+import demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity;
 
 /**
  * 作者: Wang on 2019/1/25 19:59
@@ -45,7 +47,7 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
-        NearbyData nearbyData = list.get(i);
+        final NearbyData nearbyData = list.get(i);
         vh.icon.setImageURI(Uri.parse(nearbyData.getLogo()));
         vh.title.setText(nearbyData.getName());
         vh.location.setText(nearbyData.getAddress());
@@ -57,6 +59,14 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
             // 未关注
             vh.like.setImageResource(R.drawable.aix);
         }
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CinemaDetailActivity.class);
+                intent.putExtra("cinemaID",nearbyData.getId()+"");
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

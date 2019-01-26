@@ -38,7 +38,8 @@
         <activity android:name="demo.com.wdmoviedemo.view.myactivity.UpdatePwd_Activity" />
         <activity
             android:name="demo.com.wdmoviedemo.view.DetailsActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            tools:ignore="DuplicateActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +48,8 @@
             </intent-filter>
         </activity>
         <activity android:name="demo.com.wdmoviedemo.view.Film_Details_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TheFilmDetailsActivity"></activity>
+        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TheFilmDetailsActivity"/>
+        <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity"/>
     </application>
 
 </manifest>

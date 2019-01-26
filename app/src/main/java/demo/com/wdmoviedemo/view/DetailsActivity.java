@@ -22,6 +22,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
 
 import java.util.ArrayList;
@@ -29,10 +33,13 @@ import java.util.List;
 
 import demo.com.wdmoviedemo.view.fragment.CinemaxFragment;
 import demo.com.wdmoviedemo.view.fragment.ComingFragment;
+import demo.com.wdmoviedemo.view.fragment.HomeFragment;
 import demo.com.wdmoviedemo.view.fragment.IsHitFragment;
 
 
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
+    private MyLocationListener myListener = new MyLocationListener();
+    private LocationClient mLocationClient = null;
 
     private ImageView imageLocation;
     private TextView txtLocation;
@@ -60,7 +67,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_details);
         initView();
         initData();
-
+        initMap();
     }
 
     private void initData() {
@@ -124,18 +131,39 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         //图片
 //        initImage();
     }
-    private void initImage() {
-        //接受首页箭头图片传过来的值
-        if (image==0){
-            detailsVp.setCurrentItem(0);
-            ChangeBackGround(0);
-        }else if (image==1){
-            detailsVp.setCurrentItem(1);
-            ChangeBackGround(1);
-        }else {
-            detailsVp.setCurrentItem(2);
-            ChangeBackGround(2);
+
+    private void initMap() {
+        mLocationClient = new LocationClient(this);
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);
+        //注册监听函数
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        //如果开发者需要获得当前点的位置信息，此处必须为true
+        option.setIsNeedLocationDescribe(true);
+        //可选，设置是否需要地址信息，默认不需要
+        option.setIsNeedAddress(true);
+        //可选，默认false,设置是否使用gps
+        option.setOpenGps(true);
+        //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+        option.setLocationNotify(true);
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
+    }
+
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+//            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
+            String addr = location.getCity();    //获取详细地址信息
+            if (addr == null) {
+                return;
+            }
+            txtLocation.setText(addr);
         }
+
     }
 
     @Override
@@ -157,25 +185,26 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.recommend_cinem_search_image:
-                if(flag){
+                if (flag) {
                     initExpand();//点击搜索 伸展
-                }else{
+                } else {
                     initReduce();//点击text收缩
                 }
-                flag  = !flag;
+                flag = !flag;
                 break;
             case R.id.recommend_cinema_textName:
                 //点击搜索,获取输入的值
                 etName = recommendCinemaEdname.getText().toString().trim();
-                if (TextUtils.isEmpty(etName)){
+                if (TextUtils.isEmpty(etName)) {
                     Toast.makeText(this, "输入内容不能为空", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
 
                 }
 
                 break;
         }
     }
+
     /*设置伸展状态时的布局*/
     public void initExpand() {
         recommendCinemaEdname.setHint("CGV影城");
@@ -200,6 +229,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         beginDelayedTransition(recommendCinemaLinear);
 
     }
+
     /*设置收缩状态时的布局*/
     private void initReduce() {
         recommendCinemaEdname.setCursorVisible(false);

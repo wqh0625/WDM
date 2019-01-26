@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.dao.DbManager;
+import demo.com.wdmoviedemo.core.utils.MyApp;
 
 /**
  * 作者: Wang on 2019/1/24 13:41
@@ -27,7 +32,6 @@ public abstract class BaseFragment extends Fragment {
     private DbManager dbManager;
     public UserInfoBean userInfoBean;
     private Unbinder unbinder;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +63,5 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutId();
 
     protected abstract void initView(View view);
-
 
 }

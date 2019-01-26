@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="demo.com.wdmoviedemo.view.DetailsActivity">
+
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp">
 
+
         <ImageView
             android:id="@+id/image_location"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="26dp"
             android:src="@drawable/dw" />
 
         <TextView
             android:id="@+id/txt_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="30dp"
-            android:layout_toRightOf="@id/image_location"
+            android:layout_toRightOf="@id/cinema_image_location"
             android:text="北京"
             android:textSize="14sp" />
+
         <RelativeLayout
+            android:id="@+id/recommend_cinema_linear"
             android:layout_width="48dp"
             android:layout_height="24dp"
-            android:layout_weight="1"
             android:layout_alignParentRight="true"
-            android:id="@+id/recommend_cinema_linear"
             android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:background="@drawable/cinema_search_shape">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/recommend_cinem_search_image"
                     android:layout_width="24dp"
@@ -48,6 +51,7 @@
                     android:onClick="onClick"
                     android:paddingLeft="6dp"
                     android:src="@drawable/search" />
+
                 <EditText
                     android:id="@+id/recommend_cinema_edname"
                     android:layout_width="wrap_content"
@@ -58,14 +62,15 @@
                     android:ems="8"
                     android:padding="5dp"
                     android:textColor="#f2f2f2"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
+
                 <TextView
                     android:id="@+id/recommend_cinema_textName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:paddingTop="3dp"
                     android:onClick="onClick"
+                    android:paddingTop="3dp"
                     android:text="搜索"
                     android:textColor="#ffffff"
                     android:textSize="12sp"
@@ -117,17 +122,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/center"
-        android:layout_marginTop="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp" />
+
     <RelativeLayout
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="24dp"
         android:background="@drawable/home_lucency"
-        android:paddingBottom="20dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/image_back"
