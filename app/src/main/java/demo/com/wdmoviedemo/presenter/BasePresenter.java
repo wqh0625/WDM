@@ -29,9 +29,10 @@ public abstract class BasePresenter  {
     }
 
     public void requestNet(final Object... args) {
-//        if (runing)
-//            return;
-//        runing = true;
+        if (runing){
+            return;
+        }
+        runing = true;
         observable(args)
                 .compose(ResponseTransformer.handleResult())///
                 .compose(new ObservableTransformer() {

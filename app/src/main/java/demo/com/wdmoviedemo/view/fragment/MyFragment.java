@@ -41,8 +41,8 @@ public class MyFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         if (userInfoBean != null) {
-            int userId = userInfoBean.getUserId();
-            Toast.makeText(getActivity(), "咳咳 " + userId, Toast.LENGTH_SHORT).show();
+//            int userId = userInfoBean.getUserId();
+//            Toast.makeText(getActivity(), "咳咳 " + userId, Toast.LENGTH_SHORT).show();
         }
         unbinder = ButterKnife.bind(getActivity(), view);
 

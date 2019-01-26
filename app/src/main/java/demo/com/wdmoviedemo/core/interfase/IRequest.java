@@ -5,6 +5,7 @@ import java.util.List;
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.MyMessageData;
+import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.bean.Result;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -71,6 +72,9 @@ public interface IRequest {
                                      @Field("newPwd2") String newPwd2);
 
     // http://172.17.8.100/
-//    @GET("movieApi/cinema/v1/findRecommendCinemas")
-//    Observable<>
+    @GET("movieApi/cinema/v1/findRecommendCinemas")
+    Observable<Result<List<NearbyData>>> findRecommendCinemas(@Header("userId") int userId,
+                                                              @Header("sessionId") String Id,
+                                                              @Query("page") int page,
+                                                              @Query("count") int count);
 }
