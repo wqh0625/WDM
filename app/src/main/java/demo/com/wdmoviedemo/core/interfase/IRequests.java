@@ -40,8 +40,6 @@ public interface IRequests {
 
  //电影详情
  @GET("movieApi/movie/v1/findMoviesDetail")
- Observable<Result<FilmDetailsData>> getFilmDetails(@Header("userId")int userId,
-                                                    @Header("sessionId")String sessionId,
-                                                    @Query("movieId") int movieId);
+ Observable<Result<FilmDetailsData>> getFilmDetails(@Query("movieId") int movieId);
 
 }

@@ -30,6 +30,7 @@
             android:layout_toRightOf="@id/image_details"
             android:textColor="#fff"/>
         <ImageView
+            android:id="@+id/actvity_image_details"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/com_icon_collection_default"

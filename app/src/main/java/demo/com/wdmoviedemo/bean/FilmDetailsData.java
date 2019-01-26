@@ -8,6 +8,7 @@ import java.util.List;
  * function:
  */
 public class FilmDetailsData {
+
     /**
      * director : 刘阔
      * duration : 105分钟

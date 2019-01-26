@@ -159,6 +159,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/activity_details_role"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
         ></android.support.v7.widget.RecyclerView>
 

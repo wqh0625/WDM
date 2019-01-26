@@ -19,6 +19,7 @@ import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.CarouselPresenter;
 import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
+import demo.com.wdmoviedemo.view.LoginActivity;
 
 public class CinemaxFragment extends BaseFragment {
     private RecyclerView cinemaxrecy;
@@ -49,9 +50,19 @@ public class CinemaxFragment extends BaseFragment {
             private ConcernPresenter concernPresenter;
 
             @Override
-            public void OnImageClick(int position) {
-                concernPresenter = new ConcernPresenter(new ConcernCall());
-                concernPresenter.requestNet(userId,sessionId,position);
+            public void OnImageClick(int position, int followMovie) {
+                if (userId==0 || sessionId==null || sessionId==""){
+                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    if (followMovie ==2){
+                        concernPresenter = new ConcernPresenter(new ConcernCall());
+                        concernPresenter.requestNet(userId,sessionId,position);
+                    }else {
+                        Toast.makeText(getActivity(), "已关注", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -68,7 +79,6 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-
         }
     }
     //关注

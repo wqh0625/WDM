@@ -50,7 +50,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
         mOnCinemaxItemClickListener= onCinemaxItemClickListener;
     }
     public interface OnImageClickListener{
-        void OnImageClick(int position);
+        void OnImageClick(int position,int followMovie);
     }
     public OnImageClickListener mOnImageClickListener;
     public void setOnImageClickListener(OnImageClickListener onImageClickListener){
@@ -72,7 +72,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
         viewHolder.txtName.setText(list.get(i).getName());
         viewHolder.txtContent.setText(list.get(i).getSummary());
@@ -89,10 +89,18 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
         viewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int ids = list.get(i).getId();
+                int followMovie = list.get(i).getFollowMovie();
                 if (mOnImageClickListener !=null){
-                    int ids = list.get(i).getId();
-                    mOnImageClickListener.OnImageClick(ids);
+                    mOnImageClickListener.OnImageClick(ids,followMovie);
+                    if (followMovie ==1){
+                        viewHolder.image.setBackgroundResource(R.drawable.icon_collection_selected);
+                    }else {
+                        viewHolder.image.setBackgroundResource(R.drawable.com_icon_collection_default);
+                    }
+
                 }
+
             }
         });
     }

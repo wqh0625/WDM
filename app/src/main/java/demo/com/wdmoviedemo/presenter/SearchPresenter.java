@@ -23,6 +23,6 @@ public class SearchPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequests iRequests = NetWorks.getRequest().create(IRequests.class);
-        return iRequests.getmovieId((int)args[0]);
+        return iRequests.getFilmDetails((int)args[0]);
     }
 }

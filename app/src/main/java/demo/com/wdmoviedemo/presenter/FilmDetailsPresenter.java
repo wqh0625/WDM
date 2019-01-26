@@ -22,6 +22,6 @@ public class FilmDetailsPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequests iRequests = NetWorks.getRequest().create(IRequests.class);
-        return iRequests.getFilmDetails((int)args[0],(String)args[1],(int)args[2]);
+        return iRequests.getFilmDetails((int)args[0]);
     }
 }
