@@ -45,6 +45,7 @@ import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.presenter.FilmDetailsPresenter;
 import demo.com.wdmoviedemo.presenter.ReviewPresenter;
 import demo.com.wdmoviedemo.presenter.SearchPresenter;
+import demo.com.wdmoviedemo.view.detailsactvity.ListofCinemaActivity;
 
 public class Film_Details_Activity extends BaseActivity implements View.OnClickListener {
 
@@ -85,9 +86,16 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private ImageView activityReviewPopwindowDown;
     private RecyclerView activityreviewpopwindowrecy;
     private StillsAdapter stillsAdapter;
-    private FilmDetailsPresenter filmDetailsPresenter1;
     private ReviewAdapter reviewAdapter;
     private ReviewPresenter reviewPresenter;
+    private String name;
+    private String movieTypes;
+    private String director;
+    private String duration;
+    private String placeOrigin;
+    private String summary;
+    private String imageUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +114,15 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
     class SearchCall implements DataCall<Result<FilmDetailsData>>{
 
+
+
         @Override
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")){
-                detailsTxtName.setText(data.getResult().getName());
-                detailsSdvImage.setImageURI(data.getResult().getImageUrl());
+                name = data.getResult().getName();
+                imageUrl = data.getResult().getImageUrl();
+                detailsTxtName.setText(name);
+                detailsSdvImage.setImageURI(imageUrl);
                 int followMovie = data.getResult().getFollowMovie();
                 if (followMovie ==2){
                     actvityImageDetails.setBackgroundResource(R.drawable.com_icon_collection_default);
@@ -190,7 +202,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityDetailsBack = view1.findViewById(R.id.activity_details_back);
                 //popupWindow设置与父窗体替补显示
 
-
                 activityDetailsRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
                 filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
@@ -211,7 +222,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //预告片
                 View rootview2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
                 View view2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_prediction_popwindow, null, false);
-                final PopupWindow popupWindow2 = new PopupWindow(view);
+                final PopupWindow popupWindow2 = new PopupWindow(view2);
                 //设置充满父窗体
                 popupWindow2.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow2.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -245,7 +256,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //剧照
                 View rootview3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
                 View view3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_stills_popwindow, null, false);
-                final PopupWindow popupWindow3 = new PopupWindow(view);
+                final PopupWindow popupWindow3 = new PopupWindow(view3);
                 //设置充满父窗体
                 popupWindow3.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow3.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -276,7 +287,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //影评
                 View rootview4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
                 View view4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_review_popwindow, null, false);
-                final PopupWindow popupWindow4 = new PopupWindow(view);
+                final PopupWindow popupWindow4 = new PopupWindow(view4);
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -309,7 +320,15 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.details_btn_buy:
                 //购票
-
+                Intent intent = new Intent(this,ListofCinemaActivity.class);
+                intent.putExtra("position",position);
+                intent.putExtra("name",name);
+                intent.putExtra("movieTypes",movieTypes);
+                intent.putExtra("director",director);
+                intent.putExtra("duration",duration);
+                intent.putExtra("imageUrl",imageUrl);
+                intent.putExtra("placeOrigin",placeOrigin);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -320,6 +339,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     //详情
     class FilmDetailsCall implements DataCall<Result<FilmDetailsData>>{
 
+
+
         @Override
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")){
@@ -327,11 +348,16 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 FilmDetailsData result = data.getResult();
                 //activityDetailsSimpledraweeview.setImageURI(result.getImageUrl());
-                activityDetailsType.setText("类型:"+ result.getMovieTypes());
-                popwindowDetailsDirect.setText("导演:"+ result.getDirector());
-                activityDetailsTime.setText("时长:"+ result.getDuration());
-                activityDetailsLocation.setText("产地:"+ result.getPlaceOrigin());
-                activityDetailsJianjie.setText("简介:"+ result.getSummary());
+                movieTypes = result.getMovieTypes();
+                director = result.getDirector();
+                duration = result.getDuration();
+                placeOrigin = result.getPlaceOrigin();
+                summary = result.getSummary();
+                activityDetailsType.setText("类型:"+movieTypes );
+                popwindowDetailsDirect.setText("导演:"+ director);
+                activityDetailsTime.setText("时长:"+duration );
+                activityDetailsLocation.setText("产地:"+ placeOrigin);
+                activityDetailsJianjie.setText("简介:"+ summary);
 
                 //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();

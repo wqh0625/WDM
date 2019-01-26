@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -16,10 +17,13 @@ import java.util.List;
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
+import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.ComingPresenter;
+import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
+import demo.com.wdmoviedemo.view.LoginActivity;
 
 public class ComingFragment extends BaseFragment {
     private RecyclerView comingrecy;
@@ -46,23 +50,22 @@ public class ComingFragment extends BaseFragment {
         });
         cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
 
-            private ConcernPresenter concernPresenter;
-
             @Override
-            public void OnImageClick(int position, int followMovie) {
+            public void OnImageClick(int position, CarouselData carouselData) {
                 if (userId ==0 || sessionId==null || sessionId==""){
                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
                     startActivity(intent);
                 }else {
-                    if (followMovie ==2){
-                        concernPresenter = new ConcernPresenter(new ConcernCall());
+                    if (carouselData.getFollowMovie() ==2){
+                        ConcernPresenter concernPresenter = new ConcernPresenter(new ConcernCall());
                         concernPresenter.requestNet(userId,sessionId,position);
                     }else {
                         Toast.makeText(getActivity(), "已关注", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+
         });
     }
     class ComingCall implements DataCall<Result<List<CarouselData>>> {

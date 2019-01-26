@@ -50,17 +50,16 @@ public class IsHitFragment extends BaseFragment {
             }
         });
         cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
-
             private ConcernPresenter concernPresenter;
 
             @Override
-            public void OnImageClick(int position, int followMovie) {
+            public void OnImageClick(int position, CarouselData carouselData) {
                 if (userId ==0 || sessionId==null || sessionId==""){
                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(),LoginActivity.class);
                     startActivity(intent);
                 }else {
-                    if (followMovie ==2){
+                    if (carouselData.getFollowMovie() ==2){
                         concernPresenter = new ConcernPresenter(new ConcernCall());
                         concernPresenter.requestNet(userId,sessionId,position);
                     }else {
@@ -68,6 +67,8 @@ public class IsHitFragment extends BaseFragment {
                     }
                 }
             }
+
+
         });
     }
     class IsHitCall implements DataCall<Result<List<CarouselData>>> {
