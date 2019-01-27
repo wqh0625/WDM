@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -63,8 +64,10 @@ public class CheckInActivity extends AppCompatActivity {
     }
 
     private void initSeatTable() {
-        seatView.setScreenName(screeningHall + "荧幕");//设置屏幕名称
-        seatView.setMaxSelected(3);//设置最多选中
+        //设置屏幕名称
+        seatView.setScreenName(screeningHall + "荧幕");
+        //设置最多选中
+        seatView.setMaxSelected(10);
 
         seatView.setSeatChecker(new SeatTable.SeatChecker() {
 
@@ -106,11 +109,10 @@ public class CheckInActivity extends AppCompatActivity {
     }
 
     private void initChooseMessage() {
-//        String mPrice = "0.1";
         mPriceWithCalculate = new BigDecimal(price);
 
     }
-
+    //选中的座位计算价格
     private void changePriceWithSelected() {
         selectedTableCount++;
         String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
@@ -121,11 +123,17 @@ public class CheckInActivity extends AppCompatActivity {
     //取消选座时价格联动
     private void changePriceWithUnSelected() {
         selectedTableCount--;
-        String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
-        SpannableString spannableString = changTVsize(currentPrice);
-        checkinPrices.setText(spannableString);
+      if (selectedTableCount ==0){
+          checkinPrices.setText("" + 0.00);
+      }else {
+          String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
+          SpannableString spannableString = changTVsize(currentPrice);
+          checkinPrices.setText(spannableString);
+      }
+
     }
 
+    //小数点后面改变字体大小
     public static SpannableString changTVsize(String value) {
         SpannableString spannableString = new SpannableString(value);
         if (value.contains(".")) {
@@ -149,7 +157,7 @@ public class CheckInActivity extends AppCompatActivity {
         checkinScreeningHall.setText(screeningHall);
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
-        checkinPrices.setText("" + price);
+        checkinPrices.setText("" + 0.00);
     }
 
     @OnClick({R.id.img_confirm, R.id.img_abandon})
