@@ -134,4 +134,22 @@ public interface IRequest {
     //movieApi/movie/v1/findCinemasListByMovieId
     @GET("movieApi/movie/v1/findCinemasListByMovieId")
     Observable<Result<List<TicketDetailsData>>> findMovieScheduleList(@Query("movieId") int movieId);
+
+    // 购票下单 /
+    @POST("movieApi/movie/v1/verify/buyMovieTicket")
+    @FormUrlEncoded
+    Observable<Result> buyMovieTicket(
+            @Header("userId") int userId,
+            @Header("sessionId")String sessionId,
+            @Field("scheduleId") int scheduleId,
+            @Field("amount") int amount,
+            @Field("sign") String sign);
+
+    // 支付
+    @POST("movieApi/movie/v1/verify/pay")
+    @FormUrlEncoded
+    Observable<Result> pay(@Header("userId") int userId,
+                           @Header("sessionId")String sessionId,
+                           @Field("payType") int scheduleId,
+                           @Field("orderId") String  orderId);
 }

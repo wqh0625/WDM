@@ -20,6 +20,15 @@ public class Result<T> {
     private String sign;
     private String appId;
     private String packageValue;
+    private String orderId;
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
 
     public String getPrepayId() {
         return prepayId;
