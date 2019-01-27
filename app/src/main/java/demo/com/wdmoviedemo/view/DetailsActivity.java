@@ -108,7 +108,6 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private void initView() {
         Intent intent = getIntent();
         image = intent.getExtras().getInt("image");
-
         imageLocation = (ImageView) findViewById(R.id.image_location);
         txtLocation = (TextView) findViewById(R.id.txt_location);
         top = (RelativeLayout) findViewById(R.id.top);
@@ -204,8 +203,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
 
                 }
-
-                initReduce();//点击text收缩
+                break;
+            default:
                 break;
         }
     }

@@ -3,6 +3,7 @@ package demo.com.wdmoviedemo.view.detailsactvity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.qfdqc.views.seattable.SeatTable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CheckInActivity extends AppCompatActivity {
 
@@ -52,7 +54,7 @@ public class CheckInActivity extends AppCompatActivity {
     }
 
     private void initSeatTable() {
-        seatView.setScreenName(screeningHall+"荧幕");//设置屏幕名称
+        seatView.setScreenName(screeningHall + "荧幕");//设置屏幕名称
         seatView.setMaxSelected(3);//设置最多选中
 
         seatView.setSeatChecker(new SeatTable.SeatChecker() {
@@ -109,5 +111,19 @@ public class CheckInActivity extends AppCompatActivity {
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
         checkinPrices.setText("" + price);
+    }
+
+    @OnClick({R.id.img_confirm, R.id.img_abandon})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_confirm:
+
+                break;
+            case R.id.img_abandon:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }
