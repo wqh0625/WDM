@@ -4,32 +4,49 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import demo.com.wdmoviedemo.bean.CinemaDetailListData;
 import demo.com.wdmoviedemo.bean.CinemaDetailListDataBottom;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.ReviewData;
 import demo.com.wdmoviedemo.bean.TicketDetailsData;
 import demo.com.wdmoviedemo.core.adapter.CinemaDetailAdapter;
+import demo.com.wdmoviedemo.core.adapter.ReviewAdapter;
 import demo.com.wdmoviedemo.core.adapter.TicketDetailsAdapter;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.FindCinemasListByMovieIdPresenter;
 import demo.com.wdmoviedemo.presenter.FindMovieListByCinemaIdPresenter;
+import demo.com.wdmoviedemo.presenter.ReviewPresenter;
+import demo.com.wdmoviedemo.view.Film_Details_Activity;
 import demo.com.wdmoviedemo.view.detailsactvity.CheckInActivity;
 import demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity;
+import demo.com.wdmoviedemo.view.fragment.fcdetail.CinemaDetailsPlFragment;
+import demo.com.wdmoviedemo.view.fragment.fcdetail.CinemaDetailsXqFragment;
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
@@ -68,6 +85,14 @@ public class CinemaDetailActivity extends BaseActivity {
     private String imageUrl;
     private String names;
 
+
+    private ReviewAdapter reviewAdapter;
+    private ImageView activityReviewPopwindowDown;
+    private RecyclerView activityreviewpopwindowrecy;
+    private ReviewPresenter reviewPresenter;
+    private ViewPager vp;
+    private List<Fragment> fragments;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,10 +100,6 @@ public class CinemaDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
 
-
-        ticketDetailsAdapter = new TicketDetailsAdapter(this);
-        rec.setAdapter(ticketDetailsAdapter);
-        rec.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         findMovieListByCinemaIdPresenter.requestNet(cinemaId);
         // 根据电影ID和影院ID查询电影排期列表
         findMovieScheduleListPresenter = new FindCinemasListByMovieIdPresenter(new find222());
@@ -110,6 +131,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
                 startActivity(intent);
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }
@@ -137,6 +159,95 @@ public class CinemaDetailActivity extends BaseActivity {
         icon.setImageURI(Uri.parse(imageUrl));
         addtess.setText(addre);
         title.setText(cinameName);
+        ticketDetailsAdapter = new TicketDetailsAdapter(this);
+        rec.setAdapter(ticketDetailsAdapter);
+        rec.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @OnClick({R.id.cinema_detail_image_back, R.id.cinema_detail_image_icon})
+    void on(View view) {
+        switch (view.getId()) {
+            case R.id.cinema_detail_image_back:
+                finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                break;
+            case R.id.cinema_detail_image_icon:
+                View rootview4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.activity_cinema_detail, null);
+                View view4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.fragment_cinema_pop_, null, false);
+                final PopupWindow popupWindow4 = new PopupWindow(view4);
+                //设置充满父窗体
+                popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
+                //设置布局
+                popupWindow4.setContentView(view4);
+                activityReviewPopwindowDown = view4.findViewById(R.id.fragment_review_popwindow_down);
+
+
+
+                popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
+
+                initPow(view4);
+                //设置关闭popupWindow的点击事件
+                activityReviewPopwindowDown.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow4.dismiss();
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void initPow(View view4) {
+        vp = view4.findViewById(R.id.fragment_details_vp);
+        fragments = new ArrayList<>();
+        fragments.add(new CinemaDetailsXqFragment());
+        fragments.add(new CinemaDetailsPlFragment());
+        vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int i) {
+                return fragments.get(i);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+        });
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+//                ChangeBackGround(i);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
+
+    class ReviewCall implements DataCall<Result<List<ReviewData>>> {
+
+        @Override
+        public void success(Result<List<ReviewData>> data) {
+            if (data.getStatus().equals("0000")) {
+                reviewAdapter.addAll(data.getResult());
+                reviewAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+        }
     }
 
     class find implements DataCall<Result<List<CinemaDetailListData>>> {
@@ -163,7 +274,7 @@ public class CinemaDetailActivity extends BaseActivity {
     class find222 implements DataCall<Result<List<TicketDetailsData>>> {
         @Override
         public void success(Result<List<TicketDetailsData>> data) {
-            Toast.makeText(CinemaDetailActivity.this, "下下下下下" + data.getMessage() + data.getResult().size(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CinemaDetailActivity.this, "下下下下下" + data.getMessage() + data.getResult().size(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 ticketDetailsAdapter.addAll(data.getResult());
                 ticketDetailsAdapter.notifyDataSetChanged();

@@ -111,6 +111,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
                 startActivity(intent);
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
     }
@@ -138,6 +139,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.ticket_image_back:
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             default:
                 break;
