@@ -69,7 +69,6 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
                 intent.putExtra("Caddress", nearbyData.getAddress());
                 intent.putExtra("CimageUrl", nearbyData.getLogo());
                 intent.putExtra("CcinameName", nearbyData.getName());
-                Toast.makeText(context, "cinemaId"+nearbyData.getId(), Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
                 context.overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }

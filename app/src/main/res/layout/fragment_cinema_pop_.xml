@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/the_film_details_shape">
+
+        <TextView
+            android:id="@+id/fragment_details_xiangqing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="84dp"
+            android:layout_marginTop="20dp"
+            android:text="详情"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_below="@id/fragment_details_xiangqing"
+            android:layout_marginLeft="84dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/details_bgs" />
+
+        <TextView
+            android:id="@+id/fragment_details_pinglun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="204dp"
+            android:layout_marginTop="20dp"
+            android:text="评论"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_below="@id/fragment_details_pinglun"
+            android:layout_marginLeft="204dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/details_bgs"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/fragment_review_popwindow_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/com_icon_down_default" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragment_details_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginRight="24dp" />
+    </RelativeLayout>
+</LinearLayout>

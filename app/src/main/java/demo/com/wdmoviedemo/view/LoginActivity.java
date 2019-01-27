@@ -90,6 +90,7 @@ public class LoginActivity extends BaseActivity {
             if (reme_login) {
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 return;
             }
             return;
@@ -142,7 +143,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_register:
                 // 进入注册页
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.iv_wx:
                 // 微信登录

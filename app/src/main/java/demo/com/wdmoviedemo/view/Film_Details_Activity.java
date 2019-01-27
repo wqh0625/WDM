@@ -282,7 +282,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 break;
             case R.id.details_btn_review:
-                //影评
+                               //影评
                 View rootview4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
                 View view4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_review_popwindow, null, false);
                 final PopupWindow popupWindow4 = new PopupWindow(view4);
@@ -337,8 +337,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     }
     //详情
     class FilmDetailsCall implements DataCall<Result<FilmDetailsData>>{
-
-
 
         @Override
         public void success(Result<FilmDetailsData> data) {
