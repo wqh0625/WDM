@@ -20,7 +20,7 @@ import demo.com.wdmoviedemo.bean.ShortFilmListBean;
 /**
  * date: 2019/1/26.
  * Created 王思敏
- * function:
+ * function:预告片
  */
 public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.ViewHolder> {
     private Context context;

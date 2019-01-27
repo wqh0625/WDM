@@ -30,13 +30,17 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
         this.context = context;
         list = new ArrayList<>();
     }
-    public interface OnImageClickLisener{
-        void onImageClick(String ScreeningHall,String BeginTime,String EndTime,double Price);
+
+    public interface OnImageClickLisener {
+        void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price);
     }
+
     public OnImageClickLisener mOnImageClickLisener;
-    public void setOnImageClickLisener(OnImageClickLisener onImageClickLisener){
+
+    public void setOnImageClickLisener(OnImageClickLisener onImageClickLisener) {
         mOnImageClickLisener = onImageClickLisener;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -50,16 +54,16 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
         viewHolder.txtScreeningHall.setText(list.get(i).getScreeningHall());
         viewHolder.txtBeginTime.setText(list.get(i).getBeginTime());
         viewHolder.txtEndTime.setText(list.get(i).getEndTime());
-        viewHolder.txtPrice.setText(""+list.get(i).getPrice());
-        viewHolder.imgNext.setOnClickListener(new View.OnClickListener() {
+        viewHolder.txtPrice.setText("" + list.get(i).getPrice());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String screeningHall = list.get(i).getScreeningHall();
                 String beginTime = list.get(i).getBeginTime();
                 String endTime = list.get(i).getEndTime();
                 double price = list.get(i).getPrice();
-                if (mOnImageClickLisener !=null){
-                    mOnImageClickLisener.onImageClick(screeningHall,beginTime,endTime,price);
+                if (mOnImageClickLisener != null) {
+                    mOnImageClickLisener.onImageClick(screeningHall, beginTime, endTime, price);
                 }
             }
         });
@@ -71,7 +75,7 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
     }
 
     public void addAll(List<TicketDetailsData> result) {
-        if (result !=null){
+        if (result != null) {
             list.clear();
             list.addAll(result);
         }

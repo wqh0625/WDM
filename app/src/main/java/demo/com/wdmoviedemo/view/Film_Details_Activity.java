@@ -112,11 +112,11 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         searchPresenter.requestNet(position);
         filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
         filmDetailsPresenter.requestNet(position);
+        filmDetailsPresenter = new FilmDetailsPresenter(new PredictionCall());
+        filmDetailsPresenter.requestNet(position);
     }
 
     class SearchCall implements DataCall<Result<FilmDetailsData>> {
-
-
         @Override
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")) {
@@ -205,7 +205,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //popupWindow设置与父窗体替补显示
 
                 activityDetailsRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//                 activityDetailsSimpledraweeview.setImageURI(imageUrl);
+//                activityDetailsSimpledraweeview.setImageURI(imageUrl);
                 activityDetailsType.setText("类型：" + movieTypes);
                 popwindowDetailsDirect.setText("导演:" + director);
                 activityDetailsTime.setText("时长:" + duration);
@@ -353,7 +353,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 placeOrigin = result.getPlaceOrigin();
                 summary = result.getSummary();
 
-
                 //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
                 predictionAdapter.addAll(shortFilmList);
@@ -363,6 +362,29 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 List<String> posterList = result.getPosterList();
                 stillsAdapter.addAll(posterList);
                 stillsAdapter.notifyDataSetChanged();
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+    //预告片
+    class PredictionCall implements DataCall<Result<FilmDetailsData>> {
+
+
+        @Override
+        public void success(Result<FilmDetailsData> data) {
+            if (data.getStatus().equals("0000")) {
+                //设置popupWindow内部的数据
+                Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+                FilmDetailsData result = data.getResult();
+                //预告
+                List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
+                predictionAdapter.addAll(shortFilmList);
+                predictionAdapter.notifyDataSetChanged();
 
             }
         }
