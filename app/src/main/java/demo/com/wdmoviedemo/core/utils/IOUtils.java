@@ -89,6 +89,7 @@ public class IOUtils {
             MediaScannerConnection.scanFile(context,
                     new String[]{file.toString()}, null,
                     new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
                         public void onScanCompleted(String path, Uri uri) {
                         }
                     });

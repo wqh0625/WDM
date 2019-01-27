@@ -25,7 +25,7 @@ import demo.com.wdmoviedemo.core.utils.MyApp;
  */
 
 
-public class BaseActivity extends AppCompatActivity {
+public  class BaseActivity extends AppCompatActivity {
     public final static int PHOTO = 0;// 相册选取
     public final static int CAMERA = 1;// 拍照
     private DbManager dbManager;

@@ -3,6 +3,8 @@ package demo.com.wdmoviedemo.core.interfase;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
+import demo.com.wdmoviedemo.bean.CinemaDetailListData;
+import demo.com.wdmoviedemo.bean.CinemaDetailListDataBottom;
 import demo.com.wdmoviedemo.bean.FindCinemaPageListData;
 import demo.com.wdmoviedemo.bean.FindMoviePageListData;
 import demo.com.wdmoviedemo.bean.LoginData;
@@ -106,7 +108,7 @@ public interface IRequest {
 
     //http://172.17.8.100/movieApi/movie/v1/verify/findMoviePageList
     @GET("movieApi/movie/v1/verify/findMoviePageList")
-    Observable<Result<List<FindMoviePageListData>>> findMoviePageList(@Header("userId")int userId,
+    Observable<Result<List<FindMoviePageListData>>> findMoviePageList(@Header("userId") int userId,
                                                                       @Header("sessionId") String Id,
                                                                       @Query("page") int page,
                                                                       @Query("count") int count);
@@ -120,5 +122,15 @@ public interface IRequest {
     // 3.查询会员首页信息movieApi/user/v1/verify/findUserHomeInfo
     @GET("movieApi/user/v1/verify/findUserHomeInfo")
     Observable<Result<Result2>> findUserHomeInfo(@Header("userId") int userId,
-                                                @Header("sessionId") String sessionId);
+                                                 @Header("sessionId") String sessionId);
+
+    // http://172.17.8.100/movieApi/movie/v1/findMovieListByCinemaId
+    //14.根据影院ID查询该影院当前排期的电影列表
+    @GET("movieApi/movie/v1/findMovieListByCinemaId")
+    Observable<Result<List<CinemaDetailListData>>> findMovieListByCinemaId(@Query("cinemaId") int id);
+
+    //    根据电影ID和影院ID查询电影排期列表
+    //movieApi/movie/v1/findMovieScheduleList
+    @GET("movieApi/movie/v1/findCinemasListByMovieId")
+    Observable<Result<List<CinemaDetailListDataBottom>>> findMovieScheduleList(@Query("movieId") int movieId);
 }

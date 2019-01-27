@@ -311,7 +311,6 @@ public class MyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-
                 Intent openCameraIntent = new Intent(
                         MediaStore.ACTION_IMAGE_CAPTURE);
 
