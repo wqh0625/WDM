@@ -1,12 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button"
+
+    <RelativeLayout
+        android:id="@+id/cinema_detail_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="196dp"
+            android:background="@drawable/bg">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/cinema_detail_image_icon"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/dw"
+                app:roundAsCircle="false"
+                app:roundedCornerRadius="5dp" />
+
+            <TextView
+                android:id="@+id/cinema_detail_text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@id/cinema_detail_image_icon"
+                android:text="CGV电影"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cinema_detail_address"
+                android:layout_width="220dp"
+                android:layout_height="35dp"
+                android:layout_below="@id/cinema_detail_text_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/cinema_detail_image_icon"
+                android:ellipsize="end"
+                android:ems="15"
+                android:maxEms="15"
+                android:text="水电费水电费帝水电费水电费帝水电费水电费帝国时代"
+                android:textColor="#DFCACA" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="45dp"
+                android:layout_toRightOf="@id/cinema_detail_address"
+                android:background="@drawable/com_icon_navigation_default" />
+        </RelativeLayout>
+
+        <recycler.coverflow.RecyclerCoverFlow
+            android:id="@+id/cinema_detail_recy_carousel"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginRight="24dp" />
+
+        <View
+            android:id="@+id/cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/cinema_detail_recy_carousel"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="24dp"
+            android:background="#BBBBBB" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cinema_detail_rec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/cccccc"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="24dp" />
+    </RelativeLayout>
+
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan;
 /**
  * Created by mwqi on 2014/6/8.
  */
+@SuppressWarnings("ALL")
 public class StringUtils {
     public final static String UTF_8 = "UTF-8";
 

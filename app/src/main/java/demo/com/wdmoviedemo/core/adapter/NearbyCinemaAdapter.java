@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -64,7 +65,11 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CinemaDetailActivity.class);
-                intent.putExtra("cinemaID",nearbyData.getId()+"");
+                intent.putExtra("cinemaID", nearbyData.getId());
+                intent.putExtra("address", nearbyData.getAddress());
+                intent.putExtra("imageUrl", nearbyData.getLogo());
+                intent.putExtra("cinameName", nearbyData.getName());
+                Toast.makeText(context, "cinemaId"+nearbyData.getId(), Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
                 context.overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
