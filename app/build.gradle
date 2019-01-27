@@ -61,4 +61,5 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.9'
     implementation files('libs/BaiduLBS_Android.jar')
     implementation project(':SeatTable')
+
 }

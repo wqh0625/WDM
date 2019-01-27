@@ -12,6 +12,7 @@ import demo.com.wdmoviedemo.bean.MyMessageData;
 import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.Result2;
+import demo.com.wdmoviedemo.bean.TicketDetailsData;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -130,7 +131,7 @@ public interface IRequest {
     Observable<Result<List<CinemaDetailListData>>> findMovieListByCinemaId(@Query("cinemaId") int id);
 
     //    根据电影ID和影院ID查询电影排期列表
-    //movieApi/movie/v1/findMovieScheduleList
+    //movieApi/movie/v1/findCinemasListByMovieId
     @GET("movieApi/movie/v1/findCinemasListByMovieId")
-    Observable<Result<List<CinemaDetailListDataBottom>>> findMovieScheduleList(@Query("movieId") int movieId);
+    Observable<Result<List<TicketDetailsData>>> findMovieScheduleList(@Query("movieId") int movieId);
 }

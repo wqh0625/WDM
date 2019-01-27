@@ -65,10 +65,10 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CinemaDetailActivity.class);
-                intent.putExtra("cinemaID", nearbyData.getId());
-                intent.putExtra("address", nearbyData.getAddress());
-                intent.putExtra("imageUrl", nearbyData.getLogo());
-                intent.putExtra("cinameName", nearbyData.getName());
+                intent.putExtra("CcinemaID", nearbyData.getId());
+                intent.putExtra("Caddress", nearbyData.getAddress());
+                intent.putExtra("CimageUrl", nearbyData.getLogo());
+                intent.putExtra("CcinameName", nearbyData.getName());
                 Toast.makeText(context, "cinemaId"+nearbyData.getId(), Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
                 context.overridePendingTransition(R.anim.ac_in, R.anim.ac_out);

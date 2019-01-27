@@ -10,8 +10,8 @@ import io.reactivex.Observable;
  * <p>
  * function:
  */
-public class FindMovieScheduleListPresenter extends BasePresenter {
-    public FindMovieScheduleListPresenter(DataCall consumer) {
+public class FindCinemasListByMovieIdPresenter extends BasePresenter {
+    public FindCinemasListByMovieIdPresenter(DataCall consumer) {
         super(consumer);
     }
 
