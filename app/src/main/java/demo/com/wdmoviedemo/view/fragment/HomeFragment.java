@@ -49,6 +49,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private MyLocationListener myListener = new MyLocationListener();
     private LocationClient mLocationClient = null;
     private RelativeLayout relativeLayout;
+    private int image4 = 3;
     private int image1 = 0;
     private int image2 = 1;
     private int image3 = 2;
@@ -256,6 +257,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.recommend_cinema_linear:
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra("image",image1);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;

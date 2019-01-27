@@ -3,14 +3,21 @@ package demo.com.wdmoviedemo.view.detailsactvity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.qfdqc.views.seattable.SeatTable;
 
+import java.math.BigDecimal;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CheckInActivity extends AppCompatActivity {
 
@@ -41,6 +48,8 @@ public class CheckInActivity extends AppCompatActivity {
     private String beginTime;
     private String endTime;
     private double price;
+    private BigDecimal mPriceWithCalculate;
+    private int selectedTableCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +58,12 @@ public class CheckInActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initData();
         initSeatTable();
+        //初始化影院选座页面对应的影院以及影片信息
+        initChooseMessage();
     }
 
     private void initSeatTable() {
-        seatView.setScreenName(screeningHall+"荧幕");//设置屏幕名称
+        seatView.setScreenName(screeningHall + "荧幕");//设置屏幕名称
         seatView.setMaxSelected(3);//设置最多选中
 
         seatView.setSeatChecker(new SeatTable.SeatChecker() {
@@ -75,12 +86,12 @@ public class CheckInActivity extends AppCompatActivity {
 
             @Override
             public void checked(int row, int column) {
-
+                changePriceWithSelected();
             }
 
             @Override
             public void unCheck(int row, int column) {
-
+                changePriceWithUnSelected();
             }
 
             @Override
@@ -91,6 +102,36 @@ public class CheckInActivity extends AppCompatActivity {
         });
         seatView.setData(10, 15);
 
+
+    }
+
+    private void initChooseMessage() {
+//        String mPrice = "0.1";
+        mPriceWithCalculate = new BigDecimal(price);
+
+    }
+
+    private void changePriceWithSelected() {
+        selectedTableCount++;
+        String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
+        SpannableString spannableString = changTVsize(currentPrice);
+        checkinPrices.setText(spannableString);
+    }
+
+    //取消选座时价格联动
+    private void changePriceWithUnSelected() {
+        selectedTableCount--;
+        String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
+        SpannableString spannableString = changTVsize(currentPrice);
+        checkinPrices.setText(spannableString);
+    }
+
+    public static SpannableString changTVsize(String value) {
+        SpannableString spannableString = new SpannableString(value);
+        if (value.contains(".")) {
+            spannableString.setSpan(new RelativeSizeSpan(0.6f), value.indexOf("."), value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
     }
 
     private void initData() {
@@ -109,5 +150,19 @@ public class CheckInActivity extends AppCompatActivity {
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
         checkinPrices.setText("" + price);
+    }
+
+    @OnClick({R.id.img_confirm, R.id.img_abandon})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_confirm:
+
+                break;
+            case R.id.img_abandon:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }
