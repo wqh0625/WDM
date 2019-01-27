@@ -60,4 +60,5 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-core:5.1'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.9'
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation project(':SeatTable')
 }

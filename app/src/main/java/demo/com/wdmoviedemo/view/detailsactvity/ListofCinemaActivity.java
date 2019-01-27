@@ -38,7 +38,7 @@ public class ListofCinemaActivity extends BaseActivity {
     private int position;
     private ListofCinemaAdapter listofCinemaAdapter;
     private ListofCinemaPresenter listofCinemaPresenter;
-    private String name;
+    private String names;
     private String movieTypes;
     private String director;
     private String duration;
@@ -52,7 +52,7 @@ public class ListofCinemaActivity extends BaseActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         position = intent.getExtras().getInt("position");
-        name = intent.getExtras().getString("name");
+        names = intent.getExtras().getString("name");
         movieTypes = intent.getExtras().getString("movieTypes");
         imageUrl = intent.getExtras().getString("imageUrl");
         director = intent.getExtras().getString("director");
@@ -62,7 +62,7 @@ public class ListofCinemaActivity extends BaseActivity {
     }
 
     private void initData() {
-        listTxtName.setText(name);
+        listTxtName.setText(names);
         listofCinemaAdapter = new ListofCinemaAdapter(this);
         listRecyItem.setAdapter(listofCinemaAdapter);
         listRecyItem.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -71,11 +71,12 @@ public class ListofCinemaActivity extends BaseActivity {
         //接口回调传值
         listofCinemaAdapter.setOnListofCinemaListener(new ListofCinemaAdapter.OnListofCinemaListener() {
             @Override
-            public void onList(int position, int id, String name,String address) {
+            public void onList(int id, String name,String address) {
                 Intent intent = new Intent(ListofCinemaActivity.this,TicketDetailsActivity.class);
                 intent.putExtra("position",position);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
+                intent.putExtra("names",names);
                 intent.putExtra("address",address);
                 intent.putExtra("imageUrl",imageUrl);
                 intent.putExtra("movieTypes",movieTypes);

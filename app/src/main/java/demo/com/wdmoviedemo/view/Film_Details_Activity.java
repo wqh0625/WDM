@@ -110,6 +110,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private void initData() {
         searchPresenter = new SearchPresenter(new SearchCall());
         searchPresenter.requestNet(position);
+        filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
+        filmDetailsPresenter.requestNet(position);
     }
 
     class SearchCall implements DataCall<Result<FilmDetailsData>>{
@@ -204,10 +206,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 activityDetailsRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-                filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
-
-                filmDetailsPresenter.requestNet(position);
-
 
                 //设置关闭popupWindow的点击事件
                 activityDetailsBack.setOnClickListener(new View.OnClickListener() {
@@ -239,10 +237,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 activityPredictionPopwindowRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-                filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
-
-
-                filmDetailsPresenter.requestNet(position);
+//                filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
+//
+//
+//                filmDetailsPresenter.requestNet(position);
 
                 //设置关闭popupWindow的点击事件
                 activityPredictionPopwindowDown.setOnClickListener(new View.OnClickListener() {
@@ -348,12 +346,12 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //设置popupWindow内部的数据
                 Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 FilmDetailsData result = data.getResult();
-                //activityDetailsSimpledraweeview.setImageURI(result.getImageUrl());
                 movieTypes = result.getMovieTypes();
                 director = result.getDirector();
                 duration = result.getDuration();
                 placeOrigin = result.getPlaceOrigin();
                 summary = result.getSummary();
+//                activityDetailsSimpledraweeview.setImageURI(imageUrl);
                 activityDetailsType.setText("类型:"+movieTypes );
                 popwindowDetailsDirect.setText("导演:"+ director);
                 activityDetailsTime.setText("时长:"+duration );

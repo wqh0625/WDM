@@ -3,17 +3,27 @@ package demo.com.wdmoviedemo.view.detailsactvity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.TicketDetailsData;
+import demo.com.wdmoviedemo.core.adapter.TicketDetailsAdapter;
+import demo.com.wdmoviedemo.core.exception.ApiException;
+import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.TicketPresenter;
 
 public class TicketDetailsActivity extends AppCompatActivity {
 
@@ -48,6 +58,9 @@ public class TicketDetailsActivity extends AppCompatActivity {
     private String placeOrigin;
     private String address;
     private String imageUrl;
+    private TicketDetailsAdapter ticketDetailsAdapter;
+    private TicketPresenter ticketPresenter;
+    private String names;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +72,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
         position = intent.getExtras().getInt("position");
         id = intent.getExtras().getInt("id");
         name = intent.getExtras().getString("name");
+        names = intent.getExtras().getString("names");
         address = intent.getExtras().getString("address");
         imageUrl = intent.getExtras().getString("imageUrl");
         movieTypes = intent.getExtras().getString("movieTypes");
@@ -69,23 +83,62 @@ public class TicketDetailsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-    //赋值
+        //赋值
         ticketName.setText(name);
         ticketAddress.setText(address);
         ticketSdvImage.setImageURI(imageUrl);
-        ticketTxtMovieTypes.setText(movieTypes);
-        ticketTxtDirector.setText(director);
-        ticketTxtDuration.setText(duration);
-        ticketTxtPlaceOrigin.setText(placeOrigin);
+        ticketTxtName.setText(names);
+        ticketTxtMovieTypes.setText("类型："+movieTypes);
+        ticketTxtDirector.setText("导演："+director);
+        ticketTxtDuration.setText("时长："+duration);
+        ticketTxtPlaceOrigin.setText("产地："+placeOrigin);
+        ticketDetailsAdapter = new TicketDetailsAdapter(this);
+        ticketRecy.setAdapter(ticketDetailsAdapter);
+        ticketRecy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        ticketPresenter = new TicketPresenter(new TicketCall());
+        ticketPresenter.requestNet(position,id);
+
+        //接口回调传值跳转选座页
+        ticketDetailsAdapter.setOnImageClickLisener(new TicketDetailsAdapter.OnImageClickLisener() {
+            @Override
+            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price) {
+                Intent intent = new Intent(TicketDetailsActivity.this,CheckInActivity.class);
+                intent.putExtra("name",name);
+                intent.putExtra("address",address);
+                intent.putExtra("names",names);
+                intent.putExtra("ScreeningHall",ScreeningHall);
+                intent.putExtra("BeginTime",BeginTime);
+                intent.putExtra("EndTime",EndTime);
+                intent.putExtra("Price",Price);
+                startActivity(intent);
+            }
+        });
+    }
+    class TicketCall implements DataCall<Result<List<TicketDetailsData>>>{
+
+        @Override
+        public void success(Result<List<TicketDetailsData>> data) {
+            if (data.getStatus().equals("0000")){
+                ticketDetailsAdapter.addAll(data.getResult());
+                ticketDetailsAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+        }
     }
 
     @OnClick({R.id.ticket_image, R.id.ticket_image_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ticket_image:
+
                 break;
             case R.id.ticket_image_back:
                 finish();
+                break;
+            default:
                 break;
         }
     }

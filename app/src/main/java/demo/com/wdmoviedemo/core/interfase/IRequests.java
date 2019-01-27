@@ -9,6 +9,7 @@ import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.ReviewData;
 import demo.com.wdmoviedemo.bean.SearchData;
+import demo.com.wdmoviedemo.bean.TicketDetailsData;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -47,12 +48,18 @@ public interface IRequests {
  //查询电影评论
  @GET("movieApi/movie/v1/findAllMovieComment")
  Observable<Result<List<ReviewData>>> getReciew(@Query("movieId") int movieId,
-                                          @Query("page")int page,
-                                          @Query("count")int count);
+                                                @Query("page")int page,
+                                                @Query("count")int count);
 
  //电影详情影院
  @GET("movieApi/movie/v1/findCinemasListByMovieId")
  Observable<Result<List<ListofCinemaData>>> getListofCinema(@Query("movieId") int movieId);
+
+
+ //电影id和影院id查询电影信息
+ @GET("movieApi/movie/v1/findMovieScheduleList")
+ Observable<Result<List<TicketDetailsData>>> getTicketDetails(@Query("movieId") int movieId,
+                                                              @Query("cinemasId")int cinemasId);
 
 
 }

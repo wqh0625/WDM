@@ -19,7 +19,7 @@ import demo.com.wdmoviedemo.bean.ListofCinemaData;
 /**
  * date: 2019/1/26.
  * Created 王思敏
- * function:
+ * function:电影相关影院
  */
 public class ListofCinemaAdapter extends RecyclerView.Adapter<ListofCinemaAdapter.ViewHolder> {
     private Context context;
@@ -31,9 +31,11 @@ public class ListofCinemaAdapter extends RecyclerView.Adapter<ListofCinemaAdapte
     }
     //接口回调
     public interface OnListofCinemaListener{
-        void onList(int position,int id,String name,String address);
+        void onList(int id,String name,String address);
     }
+
     public OnListofCinemaListener mOnListofCinemaListener;
+
     public void setOnListofCinemaListener(OnListofCinemaListener onListofCinemaListener){
         mOnListofCinemaListener = onListofCinemaListener;
     }
@@ -58,7 +60,7 @@ public class ListofCinemaAdapter extends RecyclerView.Adapter<ListofCinemaAdapte
                 String name = list.get(i).getName();
                 String address = list.get(i).getAddress();
                 if (mOnListofCinemaListener !=null){
-                    mOnListofCinemaListener.onList(i,id,name,address);
+                    mOnListofCinemaListener.onList(id,name,address);
                 }
 
             }

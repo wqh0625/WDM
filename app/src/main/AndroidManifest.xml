@@ -50,7 +50,8 @@
         <activity android:name="demo.com.wdmoviedemo.view.Film_Details_Activity" />
         <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.ListofCinemaActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity"></activity>
+        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity" />
+        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.CheckInActivity"></activity>
     </application>
 
 </manifest>
