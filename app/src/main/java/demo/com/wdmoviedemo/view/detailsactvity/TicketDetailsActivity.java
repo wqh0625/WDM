@@ -88,37 +88,38 @@ public class TicketDetailsActivity extends AppCompatActivity {
         ticketAddress.setText(address);
         ticketSdvImage.setImageURI(imageUrl);
         ticketTxtName.setText(names);
-        ticketTxtMovieTypes.setText("类型："+movieTypes);
-        ticketTxtDirector.setText("导演："+director);
-        ticketTxtDuration.setText("时长："+duration);
-        ticketTxtPlaceOrigin.setText("产地："+placeOrigin);
+        ticketTxtMovieTypes.setText("类型：" + movieTypes);
+        ticketTxtDirector.setText("导演：" + director);
+        ticketTxtDuration.setText("时长：" + duration);
+        ticketTxtPlaceOrigin.setText("产地：" + placeOrigin);
         ticketDetailsAdapter = new TicketDetailsAdapter(this);
         ticketRecy.setAdapter(ticketDetailsAdapter);
-        ticketRecy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        ticketRecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         ticketPresenter = new TicketPresenter(new TicketCall());
-        ticketPresenter.requestNet(position,id);
+        ticketPresenter.requestNet(position, id);
 
         //接口回调传值跳转选座页
         ticketDetailsAdapter.setOnImageClickLisener(new TicketDetailsAdapter.OnImageClickLisener() {
             @Override
             public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price) {
-                Intent intent = new Intent(TicketDetailsActivity.this,CheckInActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("address",address);
-                intent.putExtra("names",names);
-                intent.putExtra("ScreeningHall",ScreeningHall);
-                intent.putExtra("BeginTime",BeginTime);
-                intent.putExtra("EndTime",EndTime);
-                intent.putExtra("Price",Price);
+                Intent intent = new Intent(TicketDetailsActivity.this, CheckInActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("address", address);
+                intent.putExtra("names", names);
+                intent.putExtra("ScreeningHall", ScreeningHall);
+                intent.putExtra("BeginTime", BeginTime);
+                intent.putExtra("EndTime", EndTime);
+                intent.putExtra("Price", Price);
                 startActivity(intent);
             }
         });
     }
-    class TicketCall implements DataCall<Result<List<TicketDetailsData>>>{
+
+    class TicketCall implements DataCall<Result<List<TicketDetailsData>>> {
 
         @Override
         public void success(Result<List<TicketDetailsData>> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 ticketDetailsAdapter.addAll(data.getResult());
                 ticketDetailsAdapter.notifyDataSetChanged();
             }

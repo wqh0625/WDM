@@ -48,6 +48,11 @@ public class CheckInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check_in);
         ButterKnife.bind(this);
         initData();
+        initSeatTable();
+    }
+
+    private void initSeatTable() {
+        
     }
 
     private void initData() {
@@ -65,6 +70,6 @@ public class CheckInActivity extends AppCompatActivity {
         checkinScreeningHall.setText(screeningHall);
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
-        checkinPrices.setText(""+price);
+        checkinPrices.setText("" + price);
     }
 }
