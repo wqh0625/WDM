@@ -3,6 +3,7 @@ package com.bw.movie.wxapi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 	private IWXAPI api;
 
 	private TextView payResult;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 		//LogUtils.e("com.bw.movie.wxapi包哈哈哈啊");
 
 		//payResult = findViewById(R.id.pay_result);
-
+		payResult = findViewById(R.id.paytext);
 		api = WXAPIFactory.createWXAPI(this, "wxb3852e6a6b7d9516");
 		api.handleIntent(getIntent(), this);
 	}
@@ -40,6 +40,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 
 	@Override
 	public void onReq(BaseReq req) {
+
 	}
 
 	@Override

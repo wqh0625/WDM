@@ -51,7 +51,12 @@
         <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.ListofCinemaActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.CheckInActivity"></activity>
+        <!-- 微信支付 -->
+        <activity
+            android:name="com.bw.movie.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
 
     </application>
 
