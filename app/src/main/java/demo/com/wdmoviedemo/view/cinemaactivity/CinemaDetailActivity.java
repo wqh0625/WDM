@@ -1,6 +1,7 @@
 package demo.com.wdmoviedemo.view.cinemaactivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -92,6 +93,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private ReviewPresenter reviewPresenter;
     private ViewPager vp;
     private List<Fragment> fragments;
+    private View xqV, plV;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -184,10 +186,9 @@ public class CinemaDetailActivity extends BaseActivity {
                 activityReviewPopwindowDown = view4.findViewById(R.id.fragment_review_popwindow_down);
 
 
-
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
-                initPow(view4);
+//                initPow(view4);
                 //设置关闭popupWindow的点击事件
                 activityReviewPopwindowDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -203,9 +204,12 @@ public class CinemaDetailActivity extends BaseActivity {
 
     private void initPow(View view4) {
         vp = view4.findViewById(R.id.fragment_details_vp);
+        xqV = view4.findViewById(R.id.fragment_details_v);
+        plV = view4.findViewById(R.id.fragment_details_vv);
         fragments = new ArrayList<>();
         fragments.add(new CinemaDetailsXqFragment());
         fragments.add(new CinemaDetailsPlFragment());
+        ChangeBackGround(0);
         vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -225,7 +229,7 @@ public class CinemaDetailActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
-//                ChangeBackGround(i);
+                ChangeBackGround(i);
             }
 
             @Override
@@ -235,19 +239,11 @@ public class CinemaDetailActivity extends BaseActivity {
         });
     }
 
-    class ReviewCall implements DataCall<Result<List<ReviewData>>> {
-
-        @Override
-        public void success(Result<List<ReviewData>> data) {
-            if (data.getStatus().equals("0000")) {
-                reviewAdapter.addAll(data.getResult());
-                reviewAdapter.notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void fail(ApiException a) {
-        }
+    private void ChangeBackGround(int index) {
+        //
+        xqV.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
+        //
+        plV.setVisibility(index == 1 ? View.VISIBLE : View.GONE);
     }
 
     class find implements DataCall<Result<List<CinemaDetailListData>>> {

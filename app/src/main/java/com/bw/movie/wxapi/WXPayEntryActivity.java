@@ -1,0 +1,50 @@
+package com.bw.movie.wxapi;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.bw.movie.R;
+
+import demo.com.wdmoviedemo.bean.Result;
+
+public class WXPayEntryActivity extends Activity  {
+
+//    private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
+//implements IWXAPIEventHandler
+//    private IWXAPI api;
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.pay_result);
+//
+//        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
+//        api.handleIntent(getIntent(), this);
+//    }
+//
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        setIntent(intent);
+//        api.handleIntent(intent, this);
+//    }
+//
+//    @Override
+//    public void onReq(Result req) {
+//    }
+//
+//    @Override
+//    public void onResp(Result resp) {
+//        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+//
+//        if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle(R.string.app_tip);
+//            builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));
+//            builder.show();
+//        }
+//    }
+}

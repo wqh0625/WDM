@@ -2,6 +2,8 @@ package demo.com.wdmoviedemo.view.fragment.fcdetail;
 
 import android.view.View;
 
+import com.bw.movie.R;
+
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 
 /**
@@ -13,7 +15,7 @@ import demo.com.wdmoviedemo.core.base.BaseFragment;
 public class CinemaDetailsXqFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.fragment_cinema_details_xq;
     }
 
     @Override
