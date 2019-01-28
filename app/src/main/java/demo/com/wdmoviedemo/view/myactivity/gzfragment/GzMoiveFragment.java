@@ -28,8 +28,6 @@ import demo.com.wdmoviedemo.presenter.FindMoviePageListPresenter;
 
 public class GzMoiveFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
-    private int userId;
-    private String sessionId;
     @BindView(R.id.gzmovie_rec)
     XRecyclerView rec;
     private FindMoviePageListPresenter findMoviePageListPresenter;
@@ -48,6 +46,7 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
 
         gzMovieAdapter = new GzMovieAdapter(getActivity());
         rec.setAdapter(gzMovieAdapter);
+
         findMoviePageListPresenter = new FindMoviePageListPresenter(new find());
         findMoviePageListPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), true);
     }
@@ -55,14 +54,8 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
     @Override
     public void onResume() {
         super.onResume();
-        userId = userInfoBean.getUserId();
-        sessionId = userInfoBean.getSessionId();
-        if (sessionId.length() > 0 && userId != 0) {
-            rec.refresh();
-        } else {
-            userId = 0;
-            sessionId = "";
-        }
+
+
     }
 
     @Override
@@ -73,7 +66,7 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-        findMoviePageListPresenter.requestNet(userId, sessionId, true);
+        findMoviePageListPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), true);
     }
 
     @Override
@@ -94,6 +87,9 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
             rec.loadMoreComplete();
             Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
+                if (data.getResult().size() == 0) {
+                    return;
+                }
                 gzMovieAdapter.setListData(data.getResult());
                 gzMovieAdapter.notifyDataSetChanged();
             }

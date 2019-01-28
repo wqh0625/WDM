@@ -48,13 +48,6 @@
             android:textColor="#333"
             android:textSize="14sp" />
 
-        <RadioButton
-            android:id="@+id/wxzf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ay_pop_down"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp" />
 
         <ImageView
             android:id="@+id/zfb"
@@ -76,12 +69,31 @@
             android:textColor="#333"
             android:textSize="14sp" />
 
-        <RadioButton
+
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/wxzf"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp" />
+            android:layout_alignEnd="@+id/ay_pop_down"
+            android:layout_alignBottom="@+id/zfb"
+            android:layout_marginRight="-15dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/wxzf_Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ay_pop_down"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp" />
+
+            <RadioButton
+                android:id="@+id/zfb_Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wxzf_Btn"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/xiadan"

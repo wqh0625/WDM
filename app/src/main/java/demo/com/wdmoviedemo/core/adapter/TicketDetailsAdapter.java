@@ -32,7 +32,7 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
     }
 
     public interface OnImageClickLisener {
-        void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price);
+        void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price,int id);
     }
 
     public OnImageClickLisener mOnImageClickLisener;
@@ -61,9 +61,10 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
                 String screeningHall = list.get(i).getScreeningHall();
                 String beginTime = list.get(i).getBeginTime();
                 String endTime = list.get(i).getEndTime();
+                int id = list.get(i).getId();
                 double price = list.get(i).getPrice();
                 if (mOnImageClickLisener != null) {
-                    mOnImageClickLisener.onImageClick(screeningHall, beginTime, endTime, price);
+                    mOnImageClickLisener.onImageClick(screeningHall, beginTime, endTime, price,id);
                 }
             }
         });

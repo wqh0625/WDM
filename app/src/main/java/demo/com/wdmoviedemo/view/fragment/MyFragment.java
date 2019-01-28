@@ -131,6 +131,7 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
                 startActivity(new Intent(getActivity(), My_Messiage_Activity.class));
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_aixin) {
             if (userInfoBean.getUserId() == 0) {

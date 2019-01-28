@@ -23,9 +23,9 @@ public class ActornameAdapter extends RecyclerView.Adapter<ActornameAdapter.View
     private Context context;
     private List<FilmDetailsData> list;
 
-    public ActornameAdapter(Context context, List<FilmDetailsData> list) {
+    public ActornameAdapter(Context context) {
         this.context = context;
-        this.list = list;
+        this.list = new ArrayList<>();
     }
 
     @NonNull

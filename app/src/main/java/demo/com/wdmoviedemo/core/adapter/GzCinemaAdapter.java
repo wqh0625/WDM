@@ -27,7 +27,9 @@ public class GzCinemaAdapter extends RecyclerView.Adapter<GzCinemaAdapter.Vh> {
     private List<FindCinemaPageListData> listData;
 
     public void setListData(List<FindCinemaPageListData> listData) {
-        this.listData = listData;
+        if (listData != null) {
+            this.listData.addAll(listData);
+        }
     }
 
     public GzCinemaAdapter(Context context ) {

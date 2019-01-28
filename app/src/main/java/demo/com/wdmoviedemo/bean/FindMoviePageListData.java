@@ -7,7 +7,7 @@ package demo.com.wdmoviedemo.bean;
 
 public class FindMoviePageListData {
     private int id;
-    private String imageurl;
+    private String imageUrl;
     private String name;
     private long releasetime;
     private String summary;
@@ -20,12 +20,12 @@ public class FindMoviePageListData {
         this.id = id;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {

@@ -29,6 +29,7 @@ import demo.com.wdmoviedemo.bean.LoginData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
+import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.utils.EncryptUtil;
@@ -143,11 +144,14 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_register:
                 // 进入注册页
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.iv_wx:
                 // 微信登录
 
+                break;
+            default:
                 break;
         }
     }
@@ -173,6 +177,10 @@ public class LoginActivity extends BaseActivity {
 
                 // 添加数据库
                 try {
+//                    DbManager dbManager = new DbManager(LoginActivity.this);
+//                    List<UserInfoBean> student = dbManager.getStudent();
+//                    int iss = dbManager.deleteStudentByS(student.get(0));
+//                    Toast.makeText(LoginActivity.this, "删除" + iss, Toast.LENGTH_SHORT).show();
                     addUser(userInfoBean);
                 } catch (SQLException e) {
                     e.printStackTrace();

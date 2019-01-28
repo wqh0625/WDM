@@ -100,7 +100,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private String imageUrl;
     private ImageView listImageBack;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +115,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         searchPresenter.requestNet(position);
         filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
         filmDetailsPresenter.requestNet(position);
-        filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
+        filmDetailsPresenter = new FilmDetailsPresenter(new PredictionCall());
         filmDetailsPresenter.requestNet(position);
     }
 
@@ -196,7 +195,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
 
                 //获取PopupWindow获取控件
-                activityDetailsSimpledraweeview = view1.findViewById(R.id.activity_details_simpledraweeview);
+                activityDetailsSimpledraweeview = view1.findViewById(R.id.activity_details_simpledraweeviewiiii);
                 activityDetailsRole = view1.findViewById(R.id.activity_details_role);
                 activityDetailsType = view1.findViewById(R.id.activity_details_type);
                 activityDetailsTime = view1.findViewById(R.id.activity_details_time);
@@ -318,27 +317,27 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                     }
                 });
                 //写评价弹框
-                listImageBack.setOnClickListener(new View.OnClickListener() {
-
-                    private TextView btnSend;
-                    private EditText etContent;
-
-                    @Override
-                    public void onClick(View view) {
-                        View rootview5= LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-                        View view5 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.actvity_evaluate_popwindow, null, false);
-                        final PopupWindow popupWindow5 = new PopupWindow(view5);
-                        //设置充满父窗体
-                        popupWindow5.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                        popupWindow5.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-                        popupWindow5.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-                        //设置布局
-                        popupWindow5.setContentView(view5);
-                        etContent = view5.findViewById(R.id.et_content);
-                        btnSend = view5.findViewById(R.id.btn_send);
-                        popupWindow5.showAtLocation(rootview5, Gravity.BOTTOM, 0, 0);
-                    }
-                });
+//                listImageBack.setOnClickListener(new View.OnClickListener() {
+//
+//                    private TextView btnSend;
+//                    private EditText etContent;
+//
+//                    @Override
+//                    public void onClick(View view) {
+//                        View rootview5= LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
+//                        View view5 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.actvity_evaluate_popwindow, null, false);
+//                        final PopupWindow popupWindow5 = new PopupWindow(view5);
+//                        //设置充满父窗体
+//                        popupWindow5.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+//                        popupWindow5.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+//                        popupWindow5.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
+//                        //设置布局
+//                        popupWindow5.setContentView(view5);
+////                        etContent = view5.findViewById(R.id.et_content);
+////                        btnSend = view5.findViewById(R.id.btn_send);
+//                        popupWindow5.showAtLocation(rootview5, Gravity.BOTTOM, 0, 0);
+//                    }
+//                });
 
                 break;
             case R.id.details_image_back:
@@ -369,15 +368,12 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     class FilmDetailsCall implements DataCall<Result<FilmDetailsData>> {
 
 
-//        private String imageUrl;
-
         @Override
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")) {
                 //设置popupWindow内部的数据
                 Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 FilmDetailsData result = data.getResult();
-//                imageUrl = result.getImageUrl();
                 movieTypes = result.getMovieTypes();
                 director = result.getDirector();
                 duration = result.getDuration();
@@ -388,10 +384,34 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
                 predictionAdapter.addAll(shortFilmList);
                 predictionAdapter.notifyDataSetChanged();
+
                 //剧照
                 List<String> posterList = result.getPosterList();
                 stillsAdapter.addAll(posterList);
                 stillsAdapter.notifyDataSetChanged();
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+    //预告片
+    class PredictionCall implements DataCall<Result<FilmDetailsData>> {
+
+
+        @Override
+        public void success(Result<FilmDetailsData> data) {
+            if (data.getStatus().equals("0000")) {
+                //设置popupWindow内部的数据
+                Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+                FilmDetailsData result = data.getResult();
+                //预告
+                List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
+                predictionAdapter.addAll(shortFilmList);
+                predictionAdapter.notifyDataSetChanged();
 
             }
         }
@@ -420,7 +440,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         }
     }
 
-    //影评
     class ReviewCall implements DataCall<Result<List<ReviewData>>> {
 
         @Override

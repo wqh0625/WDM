@@ -123,7 +123,7 @@ public class CinemaDetailActivity extends BaseActivity {
         //接口回调传值跳转选座页
         ticketDetailsAdapter.setOnImageClickLisener(new TicketDetailsAdapter.OnImageClickLisener() {
             @Override
-            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price) {
+            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price,int id) {
                 Intent intent = new Intent(CinemaDetailActivity.this, CheckInActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("address", address);
@@ -132,6 +132,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 intent.putExtra("BeginTime", BeginTime);
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
+                intent.putExtra("Id",id);
                 startActivity(intent);
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }

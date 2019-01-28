@@ -1,7 +1,6 @@
 package demo.com.wdmoviedemo.core.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import demo.com.wdmoviedemo.bean.FindMoviePageListData;
 import demo.com.wdmoviedemo.core.utils.ToDate;
@@ -28,10 +26,12 @@ public class GzMovieAdapter extends RecyclerView.Adapter<GzMovieAdapter.Vh> {
     private List<FindMoviePageListData> listData;
 
     public void setListData(List<FindMoviePageListData> listData) {
-        this.listData = listData;
+        if (listData != null) {
+            this.listData.addAll(listData);
+        }
     }
 
-    public GzMovieAdapter(Context context ) {
+    public GzMovieAdapter(Context context) {
         this.context = context;
         this.listData = new ArrayList<>();
     }
@@ -39,18 +39,19 @@ public class GzMovieAdapter extends RecyclerView.Adapter<GzMovieAdapter.Vh> {
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = View.inflate(context, R.layout.adapter_movie_item,null);
+        View view = View.inflate(context, R.layout.adapter_movie_item, null);
         return new Vh(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
         FindMoviePageListData findMoviePageListData = listData.get(i);
-//        vh.image.setImageURI(Uri.parse(findMoviePageListData.getImageurl()));
+        String imageurl = findMoviePageListData.getImageUrl();
+        vh.image.setImageURI(imageurl);
         String timedate = ToDate.timedate(findMoviePageListData.getReleasetime());
-        vh.date.setText(timedate);
-        vh.title.setText(findMoviePageListData.getName());
-        vh.xq.setText(findMoviePageListData.getSummary());
+        vh.date.setText(timedate + "");
+        vh.title.setText(findMoviePageListData.getName() + "");
+        vh.xq.setText(findMoviePageListData.getSummary() + "");
     }
 
     @Override
@@ -61,7 +62,7 @@ public class GzMovieAdapter extends RecyclerView.Adapter<GzMovieAdapter.Vh> {
     public class Vh extends RecyclerView.ViewHolder {
 
         private final SimpleDraweeView image;
-        private final TextView title,xq,date;
+        private final TextView title, xq, date;
 
 
         public Vh(@NonNull View itemView) {

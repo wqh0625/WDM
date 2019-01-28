@@ -12,7 +12,7 @@
         android:background="@drawable/the_film_details_shape" />
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/activity_details_simpledraweeview"
+        android:id="@+id/activity_details_simpledraweeviewiiii"
         android:layout_marginTop="66dp"
         android:layout_width="111dp"
         android:layout_height="149dp"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="#333333"
-        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_toRightOf="@id/activity_details_simpledraweeviewiiii"
         android:text="类型"/>
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="#333333"
-        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_toRightOf="@id/activity_details_simpledraweeviewiiii"
         android:layout_below="@id/activity_details_type"
         android:text="导演"/>
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="#333333"
-        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_toRightOf="@id/activity_details_simpledraweeviewiiii"
         android:layout_below="@id/popwindow_details_direct"
         android:text="时长"/>
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="#333333"
-        android:layout_toRightOf="@id/activity_details_simpledraweeview"
+        android:layout_toRightOf="@id/activity_details_simpledraweeviewiiii"
         android:layout_below="@id/activity_details_time"
         android:text="产地"/>
 
@@ -83,7 +83,7 @@
         android:text="剧情简介"
         android:textColor="#333333"
         android:textSize="16sp"
-        android:layout_below="@id/activity_details_simpledraweeview"/>
+        android:layout_below="@id/activity_details_simpledraweeviewiiii"/>
 
     <View
         android:id="@+id/view"

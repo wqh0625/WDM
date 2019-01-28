@@ -29,6 +29,7 @@ public class DbManager {
     public void insertStudent(UserInfoBean student) throws SQLException {
         //在数据库中创建一条记录，作用与SQLiteDatabase.insert一样
         dao.createOrUpdate(student);
+
     }
 
     /**
