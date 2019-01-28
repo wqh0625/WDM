@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context="demo.com.wdmoviedemo.view.Film_Details_Activity"
     android:background="@drawable/details_details"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
@@ -47,7 +49,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/details_sdv_image"
         android:layout_width="259dp"
-        android:layout_height="345dp"
+        android:layout_height="330dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
         />
@@ -101,7 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/details_transparent">
         <ImageView
             android:id="@+id/details_image_back"
