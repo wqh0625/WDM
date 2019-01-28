@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context="demo.com.wdmoviedemo.view.Film_Details_Activity"
     android:background="@drawable/details_details"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"

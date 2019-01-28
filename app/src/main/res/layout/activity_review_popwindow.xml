@@ -43,4 +43,18 @@
             android:layout_marginTop="60dp"
             ></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="right"
+        android:background="@drawable/home_lucency"
+        android:layout_alignParentBottom="true">
+        <ImageView
+            android:id="@+id/list_image_back"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:src="@drawable/com_icon_publish_default" />
+    </LinearLayout>
 </RelativeLayout>
