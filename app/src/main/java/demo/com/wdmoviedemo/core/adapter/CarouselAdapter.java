@@ -27,7 +27,6 @@ import demo.com.wdmoviedemo.core.utils.ToDate;
  * function:正在热映
  */
 public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHolder> {
-    public static final String FORMAT_DATE_TIME_PATTERN = "mm";
     private Context context;
     private List<CarouselData> list;
 
@@ -58,12 +57,8 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
         viewHolder.txtName.setText(list.get(i).getName());
-        //转换成日期格式
-        long releaseTime = list.get(i).getReleaseTime();
 
-        String s1 = ToDate.formatTimeS(releaseTime);
 
-        viewHolder.txtTime.setText(s1+"分钟");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,13 +87,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.ViewHo
 
         private final SimpleDraweeView sdvImage;
         private final TextView txtName;
-        private final TextView txtTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdvImage = itemView.findViewById(R.id.home_sdv_image);
             txtName = itemView.findViewById(R.id.home_txt_name);
-            txtTime = itemView.findViewById(R.id.home_txt_time);
         }
     }
 }
