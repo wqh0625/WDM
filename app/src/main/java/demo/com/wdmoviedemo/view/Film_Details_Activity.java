@@ -317,27 +317,27 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                     }
                 });
                 //写评价弹框
-                listImageBack.setOnClickListener(new View.OnClickListener() {
-
-                    private TextView btnSend;
-                    private EditText etContent;
-
-                    @Override
-                    public void onClick(View view) {
-                        View rootview5= LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-                        View view5 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.actvity_evaluate_popwindow, null, false);
-                        final PopupWindow popupWindow5 = new PopupWindow(view5);
-                        //设置充满父窗体
-                        popupWindow5.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                        popupWindow5.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-                        popupWindow5.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-                        //设置布局
-                        popupWindow5.setContentView(view5);
-//                        etContent = view5.findViewById(R.id.et_content);
-//                        btnSend = view5.findViewById(R.id.btn_send);
-                        popupWindow5.showAtLocation(rootview5, Gravity.BOTTOM, 0, 0);
-                    }
-                });
+//                listImageBack.setOnClickListener(new View.OnClickListener() {
+//
+//                    private TextView btnSend;
+//                    private EditText etContent;
+//
+//                    @Override
+//                    public void onClick(View view) {
+//                        View rootview5= LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
+//                        View view5 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.actvity_evaluate_popwindow, null, false);
+//                        final PopupWindow popupWindow5 = new PopupWindow(view5);
+//                        //设置充满父窗体
+//                        popupWindow5.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+//                        popupWindow5.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+//                        popupWindow5.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
+//                        //设置布局
+//                        popupWindow5.setContentView(view5);
+////                        etContent = view5.findViewById(R.id.et_content);
+////                        btnSend = view5.findViewById(R.id.btn_send);
+//                        popupWindow5.showAtLocation(rootview5, Gravity.BOTTOM, 0, 0);
+//                    }
+//                });
 
                 break;
             case R.id.details_image_back:
