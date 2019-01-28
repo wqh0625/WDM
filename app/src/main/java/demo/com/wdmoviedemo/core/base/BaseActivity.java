@@ -15,6 +15,7 @@ import com.baidu.location.LocationClientOption;
 import java.sql.SQLException;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.utils.MyApp;
@@ -48,6 +49,7 @@ public  class BaseActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        ButterKnife.bind(this);
     }
 
     // 删除数据

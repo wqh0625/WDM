@@ -20,6 +20,7 @@ import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+
 import demo.com.wdmoviedemo.core.utils.WeiXinUtil;
 import demo.com.wdmoviedemo.presenter.WxLoginPresenter;
 import demo.com.wdmoviedemo.view.HomeActivity;
