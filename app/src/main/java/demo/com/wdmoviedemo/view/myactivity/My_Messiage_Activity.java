@@ -53,8 +53,7 @@ public class My_Messiage_Activity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_message_);
-
-
+        ButterKnife.bind(this);
         myMessagePresenter = new MyMessagePresenter(new mymesage());
         myMessagePresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
 
@@ -66,11 +65,31 @@ public class My_Messiage_Activity extends BaseActivity {
 //            Toast.makeText(My_Messiage_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 MyMessageData result = data.getResult();
-                t_phone.setText(result.getPhone());
-                t_mail.setText(result.getEmail());
-                String timedate = ToDate.timedate(result.getBirthday());
-                t_date.setText("" + timedate);
-                t_header.setImageURI(Uri.parse(result.getHeadPic()));
+                if (result.getPhone() == null) {
+                    t_phone.setText("手机号");
+                }else{
+                    t_phone.setText(result.getPhone()+"");
+                }
+                if (result.getEmail() == null) {
+                    t_mail.setText("邮箱");
+                }else{
+                    t_mail.setText(result.getEmail()+"");
+                }
+
+                if (result.getBirthday() == 0) {
+                    String timedate = ToDate.timedate(result.getBirthday());
+                    t_date.setText("日期");
+                }else{
+                    String timedate = ToDate.timedate(result.getBirthday());
+                    t_date.setText("" + timedate);
+                }
+
+                if (!result.getHeadPic().contains(".")) {
+                    t_header.setImageURI(result.getHeadPic()+".png");
+                }else{
+                    t_header.setImageURI(result.getHeadPic());
+
+                }
                 t_name.setText(result.getNickName());
                 int s = result.getSex();
 
@@ -87,15 +106,15 @@ public class My_Messiage_Activity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.back_image)
-    void o() {
-        finish();//关闭页面
-        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
-    }
-
-    @OnClick(R.id.go_updapwd)
-    void update_pwd() {
-        startActivity(new Intent(My_Messiage_Activity.this, UpdatePwd_Activity.class));
+    @OnClick({R.id.go_updapwd,R.id.back_image})
+    void update_pwd(View v) {
+        if (v.getId()== R.id.go_updapwd) {
+            startActivity(new Intent(My_Messiage_Activity.this, UpdatePwd_Activity.class));
+            overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+        }else if(v.getId()==R.id.back_image){
+            finish();//关闭页面
+            overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+        }
     }
 
     @Override
