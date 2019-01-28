@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +98,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private String placeOrigin;
     private String summary;
     private String imageUrl;
-
+    private ImageView listImageBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +114,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         searchPresenter = new SearchPresenter(new SearchCall());
         searchPresenter.requestNet(position);
         filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
+        filmDetailsPresenter.requestNet(position);
+        filmDetailsPresenter = new FilmDetailsPresenter(new PredictionCall());
         filmDetailsPresenter.requestNet(position);
     }
 
@@ -133,7 +138,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-
+            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -293,6 +298,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow4.setContentView(view4);
                 activityReviewPopwindowDown = view4.findViewById(R.id.activity_review_popwindow_down);
                 activityreviewpopwindowrecy = view4.findViewById(R.id.activity_review_popwindow_recy);
+                listImageBack = view4.findViewById(R.id.list_image_back);
+
 
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
@@ -307,6 +314,28 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onClick(View v) {
                         popupWindow4.dismiss();
+                    }
+                });
+                //写评价弹框
+                listImageBack.setOnClickListener(new View.OnClickListener() {
+
+                    private TextView btnSend;
+                    private EditText etContent;
+
+                    @Override
+                    public void onClick(View view) {
+                        View rootview5= LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
+                        View view5 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.actvity_evaluate_popwindow, null, false);
+                        final PopupWindow popupWindow5 = new PopupWindow(view5);
+                        //设置充满父窗体
+                        popupWindow5.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+                        popupWindow5.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                        popupWindow5.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
+                        //设置布局
+                        popupWindow5.setContentView(view5);
+//                        etContent = view5.findViewById(R.id.et_content);
+//                        btnSend = view5.findViewById(R.id.btn_send);
+                        popupWindow5.showAtLocation(rootview5, Gravity.BOTTOM, 0, 0);
                     }
                 });
 
@@ -338,6 +367,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     //详情
     class FilmDetailsCall implements DataCall<Result<FilmDetailsData>> {
 
+
         @Override
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")) {
@@ -350,7 +380,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 placeOrigin = result.getPlaceOrigin();
                 summary = result.getSummary();
 
-                //预告 //设置popupWindow内部的数据
+                //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
                 predictionAdapter.addAll(shortFilmList);
                 predictionAdapter.notifyDataSetChanged();
@@ -365,26 +395,32 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "详情失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
         }
     }
-//    //预告片
-//    class PredictionCall implements DataCall<Result<FilmDetailsData>> {
-//
-//
-//        @Override
-//        public void success(Result<FilmDetailsData> data) {
-//            if (data.getStatus().equals("0000")) {
-//
-//
-//            }
-//        }
-//
-//        @Override
-//        public void fail(ApiException a) {
-//            Toast.makeText(Film_Details_Activity.this, "预告片失败", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    //预告片
+    class PredictionCall implements DataCall<Result<FilmDetailsData>> {
+
+
+        @Override
+        public void success(Result<FilmDetailsData> data) {
+            if (data.getStatus().equals("0000")) {
+                //设置popupWindow内部的数据
+                Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+                FilmDetailsData result = data.getResult();
+                //预告
+                List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
+                predictionAdapter.addAll(shortFilmList);
+                predictionAdapter.notifyDataSetChanged();
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     //关注
     class ConcernCall implements DataCall<Result> {
