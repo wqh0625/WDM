@@ -1,137 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="demo.com.wdmoviedemo.view.Film_Details_Activity"
     android:background="@drawable/details_details"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    tools:context="demo.com.wdmoviedemo.view.Film_Details_Activity">
+    android:paddingTop="20dp">
 
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
         android:layout_marginTop="30dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp">
-
         <ImageView
             android:id="@+id/image_details"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/com_icon_movie_default" />
-
+            android:src="@drawable/com_icon_movie_default"/>
         <TextView
             android:id="@+id/txt_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/image_details"
             android:text="电影详情"
-            android:textColor="#fff" />
-
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/image_details"
+            android:textColor="#fff"/>
         <ImageView
             android:id="@+id/actvity_image_details"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/com_icon_collection_default" />
+            android:src="@drawable/com_icon_collection_default"
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
-
     <TextView
         android:id="@+id/details_txt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:gravity="center"
         android:textColor="#fff"
-        android:textSize="20sp" />
-
+        android:textSize="20sp"
+        android:gravity="center"/>
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/details_sdv_image"
         android:layout_width="259dp"
         android:layout_height="330dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp" />
-
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:layout_marginTop="30dp"
         android:gravity="center"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
-
         <Button
             android:id="@+id/details_btn_details"
             android:layout_width="58dp"
             android:layout_height="32dp"
-            android:background="@drawable/firm_details_txt_bg"
-            android:gravity="center"
             android:text="详情"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/firm_details_txt_bg"
+            android:textColor="#fff"/>
         <Button
             android:id="@+id/details_btn_prediction"
             android:layout_width="58dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/firm_details_txt_bg"
-            android:gravity="center"
             android:text="预告"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-
+            android:textSize="14sp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:background="@drawable/firm_details_txt_bg"
+            android:textColor="#fff"/>
         <Button
             android:id="@+id/details_btn_stills"
             android:layout_width="58dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/firm_details_txt_bg"
-            android:gravity="center"
             android:text="剧照"
-            android:textColor="#fff"
-            android:textSize="14sp" />
-
+            android:textSize="14sp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:background="@drawable/firm_details_txt_bg"
+            android:textColor="#fff"/>
         <Button
             android:id="@+id/details_btn_review"
             android:layout_width="58dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/firm_details_txt_bg"
-            android:gravity="center"
             android:text="影评"
-            android:textColor="#fff"
-            android:textSize="14sp" />
+            android:layout_marginLeft="30dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/firm_details_txt_bg"
+            android:textColor="#fff"/>
     </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:orientation="horizontal"
         android:layout_marginTop="12dp"
-        android:background="@drawable/details_transparent"
-        android:orientation="horizontal">
-
+        android:background="@drawable/details_transparent">
         <ImageView
             android:id="@+id/details_image_back"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_gravity="left"
+            android:src="@drawable/com_icon_my_default"
             android:layout_marginLeft="24dp"
-            android:src="@drawable/com_icon_my_default" />
-
+            android:layout_gravity="left"/>
         <Button
             android:id="@+id/details_btn_buy"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="24dp"
             android:background="@drawable/firm_details_txt_bgs"
-            android:gravity="center"
-            android:text="购票" />
+            android:text="购票"
+            android:layout_alignParentRight="true"
+            android:gravity="center"/>
     </RelativeLayout>
 
 
