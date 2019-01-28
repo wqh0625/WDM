@@ -46,7 +46,7 @@ public class GzMovieAdapter extends RecyclerView.Adapter<GzMovieAdapter.Vh> {
     @Override
     public void onBindViewHolder(@NonNull Vh vh, int i) {
         FindMoviePageListData findMoviePageListData = listData.get(i);
-        vh.image.setImageURI(Uri.parse(findMoviePageListData.getImageurl()));
+//        vh.image.setImageURI(Uri.parse(findMoviePageListData.getImageurl()));
         String timedate = ToDate.timedate(findMoviePageListData.getReleasetime());
         vh.date.setText(timedate);
         vh.title.setText(findMoviePageListData.getName());

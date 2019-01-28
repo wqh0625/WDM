@@ -1,5 +1,6 @@
 package demo.com.wdmoviedemo.view.myactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -17,6 +18,7 @@ import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.RecordFeedBackPresenter;
+import demo.com.wdmoviedemo.view.StartActivity;
 
 /**
  * 作者: Wang on 2019/1/24 20:31
@@ -62,6 +64,8 @@ public class My_Feedback_Activity extends BaseActivity {
             Toast.makeText(My_Feedback_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 e.setText("");
+                startActivity(new Intent(My_Feedback_Activity.this,FeedbackSuccess_Activity.class));
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         }
 

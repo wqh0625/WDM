@@ -36,7 +36,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="70dp"
-            android:background="@drawable/wx" />
+            android:background="@drawable/pay_icon_weixin_" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="105dp"
-            android:background="@drawable/wx" />
+            android:background="@drawable/pay_icon_zhifubao_" />
 
         <TextView
             android:layout_width="wrap_content"

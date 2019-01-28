@@ -55,9 +55,6 @@ import demo.com.wdmoviedemo.view.myactivity.My_Feedback_Activity;
 import demo.com.wdmoviedemo.view.myactivity.My_Messiage_Activity;
 import demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity;
 
-import static android.content.ClipData.newIntent;
-import static demo.com.wdmoviedemo.core.utils.MyApp.getContext;
-
 
 public class MyFragment extends BaseFragment {
 
@@ -154,6 +151,7 @@ public class MyFragment extends BaseFragment {
             } else {
                 // 关注
                 startActivity(new Intent(getActivity(), My_Attention_Activity.class));
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_vsersion) {
             // 版本

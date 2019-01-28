@@ -52,6 +52,7 @@
         <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.CheckInActivity" />
+        <activity android:name="demo.com.wdmoviedemo.view.myactivity.FeedbackSuccess_Activity" />
         <!-- 微信支付 -->
         <activity
             android:name="com.bw.movie.wxapi.WXPayEntryActivity"
