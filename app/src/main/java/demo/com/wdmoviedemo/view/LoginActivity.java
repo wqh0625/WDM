@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -33,6 +34,7 @@ import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.utils.EncryptUtil;
+import demo.com.wdmoviedemo.core.utils.WeiXinUtil;
 import demo.com.wdmoviedemo.presenter.LoginPresenter;
 
 /**
@@ -107,7 +109,7 @@ public class LoginActivity extends BaseActivity {
         edit.commit();
     }
 
-    @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login})
+    @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login,R.id.iv_wx})
     void onclick(View v) {
         switch (v.getId()) {
             case R.id.eye:
@@ -149,10 +151,18 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.iv_wx:
                 // 微信登录
-
+                if (!WeiXinUtil.success(this)) {
+                    Toast.makeText(this, "请先安装应用", Toast.LENGTH_SHORT).show();
+                } else {
+                    //  验证
+                    SendAuth.Req req = new SendAuth.Req();
+                    req.scope = "snsapi_userinfo";
+                    req.state = "wechat_sdk_demo_test";
+                    WeiXinUtil.reg(LoginActivity.this).sendReq(req);
+                }
                 break;
-            default:
-                break;
+                default:
+                    break;
         }
     }
 
@@ -177,10 +187,6 @@ public class LoginActivity extends BaseActivity {
 
                 // 添加数据库
                 try {
-//                    DbManager dbManager = new DbManager(LoginActivity.this);
-//                    List<UserInfoBean> student = dbManager.getStudent();
-//                    int iss = dbManager.deleteStudentByS(student.get(0));
-//                    Toast.makeText(LoginActivity.this, "删除" + iss, Toast.LENGTH_SHORT).show();
                     addUser(userInfoBean);
                 } catch (SQLException e) {
                     e.printStackTrace();

@@ -214,16 +214,6 @@ public class CheckInActivity extends BaseActivity {
 
                     @Override
                     public void onClick(View v) {
-
-                        RadioButton wxBtn = popView.findViewById(R.id.wxzf_Btn);
-                        RadioButton zfbBtn = popView.findViewById(R.id.zfb_Btn);
-
-                        if (wxBtn.isChecked()) {
-                            type = 1;
-                        }
-                        if (zfbBtn.isChecked()) {
-                            type = 2;
-                        }
                         // 下单
                         Toast.makeText(CheckInActivity.this, "排期ID为：" + id + "数量" + selectedTableCount, Toast.LENGTH_SHORT).show();
                         String md = userInfoBean.getUserId() + "" + id + "" + selectedTableCount + "movie";

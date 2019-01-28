@@ -11,9 +11,18 @@ import com.bw.movie.R;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import demo.com.wdmoviedemo.bean.LoginData;
+import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.core.exception.ApiException;
+import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.WxLoginPresenter;
+import demo.com.wdmoviedemo.view.HomeActivity;
+import demo.com.wdmoviedemo.view.LoginActivity;
 
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 	private IWXAPI api;
@@ -44,7 +53,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 	}
 
 	@Override
-	public void onResp(BaseResp resp) {
+	public void onResp(final BaseResp resp) {
 		String result = "";
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 			switch (resp.errCode) {
@@ -66,5 +75,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 		}
 		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 	}
+
 
 }
