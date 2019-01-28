@@ -59,7 +59,6 @@ public class CinemaDetailAdapter extends RecyclerView.Adapter<CinemaDetailAdapte
         viewHolder.txtName.setText(cinemaDetailListData.getName());
 
 //        viewHolder.txtTime.setText("分钟");
-
     }
 
     @Override

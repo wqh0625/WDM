@@ -88,7 +88,6 @@ public class LoginActivity extends BaseActivity {
                 return;
             }
             tel_number.setText(user.getPhone() + "");
-            tel_pwd.setText(EncryptUtil.decrypt(user.getPwd()) + "");
             this.reme_pwd.setChecked(true);
             if (reme_login) {
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -176,10 +175,6 @@ public class LoginActivity extends BaseActivity {
                 UserInfoBean userInfoBean = data.getResult().getUserInfo();
                 //设置状态
 
-                String w = tel_pwd.getText().toString().trim();
-                String pwddd = EncryptUtil.encrypt(w);
-                // 设置密码
-                userInfoBean.setPwd(pwddd);
                 userInfoBean.setStats(100);
                 Log.v("登录", "" + data.getResult().getUserId() + "  " + data.getResult().getSessionId());
                 userInfoBean.setUserId(data.getResult().getUserId());

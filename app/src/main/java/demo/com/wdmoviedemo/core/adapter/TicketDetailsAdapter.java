@@ -77,9 +77,11 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
 
     public void addAll(List<TicketDetailsData> result) {
         if (result != null) {
-            list.clear();
             list.addAll(result);
         }
+    }
+    public void clearList(){
+        list.clear();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

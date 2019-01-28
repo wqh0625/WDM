@@ -76,7 +76,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private int cinemaId;
     private TicketDetailsAdapter ticketDetailsAdapter;
     private int position;
-    private int id;
+    private int cid;
     private String name;
     private String movieTypes;
     private String director;
@@ -85,6 +85,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private String address;
     private String imageUrl;
     private String names;
+    int id;
 
 
     private ReviewAdapter reviewAdapter;
@@ -116,14 +117,14 @@ public class CinemaDetailActivity extends BaseActivity {
             public void onItemSelected(int position) {
                 CinemaDetailListData cinemaDetailListData = resuleeee.get(position);
 
-                findMovieScheduleListPresenter.requestNet(cinemaDetailListData.getId());
+                findMovieScheduleListPresenter.requestNet(cinemaId, cinemaDetailListData.getId());
             }
         });
 
         //接口回调传值跳转选座页
         ticketDetailsAdapter.setOnImageClickLisener(new TicketDetailsAdapter.OnImageClickLisener() {
             @Override
-            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price,int id) {
+            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price, int id) {
                 Intent intent = new Intent(CinemaDetailActivity.this, CheckInActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("address", address);
@@ -132,7 +133,11 @@ public class CinemaDetailActivity extends BaseActivity {
                 intent.putExtra("BeginTime", BeginTime);
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
-                intent.putExtra("Id",id);
+                if (id == 0) {
+                    intent.putExtra("Id", cid);
+                } else {
+                    intent.putExtra("Id", id);
+                }
                 startActivity(intent);
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
@@ -154,11 +159,12 @@ public class CinemaDetailActivity extends BaseActivity {
         placeOrigin = intent.getExtras().getString("placeOrigin");
         //根据影院ID查询该影院当前排期的电影列表
         findMovieListByCinemaIdPresenter = new FindMovieListByCinemaIdPresenter(new find());
-        cinemaId = intent.getIntExtra("CcinemaID", 0);
+        cinemaId = intent.getExtras().getInt("CcinemaID");
         Log.v("cinemaId", "cinemaId" + cinemaId);
         String imageUrl = intent.getStringExtra("CimageUrl");
         String addre = intent.getStringExtra("Caddress");
         String cinameName = intent.getStringExtra("CcinameName");
+        cid = intent.getExtras().getInt("Cid");
         icon.setImageURI(Uri.parse(imageUrl));
         addtess.setText(addre);
         title.setText(cinameName);
@@ -256,7 +262,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 resuleeee = data.getResult();
                 int id = resuleeee.get(0).getId();
 
-                findMovieScheduleListPresenter.requestNet(id);
+                findMovieScheduleListPresenter.requestNet(cinemaId, id);
                 cinemaDetailAdapter.setList(data.getResult());
                 cinemaDetailAdapter.notifyDataSetChanged();
             }
@@ -271,10 +277,18 @@ public class CinemaDetailActivity extends BaseActivity {
     class find222 implements DataCall<Result<List<TicketDetailsData>>> {
         @Override
         public void success(Result<List<TicketDetailsData>> data) {
-//            Toast.makeText(CinemaDetailActivity.this, "下下下下下" + data.getMessage() + data.getResult().size(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("0000")) {
-                ticketDetailsAdapter.addAll(data.getResult());
-                ticketDetailsAdapter.notifyDataSetChanged();
+                if (data.getResult().size() == 0) {
+                    Toast.makeText(CinemaDetailActivity.this, "此影片暂时无排期", Toast.LENGTH_SHORT).show();
+                    ticketDetailsAdapter.clearList();
+                    ticketDetailsAdapter.notifyDataSetChanged();
+                }else{
+                    ticketDetailsAdapter.clearList();
+                    ticketDetailsAdapter.addAll(data.getResult());
+                    ticketDetailsAdapter.notifyDataSetChanged();
+                }
+
             }
         }
 

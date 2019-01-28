@@ -49,7 +49,6 @@ public  class BaseActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ButterKnife.bind(this);
     }
 
     // 删除数据

@@ -3,6 +3,7 @@ package demo.com.wdmoviedemo.presenter;
 import demo.com.wdmoviedemo.core.http.NetWorks;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.interfase.IRequest;
+import demo.com.wdmoviedemo.core.interfase.IRequests;
 import io.reactivex.Observable;
 
 /**
@@ -17,7 +18,7 @@ public class FindCinemasListByMovieIdPresenter extends BasePresenter {
 
     @Override
     protected Observable observable(Object... args) {
-        IRequest iRequests = NetWorks.getRequest().create(IRequest.class);
-        return iRequests.findMovieScheduleList((int) args[0]);
+        IRequests iRequests = NetWorks.getRequest().create(IRequests.class);
+        return iRequests.getTicketDetails((int) args[0],(int)args[1]);
     }
 }

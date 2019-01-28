@@ -23,8 +23,7 @@ public class UserInfoBean {
 
     @DatabaseField
     private String sessionId;
-    @DatabaseField
-    private String pwd;
+
     @DatabaseField
     private int stats;
     @DatabaseField
@@ -38,13 +37,7 @@ public class UserInfoBean {
         return userId;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
 
-    public String getPwd() {
-        return pwd;
-    }
 
 
     public void setStats(int stats) {
@@ -130,7 +123,7 @@ public class UserInfoBean {
                 ", sex=" + sex +
                 ", headPic='" + headPic + '\'' +
                 ", sessionId='" + sessionId + '\'' +
-                ", pwd='" + pwd + '\'' +
+
                 ", stats=" + stats +
                 ", userId=" + userId +
                 '}';

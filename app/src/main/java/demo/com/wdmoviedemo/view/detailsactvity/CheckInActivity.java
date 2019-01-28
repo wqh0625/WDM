@@ -215,6 +215,13 @@ public class CheckInActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         // 下单
+                        RadioButton zfb_Btn = popView.findViewById(R.id.zfb_Btn);
+                        RadioButton wx_Btn = popView.findViewById(R.id.wxzf_Btn);
+                        if (wx_Btn.isChecked()) {
+                            type = 1;
+                        } else if (zfb_Btn.isChecked()) {
+                            type = 2;
+                        }
                         Toast.makeText(CheckInActivity.this, "排期ID为：" + id + "数量" + selectedTableCount, Toast.LENGTH_SHORT).show();
                         String md = userInfoBean.getUserId() + "" + id + "" + selectedTableCount + "movie";
                         String s = EncryptUtil.MD5(md);
@@ -238,25 +245,31 @@ public class CheckInActivity extends BaseActivity {
             Toast.makeText(CheckInActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
             if (result.getStatus().equals("0000")) {
                 String orderId = result.getOrderId();
-                IRequest interfacea = NetWorks.getRequest().create(IRequest.class);
-                interfacea.pay(userInfoBean.getUserId(), userInfoBean.getSessionId(), type, orderId).subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<Result>() {
-                            @Override
-                            public void accept(Result payBean) throws Exception {
-                                PayReq req = new PayReq();
-                                req.appId = payBean.getAppId();
-                                req.partnerId = payBean.getPartnerId();
-                                req.prepayId = payBean.getPrepayId();
-                                req.nonceStr = payBean.getNonceStr();
-                                req.timeStamp = payBean.getTimeStamp();
-                                req.packageValue = payBean.getPackageValue();
-                                req.sign = payBean.getSign();
-                                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-                                //3.调用微信支付sdk支付方法
-                                api.sendReq(req);
-                            }
-                        });
+                if (type == 1) {
+                    IRequest interfacea = NetWorks.getRequest().create(IRequest.class);
+                    interfacea.pay(userInfoBean.getUserId(), userInfoBean.getSessionId(), type, orderId).subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<Result>() {
+                                @Override
+                                public void accept(Result payBean) throws Exception {
+                                    PayReq req = new PayReq();
+                                    req.appId = payBean.getAppId();
+                                    req.partnerId = payBean.getPartnerId();
+                                    req.prepayId = payBean.getPrepayId();
+                                    req.nonceStr = payBean.getNonceStr();
+                                    req.timeStamp = payBean.getTimeStamp();
+                                    req.packageValue = payBean.getPackageValue();
+                                    req.sign = payBean.getSign();
+                                    // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                                    //3.调用微信支付sdk支付方法
+                                    api.sendReq(req);
+                                }
+                            });
+                } else if (type == 2) {
+                    Toast.makeText(CheckInActivity.this, "暂不支持支付宝支付，请谅解", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
         }
