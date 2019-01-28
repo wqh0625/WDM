@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,9 +70,11 @@ public class CheckInActivity extends BaseActivity {
     private String beginTime;
     private String endTime;
     private double price;
+    private int id;
     private BigDecimal mPriceWithCalculate;
     private int selectedTableCount = 0;
     private BuyMovieTicketPresenter buyMovieTicketPresenter;
+    private int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,8 @@ public class CheckInActivity extends BaseActivity {
         initSeatTable();
         //初始化影院选座页面对应的影院以及影片信息
         initChooseMessage();
-        api = WXAPIFactory.createWXAPI(this, "wxb3852e6a6b7d9516");//第二个参数为APPID
+        //第二个参数为APPID
+        api = WXAPIFactory.createWXAPI(this, "wxb3852e6a6b7d9516");
         api.registerApp("wxb3852e6a6b7d9516");
 
         buyMovieTicketPresenter = new BuyMovieTicketPresenter(new buy());
@@ -130,13 +134,13 @@ public class CheckInActivity extends BaseActivity {
         });
         seatView.setData(10, 15);
 
-
     }
 
     private void initChooseMessage() {
         mPriceWithCalculate = new BigDecimal(price);
 
     }
+
     //选中的座位计算价格
     private void changePriceWithSelected() {
         selectedTableCount++;
@@ -148,13 +152,13 @@ public class CheckInActivity extends BaseActivity {
     //取消选座时价格联动
     private void changePriceWithUnSelected() {
         selectedTableCount--;
-      if (selectedTableCount ==0){
-          checkinPrices.setText("" + 0.00);
-      }else {
-          String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
-          SpannableString spannableString = changTVsize(currentPrice);
-          checkinPrices.setText(spannableString);
-      }
+        if (selectedTableCount == 0) {
+            checkinPrices.setText("" + 0.00);
+        } else {
+            String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
+            SpannableString spannableString = changTVsize(currentPrice);
+            checkinPrices.setText(spannableString);
+        }
 
     }
 
@@ -176,6 +180,7 @@ public class CheckInActivity extends BaseActivity {
         beginTime = intent.getExtras().getString("BeginTime");
         endTime = intent.getExtras().getString("EndTime");
         price = intent.getExtras().getDouble("Price");
+        id = intent.getExtras().getInt("Id");
         checkinName.setText(name);
         checkinAddress.setText(address);
         checkinNames.setText(names);
@@ -189,7 +194,7 @@ public class CheckInActivity extends BaseActivity {
     void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_confirm:
-                View popView = View.inflate(CheckInActivity.this, R.layout.activity_check_pop_pay, null);
+                final View popView = View.inflate(CheckInActivity.this, R.layout.activity_check_pop_pay, null);
                 final PopupWindow popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT, true);
                 popWindow.setTouchable(true);
@@ -206,13 +211,24 @@ public class CheckInActivity extends BaseActivity {
                     }
                 });
                 popView.findViewById(R.id.xiadan).setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
+
+                        RadioButton wxBtn = popView.findViewById(R.id.wxzf_Btn);
+                        RadioButton zfbBtn = popView.findViewById(R.id.zfb_Btn);
+
+                        if (wxBtn.isChecked()) {
+                            type = 1;
+                        }
+                        if (zfbBtn.isChecked()) {
+                            type = 2;
+                        }
                         // 下单
-                        Toast.makeText(CheckInActivity.this, ""+userInfoBean.getUserId(), Toast.LENGTH_SHORT).show();
-                        String md = userInfoBean.getUserId()+"1"+"3"+"movie";
+                        Toast.makeText(CheckInActivity.this, "排期ID为：" + id + "数量" + selectedTableCount, Toast.LENGTH_SHORT).show();
+                        String md = userInfoBean.getUserId() + "" + id + "" + selectedTableCount + "movie";
                         String s = EncryptUtil.MD5(md);
-                        buyMovieTicketPresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(),1,3,s);
+                        buyMovieTicketPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, selectedTableCount, s);
                     }
                 });
                 break;
@@ -225,14 +241,15 @@ public class CheckInActivity extends BaseActivity {
                 break;
         }
     }
-    class buy implements DataCall<Result>{
+
+    class buy implements DataCall<Result> {
         @Override
         public void success(Result result) {
-            Toast.makeText(CheckInActivity.this, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(CheckInActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
             if (result.getStatus().equals("0000")) {
                 String orderId = result.getOrderId();
                 IRequest interfacea = NetWorks.getRequest().create(IRequest.class);
-                interfacea.pay(userInfoBean.getUserId(),userInfoBean.getSessionId(),1,orderId).subscribeOn(Schedulers.newThread())
+                interfacea.pay(userInfoBean.getUserId(), userInfoBean.getSessionId(), type, orderId).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<Result>() {
                             @Override

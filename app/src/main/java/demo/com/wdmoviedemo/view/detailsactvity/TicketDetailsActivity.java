@@ -101,7 +101,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
         //接口回调传值跳转选座页
         ticketDetailsAdapter.setOnImageClickLisener(new TicketDetailsAdapter.OnImageClickLisener() {
             @Override
-            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price) {
+            public void onImageClick(String ScreeningHall, String BeginTime, String EndTime, double Price,int idddd) {
                 Intent intent = new Intent(TicketDetailsActivity.this, CheckInActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("address", address);
@@ -110,6 +110,7 @@ public class TicketDetailsActivity extends AppCompatActivity {
                 intent.putExtra("BeginTime", BeginTime);
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
+                intent.putExtra("Id",idddd);
                 startActivity(intent);
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }

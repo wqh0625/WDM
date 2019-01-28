@@ -58,14 +58,14 @@ public class GuidanceActivity extends AppCompatActivity {
                         return;
                     }
                 });
-                if (time <= 0) {
+                if (time == 0) {
                     startActivity(new Intent(GuidanceActivity.this, HomeActivity.class));
                     finish();
                     overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                     return;
                 }
                 time--;
-                handler.sendEmptyMessageDelayed(2, 1000);
+                handler.sendEmptyMessageDelayed(2, 500);
             }
         }
     };

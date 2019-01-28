@@ -32,7 +32,9 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
     private FragmentActivity context;
 
     public void setList(List<NearbyData> list) {
-        this.list = list;
+        if (list != null) {
+            this.list.addAll(list);
+        }
     }
 
     public NearbyCinemaAdapter(FragmentActivity context) {

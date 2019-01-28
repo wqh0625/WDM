@@ -34,7 +34,6 @@ import demo.com.wdmoviedemo.presenter.MyMessagePresenter;
 
 
 public class My_Messiage_Activity extends BaseActivity {
-    private Unbinder unbinder;
 
     @BindView(R.id.update_date)
     TextView t_date;
@@ -54,7 +53,6 @@ public class My_Messiage_Activity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_message_);
-        unbinder = ButterKnife.bind(this);
 
 
         myMessagePresenter = new MyMessagePresenter(new mymesage());
@@ -65,12 +63,12 @@ public class My_Messiage_Activity extends BaseActivity {
     class mymesage implements DataCall<Result<MyMessageData>> {
         @Override
         public void success(Result<MyMessageData> data) {
-            Toast.makeText(My_Messiage_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(My_Messiage_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 MyMessageData result = data.getResult();
                 t_phone.setText(result.getPhone());
                 t_mail.setText(result.getEmail());
-                String timedate = ToDate.timedate(result.getLastLoginTime());
+                String timedate = ToDate.timedate(result.getBirthday());
                 t_date.setText("" + timedate);
                 t_header.setImageURI(Uri.parse(result.getHeadPic()));
                 t_name.setText(result.getNickName());
@@ -103,7 +101,6 @@ public class My_Messiage_Activity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
         myMessagePresenter.unBind();
     }
 }
