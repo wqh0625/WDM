@@ -168,6 +168,7 @@ public class ComingFragment extends BaseFragment {
         super.onDestroyView();
         comingPresenter.unBind();
         concernPresenter.unBind();
+        cancelConcernPresenter.unBind();
     }
 
     @Override

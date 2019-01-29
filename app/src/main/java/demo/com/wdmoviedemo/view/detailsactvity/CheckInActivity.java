@@ -11,6 +11,7 @@ import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -25,18 +26,24 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
+import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.http.NetWorks;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.interfase.IRequest;
 import demo.com.wdmoviedemo.core.utils.EncryptUtil;
+import demo.com.wdmoviedemo.core.utils.MyApp;
 import demo.com.wdmoviedemo.presenter.BuyMovieTicketPresenter;
+import demo.com.wdmoviedemo.view.LoginActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -77,6 +84,7 @@ public class CheckInActivity extends BaseActivity {
     private int type = 0;
     private String cinameName;
     private String addre;
+    private UserInfoBean user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +106,7 @@ public class CheckInActivity extends BaseActivity {
         //设置屏幕名称
         seatView.setScreenName(screeningHall + "荧幕");
         //设置最多选中
-        seatView.setMaxSelected(10);
+        seatView.setMaxSelected(5);
 
         seatView.setSeatChecker(new SeatTable.SeatChecker() {
 
@@ -146,6 +154,7 @@ public class CheckInActivity extends BaseActivity {
     //选中的座位计算价格
     private void changePriceWithSelected() {
         selectedTableCount++;
+
         String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
         SpannableString spannableString = changTVsize(currentPrice);
         checkinPrices.setText(spannableString);
@@ -157,11 +166,11 @@ public class CheckInActivity extends BaseActivity {
         if (selectedTableCount == 0) {
             checkinPrices.setText("" + 0.00);
         } else {
-            String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
+            BigDecimal bigDecimal = new BigDecimal(String.valueOf(selectedTableCount));
+            String currentPrice = mPriceWithCalculate.multiply(bigDecimal).toString();
             SpannableString spannableString = changTVsize(currentPrice);
             checkinPrices.setText(spannableString);
         }
-
     }
 
     //小数点后面改变字体大小
@@ -196,6 +205,23 @@ public class CheckInActivity extends BaseActivity {
         checkinAddress.setText(addre);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            DbManager dbManager = new DbManager(getApplicationContext());
+            List<UserInfoBean> student = dbManager.getStudent();
+            user = new UserInfoBean();
+            if (student.size() == 0) {
+
+            } else {
+                user = student.get(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @OnClick({R.id.img_confirm, R.id.img_abandon})
     void onViewClicked(View view) {
         switch (view.getId()) {
@@ -206,8 +232,8 @@ public class CheckInActivity extends BaseActivity {
                 popWindow.setTouchable(true);
                 popWindow.setBackgroundDrawable(new BitmapDrawable());
                 popWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-
-                popWindow.showAtLocation(View.inflate(CheckInActivity.this, R.layout.activity_check_in, null), Gravity.BOTTOM, 0, 0);
+                View inflate = View.inflate(CheckInActivity.this, R.layout.activity_check_in, null);
+                popWindow.showAtLocation(inflate, Gravity.BOTTOM, 0, 0);
 
                 ImageView down = popView.findViewById(R.id.ay_pop_down);
                 down.setOnClickListener(new View.OnClickListener() {
@@ -216,7 +242,23 @@ public class CheckInActivity extends BaseActivity {
                         popWindow.dismiss();
                     }
                 });
-                popView.findViewById(R.id.xiadan).setOnClickListener(new View.OnClickListener() {
+                final Button btn = popView.findViewById(R.id.xiadan);
+                DbManager dbManager = null;
+                try {
+                    dbManager = new DbManager(getApplicationContext());
+                    List<UserInfoBean> student = dbManager.getStudent();
+                    if (student.size() == 0) {
+                        Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                        // 跳转
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                onResume();
+//                btn.setText("微信支付" + checkinPrices.getText().toString() + "元");
+                btn.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -229,9 +271,11 @@ public class CheckInActivity extends BaseActivity {
                             type = 2;
                         }
                         Toast.makeText(CheckInActivity.this, "排期ID为：" + id + "数量" + selectedTableCount, Toast.LENGTH_SHORT).show();
-                        String md = userInfoBean.getUserId() + "" + id + "" + selectedTableCount + "movie";
+                        String md = user.getUserId() + "" + id + "" + selectedTableCount + "movie";
                         String s = EncryptUtil.MD5(md);
-                        buyMovieTicketPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, selectedTableCount, s);
+
+                        buyMovieTicketPresenter.requestNet(user.getUserId(), user.getSessionId(), id, selectedTableCount, s);
+
                     }
                 });
                 break;
@@ -253,7 +297,7 @@ public class CheckInActivity extends BaseActivity {
                 String orderId = result.getOrderId();
                 if (type == 1) {
                     IRequest interfacea = NetWorks.getRequest().create(IRequest.class);
-                    interfacea.pay(userInfoBean.getUserId(), userInfoBean.getSessionId(), type, orderId).subscribeOn(Schedulers.newThread())
+                    interfacea.pay(user.getUserId(), user.getSessionId(), type, orderId).subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Consumer<Result>() {
                                 @Override
@@ -284,6 +328,7 @@ public class CheckInActivity extends BaseActivity {
         public void fail(ApiException a) {
 
         }
+
     }
 
     @Override

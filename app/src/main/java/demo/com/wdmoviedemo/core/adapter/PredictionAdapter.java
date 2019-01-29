@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
 import com.bw.movie.R;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +43,15 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
-        viewHolder.predictionJzplayer.setUp(list.get(i).getVideoUrl(),JZVideoPlayer.SCREEN_WINDOW_NORMAL,"");
+    public void onBindViewHolder(@NonNull ViewHolder myHolder, int i) {
+        myHolder.predictionJzplayer.setUp(list.get(i).getVideoUrl(),JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL,"预告片");
+        String imageUrl = list.get(i).getImageUrl();
+        try {
+            URL url = new URL(imageUrl);
+            Glide.with(context).load(url).into(myHolder.predictionJzplayer.thumbImageView);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

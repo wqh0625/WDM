@@ -187,8 +187,7 @@ public class LoginActivity extends BaseActivity {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }

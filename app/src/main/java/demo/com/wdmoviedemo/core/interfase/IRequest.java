@@ -176,10 +176,22 @@ public interface IRequest {
     Observable<Result> followCinema(@Header("userId") int userId,
                                     @Header("sessionId") String sessionId,
                                     @Query("cinemaId") int id);
+
     //7.取消关注影院
     //接口地址：http://172.17.8.100/movieApi/cinema/v1/verify/cancelFollowCinema
     @GET("movieApi/cinema/v1/verify/cancelFollowCinema")
     Observable<Result> cancelFollowCinema(@Header("userId") int userId,
-                                    @Header("sessionId") String sessionId,
-                                    @Query("cinemaId") int id);
+                                          @Header("sessionId") String sessionId,
+                                          @Query("cinemaId") int id);
+
+    // 修改个人信息
+    //
+    @FormUrlEncoded
+    @POST("movieApi/user/v1/verify/modifyUserInfo")
+    Observable<Result<MyMessage>> modifyUserI (@Header("userId") int userId,
+                                                 @Header("sessionId") String sessionId,
+                                                 @Field("nickName") String nickName,
+                                                 @Field("sex") int sex,
+                                                 @Field("email") String email);
+
 }

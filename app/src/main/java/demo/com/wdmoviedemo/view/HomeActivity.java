@@ -46,7 +46,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         UserInfoBean userInfoBeanaaa = null;
         List<UserInfoBean> student = this.student;
-        Toast.makeText(this, "DbSize" + student.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "DbSize" + student.size(), Toast.LENGTH_SHORT).show();
         if (student != null && student.size() > 0) {
             userInfoBeanaaa = student.get(0);
         }
@@ -136,6 +136,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 isimagemy(transaction);
 
                 break;
+                default:
+                    break;
         }
         transaction.commit();
     }
