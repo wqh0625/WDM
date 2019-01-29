@@ -48,6 +48,7 @@ import demo.com.wdmoviedemo.presenter.TopPhotoPresenter;
 import demo.com.wdmoviedemo.presenter.UserSignInPresenter;
 import demo.com.wdmoviedemo.view.HomeActivity;
 import demo.com.wdmoviedemo.view.LoginActivity;
+import demo.com.wdmoviedemo.view.myactivity.MessageActivity;
 import demo.com.wdmoviedemo.view.myactivity.My_Attention_Activity;
 import demo.com.wdmoviedemo.view.myactivity.My_Feedback_Activity;
 import demo.com.wdmoviedemo.view.myactivity.My_Messiage_Activity;
@@ -93,12 +94,11 @@ public class MyFragment extends BaseFragment {
         userSignInPresenter = new UserSignInPresenter(new usersignIn());
 
     }
-
-    class usersignIn implements DataCall<Result> {
+    class usersignIn implements DataCall<Result>{
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 qdBtn.setText("已签到");
             }
         }
@@ -153,7 +153,7 @@ public class MyFragment extends BaseFragment {
         return R.layout.fragment_mys;
     }
 
-    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback, R.id.my_btn_qd, R.id.my_image_icom})
+    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback, R.id.my_btn_qd, R.id.my_image_icom,R.id.message})
     public void onck(View v) {
         if (v.getId() == R.id.mRb_messiage) {
             if (userInfoBean.getUserId() == 0) {
@@ -322,6 +322,27 @@ public class MyFragment extends BaseFragment {
                 initPop(popView);
             }
 
+            cancel = popView.findViewById(R.id.open_cancel);
+            initPop(popView);
+        }else if (v.getId() ==R.id.message){
+            if (userInfoBean.getUserId() == 0) {
+                DbManager dbManager = null;
+                try {
+                    dbManager = new DbManager(getContext());
+                    int i = dbManager.deleteStudentByS(userInfoBean);
+                    Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            } else {
+                startActivity(new Intent(getActivity(), MessageActivity.class));
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
         }
     }
 
