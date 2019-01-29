@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/rcccordddd"
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:orientation="horizontal">
-
         <TextView
             android:id="@+id/my_rccord_dfk"
             android:layout_width="83dp"
@@ -31,26 +28,21 @@
             android:gravity="center"
             android:text="已完成" />
     </LinearLayout>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/my_rccord_vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="24dp"
-        android:layout_below="@id/rcccordddd"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="24dp" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
-
+        android:layout_below="@id/top"
+        android:layout_marginTop="30dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/home_lucency">
         <ImageView
             android:id="@+id/back_image_r"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
             android:layout_marginLeft="24dp"
             android:src="@drawable/com_icon_my_default" />
     </RelativeLayout>
