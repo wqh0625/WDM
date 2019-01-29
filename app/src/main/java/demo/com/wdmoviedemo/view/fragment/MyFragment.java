@@ -31,6 +31,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,6 +71,8 @@ public class MyFragment extends BaseFragment {
     private PopupWindow popWindow;
     private TopPhotoPresenter topPhotoPresenter;
     private UserSignInPresenter userSignInPresenter;
+    private View popView;
+    private List<UserInfoBean> student;
 
     @Override
     public void initView(View view) {
@@ -79,11 +82,22 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        try {
+            DbManager dbManager = new DbManager(getActivity());
+            student = dbManager.getStudent();
+            if (student.size()==0) {
+                Toast.makeText(getActivity(), "空", Toast.LENGTH_SHORT).show();
+                icon.setImageResource(R.drawable.my_icon);
+                nickNameTv.setText("未登录");
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         String headPic = userInfoBean.getHeadPic();
         String nickName = userInfoBean.getNickName();
-        if (headPic == null || headPic.length() < 0 || headPic == "") {
-            icon.setImageResource(R.drawable.my_icon);
-            nickNameTv.setText("未登录");
+        if (headPic == null || headPic == "" || userInfoBean == null) {
+            return;
         } else {
             icon.setImageURI(Uri.parse(headPic));
             nickNameTv.setText(nickName);
@@ -94,11 +108,12 @@ public class MyFragment extends BaseFragment {
         userSignInPresenter = new UserSignInPresenter(new usersignIn());
 
     }
-    class usersignIn implements DataCall<Result>{
+
+    class usersignIn implements DataCall<Result> {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 qdBtn.setText("已签到");
             }
         }
@@ -153,10 +168,10 @@ public class MyFragment extends BaseFragment {
         return R.layout.fragment_mys;
     }
 
-    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback, R.id.my_btn_qd, R.id.my_image_icom,R.id.message})
+    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback, R.id.my_btn_qd, R.id.my_image_icom, R.id.message})
     public void onck(View v) {
         if (v.getId() == R.id.mRb_messiage) {
-            if (userInfoBean.getUserId() == 0) {
+            if (userInfoBean.getUserId() == 0||student.size()==0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -198,7 +213,7 @@ public class MyFragment extends BaseFragment {
         } else if (v.getId() == R.id.mRb_vsersion) {
             // 版本
         } else if (v.getId() == R.id.mRb_rccord) {
-            if (userInfoBean.getUserId() == 0) {
+            if (userInfoBean.getUserId() == 0||student.size()==0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -218,7 +233,7 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_feedback) {
-            if (userInfoBean.getUserId() == 0) {
+            if (userInfoBean.getUserId() == 0||student.size()==0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -255,15 +270,8 @@ public class MyFragment extends BaseFragment {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    // 删除用户
-                    SharedPreferences sp0123 = getActivity().getSharedPreferences("sp0123", Context.MODE_PRIVATE);
-                    sp0123.edit().clear().commit();
-                    Intent intent = new Intent(getContext(), HomeActivity.class);
-                    // 清空当前栈 ，并且创建新的栈
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // 跳转
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                    onResume();
+
                 }
             });
             //    设置一个NegativeButton
@@ -271,7 +279,8 @@ public class MyFragment extends BaseFragment {
             //    显示出该对话框
             builder.show();
         } else if (v.getId() == R.id.my_btn_qd) {
-            if (userInfoBean == null || userInfoBean.getUserId() == 0) {
+
+            if (userInfoBean == null || userInfoBean.getUserId() == 0||student.size()==0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -290,7 +299,7 @@ public class MyFragment extends BaseFragment {
             }
         } else if (v.getId() == R.id.my_image_icom) {
 
-            if (userInfoBean == null || userInfoBean.getSessionId() == "" || userInfoBean.getUserId() == 0) {
+            if (userInfoBean == null || userInfoBean.getSessionId() == "" || userInfoBean.getUserId() == 0||student.size()==0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -305,7 +314,7 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
-                View popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
+                popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
                 popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT, true);
                 popWindow.setTouchable(true);
@@ -324,8 +333,8 @@ public class MyFragment extends BaseFragment {
 
             cancel = popView.findViewById(R.id.open_cancel);
             initPop(popView);
-        }else if (v.getId() ==R.id.message){
-            if (userInfoBean.getUserId() == 0) {
+        } else if (v.getId() == R.id.message) {
+            if (userInfoBean.getUserId() == 0||student.size()==0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
