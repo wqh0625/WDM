@@ -95,6 +95,8 @@ public class CinemaDetailActivity extends BaseActivity {
     private ViewPager vp;
     private List<Fragment> fragments;
     private View xqV, plV;
+    private String addre;
+    private String cinameName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,6 +135,8 @@ public class CinemaDetailActivity extends BaseActivity {
                 intent.putExtra("BeginTime", BeginTime);
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
+                intent.putExtra("cinameName", cinameName);
+                intent.putExtra("addre", addre);
                 if (id == 0) {
                     intent.putExtra("Id", cid);
                 } else {
@@ -162,8 +166,8 @@ public class CinemaDetailActivity extends BaseActivity {
         cinemaId = intent.getExtras().getInt("CcinemaID");
         Log.v("cinemaId", "cinemaId" + cinemaId);
         String imageUrl = intent.getStringExtra("CimageUrl");
-        String addre = intent.getStringExtra("Caddress");
-        String cinameName = intent.getStringExtra("CcinameName");
+        addre = intent.getStringExtra("Caddress");
+        cinameName = intent.getStringExtra("CcinameName");
         cid = intent.getExtras().getInt("Cid");
         icon.setImageURI(Uri.parse(imageUrl));
         addtess.setText(addre);

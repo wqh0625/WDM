@@ -6,6 +6,7 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.FilmDetailsData;
 import demo.com.wdmoviedemo.bean.ListofCinemaData;
 import demo.com.wdmoviedemo.bean.LoginData;
+import demo.com.wdmoviedemo.bean.ObligationData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.ReviewData;
 import demo.com.wdmoviedemo.bean.SearchData;
@@ -66,5 +67,13 @@ public interface IRequests {
     @FormUrlEncoded
     Observable<Result<LoginData>> getWxlogin(@Field("code") String code);
 
+
+    //查询用户购票记录
+    @GET("movieApi/user/v1/verify/findUserBuyTicketRecordList")
+    Observable<Result<List<ObligationData>>> getObligation(@Header("userId") int userId,
+                                                           @Header("sessionId") String sessionId,
+                                                           @Query("page") int page,
+                                                           @Query("count") int count,
+                                                           @Query("status") int status);
 
 }
