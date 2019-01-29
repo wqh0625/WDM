@@ -17,6 +17,7 @@ import demo.com.wdmoviedemo.core.adapter.NearbyCinemaAdapter;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.core.utils.MyApp;
 import demo.com.wdmoviedemo.presenter.CancelFollowCinemaPresenter;
 import demo.com.wdmoviedemo.presenter.FindRecommendCinemasPresenter;
 import demo.com.wdmoviedemo.presenter.FollowCinemaPresenter;
@@ -112,11 +113,16 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
         @Override
         public void success(Result data) {
             Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
             if (data.getStatus().equals("0000")) {
-                    int o = (int) data.getArgs()[4];
-                    adapter.getItem(o).setFollowcinema(1);
-                    adapter.notifyDataSetChanged();
+                int o = (int) data.getArgs()[4];
+                adapter.getItem(o).setFollowcinema(1);
+                adapter.notifyDataSetChanged();
             }
         }
 
@@ -132,7 +138,12 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
         @Override
         public void success(Result data) {
             Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
             if (data.getStatus().equals("0000")) {
                 int o = (int) data.getArgs()[4];
                 adapter.getItem(o).setFollowcinema(2);
@@ -151,6 +162,12 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
         public void success(Result<List<NearbyData>> data) {
             rec.refreshComplete();
             rec.loadMoreComplete();
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
             if (data.getStatus().equals("0000")) {
                 adapter.setList(data.getResult());
                 adapter.notifyDataSetChanged();

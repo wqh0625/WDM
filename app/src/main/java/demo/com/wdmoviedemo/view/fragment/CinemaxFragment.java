@@ -67,8 +67,8 @@ public class CinemaxFragment extends BaseFragment {
         cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
 
             @Override
-            public void OnImageClick(int i,int pos, CarouselData carouselData) {
-                if (userInfoBean == null) {
+            public void OnImageClick(int i, int pos, CarouselData carouselData) {
+                if (userInfoBean == null || userInfoBean.getSessionId() == "") {
                     DbManager dbManager = null;
                     try {
                         dbManager = new DbManager(getContext());
@@ -84,9 +84,9 @@ public class CinemaxFragment extends BaseFragment {
                     getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 } else {
                     if (carouselData.getFollowMovie() == 1) {
-                        cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), pos,i);
+                        cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), pos, i);
                     } else {
-                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), pos,i);
+                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), pos, i);
                     }
                 }
             }
@@ -98,6 +98,12 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
             if (data.getStatus().equals("0000")) {
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
@@ -115,12 +121,17 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
 
-                if (data.getStatus().equals("0000")) {
-                    int po = (int) data.getArgs()[4];
-                    cinemaxAdapter.getItem(po).setFollowMovie(1);
-                    cinemaxAdapter.notifyItemChanged(po);
+            if (data.getStatus().equals("0000")) {
+                int po = (int) data.getArgs()[4];
+                cinemaxAdapter.getItem(po).setFollowMovie(1);
+                cinemaxAdapter.notifyItemChanged(po);
 
             }
         }
@@ -136,7 +147,13 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "0000" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
 
             if (data.getStatus().equals("0000")) {
                 int po = (int) data.getArgs()[4];

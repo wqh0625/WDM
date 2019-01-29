@@ -132,26 +132,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.homeactivity_imagemy:
                 //切换我的页面
-                if (userInfoBean.getUserId() == 0) {
 
-                    DbManager dbManager = null;
-                    try {
-                        dbManager = new DbManager(getContext());
-                        int i = dbManager.deleteStudentByS(userInfoBean);
-                        Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                isimagemy(transaction);
 
-                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-
-                    // 跳转
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
-
-                } else {
-                    isimagemy(transaction);
-                }
                 break;
         }
         transaction.commit();

@@ -12,14 +12,17 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
+import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.core.utils.MyApp;
 import demo.com.wdmoviedemo.presenter.CancelConcernPresenter;
 import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
@@ -56,17 +59,27 @@ public class IsHitFragment extends BaseFragment {
         cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
 
             @Override
-            public void OnImageClick(int i,int position, CarouselData carouselData) {
-                if (userInfoBean == null) {
-                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+            public void OnImageClick(int i, int position, CarouselData carouselData) {
+                if (userInfoBean == null || userInfoBean.getSessionId() == "") {
+                    DbManager dbManager = null;
+                    try {
+                        dbManager = new DbManager(getContext());
+                        int i0 = dbManager.deleteStudentByS(userInfoBean);
+                        Toast.makeText(getContext(), "" + i0, Toast.LENGTH_SHORT).show();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                    // 跳转
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 } else {
                     if (carouselData.getFollowMovie() == 1) {
-                        cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position,i);
+                        cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position, i);
 
                     } else {
-                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position,i);
+                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position, i);
 
                     }
                 }
@@ -79,6 +92,12 @@ public class IsHitFragment extends BaseFragment {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
             if (data.getStatus().equals("0000")) {
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
@@ -90,17 +109,24 @@ public class IsHitFragment extends BaseFragment {
 
         }
     }
+
     //关注
     class ConcernCall implements DataCall<Result> {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "0.0.0.." + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
 
-                if (data.getStatus().equals("0000")) {
-                    int o = (int) data.getArgs()[4];
-                    cinemaxAdapter.getItem(o).setFollowMovie(1);
-                    cinemaxAdapter.notifyItemChanged(o);
+            if (data.getStatus().equals("0000")) {
+                int o = (int) data.getArgs()[4];
+                cinemaxAdapter.getItem(o).setFollowMovie(1);
+                cinemaxAdapter.notifyItemChanged(o);
             }
         }
 
@@ -115,8 +141,13 @@ public class IsHitFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getActivity(), "0000" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("9999")) {
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
             if (data.getStatus().equals("0000")) {
                 int po = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(po).setFollowMovie(2);
@@ -148,6 +179,7 @@ public class IsHitFragment extends BaseFragment {
     protected void initView(View view) {
         ishitRecy = (RecyclerView) view.findViewById(R.id.ishit_recy);
         initData();
-        concernPresenter = new ConcernPresenter(new ConcernCall()); cancelConcernPresenter = new CancelConcernPresenter(new CancelCall());
+        concernPresenter = new ConcernPresenter(new ConcernCall());
+        cancelConcernPresenter = new CancelConcernPresenter(new CancelCall());
     }
 }

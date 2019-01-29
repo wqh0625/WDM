@@ -93,11 +93,12 @@ public class MyFragment extends BaseFragment {
         userSignInPresenter = new UserSignInPresenter(new usersignIn());
 
     }
-    class usersignIn implements DataCall<Result>{
+
+    class usersignIn implements DataCall<Result> {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 qdBtn.setText("已签到");
             }
         }
@@ -270,23 +271,57 @@ public class MyFragment extends BaseFragment {
             //    显示出该对话框
             builder.show();
         } else if (v.getId() == R.id.my_btn_qd) {
-            userSignInPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
+            if (userInfoBean == null || userInfoBean.getUserId() == 0) {
+                DbManager dbManager = null;
+                try {
+                    dbManager = new DbManager(getContext());
+                    int i = dbManager.deleteStudentByS(userInfoBean);
+                    Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            } else {
+                userSignInPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
+            }
         } else if (v.getId() == R.id.my_image_icom) {
-            View popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
-            popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, true);
-            popWindow.setTouchable(true);
-            popWindow.setBackgroundDrawable(new BitmapDrawable());
-            popWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
 
-            final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_mys, null);
-            popWindow.showAtLocation(inflate, Gravity.BOTTOM, 0, 0);
-            camera = popView.findViewById(R.id.open_camera);
+            if (userInfoBean == null || userInfoBean.getSessionId() == "" || userInfoBean.getUserId() == 0) {
+                DbManager dbManager = null;
+                try {
+                    dbManager = new DbManager(getContext());
+                    int i = dbManager.deleteStudentByS(userInfoBean);
+                    Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-            photo = popView.findViewById(R.id.open_album);
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            } else {
+                View popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
+                popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                popWindow.setTouchable(true);
+                popWindow.setBackgroundDrawable(new BitmapDrawable());
+                popWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
 
-            cancel = popView.findViewById(R.id.open_cancel);
-            initPop(popView);
+                final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_mys, null);
+                popWindow.showAtLocation(inflate, Gravity.BOTTOM, 0, 0);
+                camera = popView.findViewById(R.id.open_camera);
+
+                photo = popView.findViewById(R.id.open_album);
+
+                cancel = popView.findViewById(R.id.open_cancel);
+                initPop(popView);
+            }
+
         }
     }
 

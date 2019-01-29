@@ -1,9 +1,19 @@
 package demo.com.wdmoviedemo.presenter;
 
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
+import com.bw.movie.R;
+
 import demo.com.wdmoviedemo.bean.Result;
+import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.CustomException;
 import demo.com.wdmoviedemo.core.exception.ResponseTransformer;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.core.utils.MyApp;
+import demo.com.wdmoviedemo.view.LoginActivity;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
@@ -17,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 
-public abstract class BasePresenter  {
+public abstract class BasePresenter {
     private DataCall consumer;
     private boolean runing;
 
@@ -26,7 +36,7 @@ public abstract class BasePresenter  {
     }
 
     public void requestNet(final Object... args) {
-        if (runing){
+        if (runing) {
             return;
         }
         runing = true;
@@ -66,4 +76,16 @@ public abstract class BasePresenter  {
     public boolean isRuning() {
         return runing;
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+
+//                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
+        }
+
+
+    };
 }

@@ -40,9 +40,10 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
         list = new ArrayList<>();
     }
 
-    public CarouselData getItem(int i){
+    public CarouselData getItem(int i) {
         return list.get(i);
     }
+
     //接口回调
     public interface OnCinemaxItemClickListener {
         void onMovieClick(int position);
@@ -55,7 +56,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     }
 
     public interface OnImageClickListener {
-        void OnImageClick(int i,int position, CarouselData carouselData);
+        void OnImageClick(int i, int position, CarouselData carouselData);
 
     }
 
@@ -96,7 +97,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
             public void onClick(View view) {
                 int ids = carouselData.getId();
                 if (mOnImageClickListener != null) {
-                    mOnImageClickListener.OnImageClick(i,ids, list.get(i));
+                    mOnImageClickListener.OnImageClick(i, ids, list.get(i));
                 }
             }
         });
@@ -110,7 +111,6 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
                 }
             }
         });
-
 
 
     }
