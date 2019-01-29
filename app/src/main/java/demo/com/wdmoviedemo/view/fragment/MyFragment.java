@@ -71,8 +71,9 @@ public class MyFragment extends BaseFragment {
     private PopupWindow popWindow;
     private TopPhotoPresenter topPhotoPresenter;
     private UserSignInPresenter userSignInPresenter;
-    private View popView;
+
     private List<UserInfoBean> student;
+    private View popView;
 
     @Override
     public void initView(View view) {
