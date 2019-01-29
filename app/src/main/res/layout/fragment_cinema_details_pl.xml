@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="评论"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/details_pl_recy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"/>
 </LinearLayout>

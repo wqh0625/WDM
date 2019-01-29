@@ -3,6 +3,8 @@ package demo.com.wdmoviedemo.core.interfase;
 import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
+import demo.com.wdmoviedemo.bean.CommentData;
+import demo.com.wdmoviedemo.bean.DetailsData;
 import demo.com.wdmoviedemo.bean.FilmDetailsData;
 import demo.com.wdmoviedemo.bean.ListofCinemaData;
 import demo.com.wdmoviedemo.bean.LoginData;
@@ -84,4 +86,18 @@ public interface IRequests {
                                                      @Header("sessionId") String sessionId,
                                                      @Query("page") int page,
                                                      @Query("count") int count);
+
+    //影院详情明细
+    @GET("movieApi/cinema/v1/findCinemaInfo")
+    Observable<Result<DetailsData>> getDetails(@Header("userId") int userId,
+                                               @Header("sessionId") String sessionId,
+                                               @Query("cinemaId") int cinemaId);
+
+    //影院评论明细
+    @GET("movieApi/cinema/v1/findAllCinemaComment")
+    Observable<Result<List<CommentData>>> getComment(@Header("userId") int userId,
+                                               @Header("sessionId") String sessionId,
+                                               @Query("cinemaId") int cinemaId,
+                                               @Query("page") int page,
+                                               @Query("count") int count);
 }
