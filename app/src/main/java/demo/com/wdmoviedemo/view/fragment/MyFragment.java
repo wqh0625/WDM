@@ -1,19 +1,17 @@
 package demo.com.wdmoviedemo.view.fragment;
 
 import android.Manifest;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
+import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -31,13 +29,11 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.File;
 import java.sql.SQLException;
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.Result2;
 import demo.com.wdmoviedemo.bean.UserInfoBean;
@@ -48,6 +44,8 @@ import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.utils.FileUtils;
 import demo.com.wdmoviedemo.core.utils.MyApp;
 import demo.com.wdmoviedemo.presenter.FindUserHomeInfoPresenter;
+import demo.com.wdmoviedemo.presenter.TopPhotoPresenter;
+import demo.com.wdmoviedemo.presenter.UserSignInPresenter;
 import demo.com.wdmoviedemo.view.HomeActivity;
 import demo.com.wdmoviedemo.view.LoginActivity;
 import demo.com.wdmoviedemo.view.myactivity.My_Attention_Activity;
@@ -65,13 +63,21 @@ public class MyFragment extends BaseFragment {
     @BindView(R.id.my_btn_qd)
     Button qdBtn;
     private FindUserHomeInfoPresenter findUserHomeInfoPresenter;
-    private RelativeLayout xc;
-    private RelativeLayout qx;
-    private RelativeLayout xiangji;
+    private RelativeLayout photo;
+    private RelativeLayout cancel;
+    private RelativeLayout camera;
     private PopupWindow popWindow;
+    private TopPhotoPresenter topPhotoPresenter;
+    private UserSignInPresenter userSignInPresenter;
 
     @Override
     public void initView(View view) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         String headPic = userInfoBean.getHeadPic();
         String nickName = userInfoBean.getNickName();
         if (headPic == null || headPic.length() < 0 || headPic == "") {
@@ -81,25 +87,59 @@ public class MyFragment extends BaseFragment {
             icon.setImageURI(Uri.parse(headPic));
             nickNameTv.setText(nickName);
         }
+        topPhotoPresenter = new TopPhotoPresenter(new top());
         findUserHomeInfoPresenter = new FindUserHomeInfoPresenter(new find());
-//        findUserHomeInfoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
+        findUserHomeInfoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
+        userSignInPresenter = new UserSignInPresenter(new usersignIn());
+
+    }
+    class usersignIn implements DataCall<Result>{
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+                qdBtn.setText("已签到");
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+
+        }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    class top implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                icon.setImageURI(data.getHeadPath());
+                UserInfoBean userInfoBean = new UserInfoBean();
+                userInfoBean.setHeadPic(data.getHeadPath());
+                try {
+                    DbManager dbManager = new DbManager(getActivity());
+                    dbManager.insertStudent(userInfoBean);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
+        @Override
+        public void fail(ApiException a) {
+
+        }
     }
 
     class find implements DataCall<Result<Result2>> {
         @Override
         public void success(Result<Result2> data) {
-            Toast.makeText(getContext(), "/////" + data.getResult().getUsersignstatus(), Toast.LENGTH_SHORT).show();
-            if (data.getResult().getUsersignstatus() == 1) {
+            if (data.getResult().getUserSignStatus() == 1) {
                 qdBtn.setText("签到");
             } else {
                 qdBtn.setText("已签到");
             }
+
         }
 
         @Override
@@ -217,7 +257,7 @@ public class MyFragment extends BaseFragment {
                     // 删除用户
                     SharedPreferences sp0123 = getActivity().getSharedPreferences("sp0123", Context.MODE_PRIVATE);
                     sp0123.edit().clear().commit();
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    Intent intent = new Intent(getContext(), HomeActivity.class);
                     // 清空当前栈 ，并且创建新的栈
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     // 跳转
@@ -230,7 +270,7 @@ public class MyFragment extends BaseFragment {
             //    显示出该对话框
             builder.show();
         } else if (v.getId() == R.id.my_btn_qd) {
-
+            userSignInPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
         } else if (v.getId() == R.id.my_image_icom) {
             View popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
             popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -241,12 +281,11 @@ public class MyFragment extends BaseFragment {
 
             final View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_mys, null);
             popWindow.showAtLocation(inflate, Gravity.BOTTOM, 0, 0);
-            xiangji = popView.findViewById(R.id.open_camera);
+            camera = popView.findViewById(R.id.open_camera);
 
+            photo = popView.findViewById(R.id.open_album);
 
-            xc = popView.findViewById(R.id.open_album);
-
-            qx = popView.findViewById(R.id.open_cancel);
+            cancel = popView.findViewById(R.id.open_cancel);
             initPop(popView);
         }
     }
@@ -255,6 +294,8 @@ public class MyFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         findUserHomeInfoPresenter.unBind();
+        topPhotoPresenter.unBind();
+        userSignInPresenter.unBind();
     }
 
     @Override
@@ -262,12 +303,33 @@ public class MyFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0:
-                Bitmap bitmap = data.getParcelableExtra("data");
-                icon.setImageBitmap(bitmap);
+                File imageFile = FileUtils.getImageFile();
+                String path = imageFile.getPath();
+
+                topPhotoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), path);
+                popWindow.dismiss();
                 break;
             case 1:
                 Uri data1 = data.getData();
-                icon.setImageURI(data1);
+
+                String[] proj = {MediaStore.Images.Media.DATA};
+
+                Cursor actualimagecursor = getActivity().managedQuery(data1, proj, null, null, null);
+
+                int actual_image_column_index = actualimagecursor
+                        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                actualimagecursor.moveToFirst();
+                String img_path = actualimagecursor
+                        .getString(actual_image_column_index);
+
+                // 4.0以上平台会自动关闭cursor,所以加上版本判断,OK
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    actualimagecursor.close();
+                }
+                topPhotoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), img_path);
+                popWindow.dismiss();
+                break;
+            default:
                 break;
         }
     }
@@ -275,7 +337,7 @@ public class MyFragment extends BaseFragment {
     private void initPop(View popView) {
 
 
-        qx.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //取消弹框
@@ -283,7 +345,7 @@ public class MyFragment extends BaseFragment {
             }
         });
         //相册
-        xc.setOnClickListener(new View.OnClickListener() {
+        photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -303,13 +365,11 @@ public class MyFragment extends BaseFragment {
             }
         });
         //相机
-        xiangji.setOnClickListener(new View.OnClickListener() {
-
+        camera.setOnClickListener(new View.OnClickListener() {
             private Uri tempUri;
 
             @Override
             public void onClick(View v) {
-
                 Intent openCameraIntent = new Intent(
                         MediaStore.ACTION_IMAGE_CAPTURE);
 

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -43,16 +44,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        UserInfoBean userInfoBeanaaa = new UserInfoBean();
+        UserInfoBean userInfoBeanaaa = null;
         List<UserInfoBean> student = this.student;
-        for (int i = student.size() - 1; i >= 0; i--) {
-            if (student.get(i).getStats() == 100) {
-                userInfoBeanaaa = student.get(i);
-                break;
-            }
+        Toast.makeText(this, "DbSize" + student.size(), Toast.LENGTH_SHORT).show();
+        if (student != null && student.size() > 0) {
+            userInfoBeanaaa = student.get(0);
         }
-        Log.v("数据库登录数据--", student.size() + " " + userInfoBeanaaa.toString());
+        if (userInfoBeanaaa != null) {
+            Log.v("数据库登录数据--", student.size() + " " + userInfoBeanaaa.toString());
+        }
 
         initV();
         initData();
@@ -147,7 +147,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
                     // 跳转
                     startActivity(intent);
-                     overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
 
                 } else {
                     isimagemy(transaction);
@@ -237,5 +237,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         //开始执行
         set.start();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MobclickAgent.onPageStart("主页面");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("主页面");
+        MobclickAgent.onPause(this);
     }
 }

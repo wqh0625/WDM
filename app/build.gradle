@@ -69,4 +69,5 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation project(':SeatTable')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.umeng.analytics:analytics:latest.integration'
 }

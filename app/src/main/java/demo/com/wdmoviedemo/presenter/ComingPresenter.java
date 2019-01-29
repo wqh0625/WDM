@@ -23,6 +23,6 @@ public class ComingPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NetWorks.getRequest().create(IRequest.class);
-        return iRequest.getonNext((int) args[0], (int) args[1]);
+        return iRequest.getonNext((int) args[0], (String) args[1],(int)args[2],(int)args[3]);
     }
 }

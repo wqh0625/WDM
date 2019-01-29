@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.umeng.analytics.MobclickAgent;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -204,5 +205,19 @@ public class LoginActivity extends BaseActivity {
         super.onDestroy();
         unBind.unbind();// 解绑
         loginPresenter.unBind();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MobclickAgent.onPageStart("登录页面");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("登录页面");
+        MobclickAgent.onPause(this);
     }
 }

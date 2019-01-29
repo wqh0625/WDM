@@ -38,21 +38,23 @@ public class CinemaxFragment extends BaseFragment {
     private RecyclerView cinemaxrecy;
     private CinemaxAdapters cinemaxAdapter;
     private CarouselPresenter carouselPresenter;
-    private int userId;
-    private String sessionId;
-    private int position;
+
     private ConcernPresenter concernPresenter;
     private CancelConcernPresenter cancelConcernPresenter;
 
     private void initData() {
-        userId = userInfoBean.getUserId();
-        sessionId = userInfoBean.getSessionId();
+
 
         cinemaxAdapter = new CinemaxAdapters(getActivity(), CinemaxAdapters.CAROUSEL_TYPE);
+        cinemaxrecy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         cinemaxrecy.setAdapter(cinemaxAdapter);
         carouselPresenter = new CarouselPresenter(new CinemaxCall());
-        cinemaxrecy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        carouselPresenter.requestNet(1, 10);
+
+        if (userInfoBean == null) {
+            carouselPresenter.requestNet(0, "", 1, 20);
+        } else {
+            carouselPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1, 20);
+        }
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
             public void onMovieClick(int position) {
@@ -64,15 +66,14 @@ public class CinemaxFragment extends BaseFragment {
         });
         cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
 
-
             @Override
-            public void OnImageClick(int pos, CarouselData carouselData) {
-                if (userId == 0 || sessionId == null || sessionId == "") {
+            public void OnImageClick(int i,int pos, CarouselData carouselData) {
+                if (userInfoBean == null) {
                     DbManager dbManager = null;
                     try {
                         dbManager = new DbManager(getContext());
-                        int i = dbManager.deleteStudentByS(userInfoBean);
-                        Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                        int ii = dbManager.deleteStudentByS(userInfoBean);
+                        Toast.makeText(getContext(), "" + ii, Toast.LENGTH_SHORT).show();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -82,13 +83,11 @@ public class CinemaxFragment extends BaseFragment {
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 } else {
-                    position = pos;
-                    Toast.makeText(getActivity(), ""+carouselData.getFollowMovie(), Toast.LENGTH_SHORT).show();
-                    if (carouselData.getFollowMovie() == 2) {
-                        cancelConcernPresenter.requestNet(userId, sessionId, carouselData.getId(),carouselData);
-                        return;
+                    if (carouselData.getFollowMovie() == 1) {
+                        cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), pos,i);
+                    } else {
+                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), pos,i);
                     }
-                    concernPresenter.requestNet(userId, sessionId, carouselData.getId(),carouselData);
                 }
             }
         });
@@ -116,14 +115,19 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")) {
-                Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (data.getStatus().equals("0000")) {
+                    int po = (int) data.getArgs()[4];
+                    cinemaxAdapter.getItem(po).setFollowMovie(1);
+                    cinemaxAdapter.notifyItemChanged(po);
+
             }
         }
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "g失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "gggg失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -132,8 +136,12 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
+            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+                int po = (int) data.getArgs()[4];
+                cinemaxAdapter.getItem(po).setFollowMovie(2);
+                cinemaxAdapter.notifyItemChanged(po);
             }
         }
 
@@ -143,8 +151,9 @@ public class CinemaxFragment extends BaseFragment {
         }
     }
 
+
     private void init(View view) {
-        cinemaxrecy = (RecyclerView) view.findViewById(R.id.cinemax_recy);
+        cinemaxrecy = view.findViewById(R.id.cinemax_recy);
         concernPresenter = new ConcernPresenter(new ConcernCall());
         cancelConcernPresenter = new CancelConcernPresenter(new CancelCall());
     }

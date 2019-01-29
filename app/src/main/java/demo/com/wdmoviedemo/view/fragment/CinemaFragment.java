@@ -132,6 +132,7 @@ public class CinemaFragment extends BaseFragment {
                 return;
             }
             txtLocation.setText(addr);
+            mLocationClient.stop();
         }
 
     }

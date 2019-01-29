@@ -20,6 +20,7 @@ import demo.com.wdmoviedemo.core.adapter.CinemaxAdapters;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.CancelConcernPresenter;
 import demo.com.wdmoviedemo.presenter.ConcernPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
 import demo.com.wdmoviedemo.view.Film_Details_Activity;
@@ -29,56 +30,56 @@ public class IsHitFragment extends BaseFragment {
     private RecyclerView ishitRecy;
     private CinemaxAdapters cinemaxAdapter;
     private IsHitPresenter isHitPresenter;
-    private int userId;
-    private String sessionId;
+    private ConcernPresenter concernPresenter;
+    private CancelConcernPresenter cancelConcernPresenter;
 
     private void initData() {
-        userId = userInfoBean.getUserId();
-        sessionId = userInfoBean.getSessionId();
-        cinemaxAdapter = new CinemaxAdapters(getActivity(),CinemaxAdapters.ISHIT_TYPE);
+        cinemaxAdapter = new CinemaxAdapters(getActivity(), CinemaxAdapters.ISHIT_TYPE);
+        ishitRecy.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         ishitRecy.setAdapter(cinemaxAdapter);
         isHitPresenter = new IsHitPresenter(new IsHitCall());
-        ishitRecy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        isHitPresenter.requestNet(1,10);
+
+        if (userInfoBean == null) {
+            isHitPresenter.requestNet(0, "", 1, 10);
+        } else {
+            isHitPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1, 10);
+        }
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapters.OnCinemaxItemClickListener() {
             @Override
             public void onMovieClick(int position) {
-                Intent intent = new Intent(getActivity(),Film_Details_Activity.class);
-                intent.putExtra("position",position);
+                Intent intent = new Intent(getActivity(), Film_Details_Activity.class);
+                intent.putExtra("position", position);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         });
         cinemaxAdapter.setOnImageClickListener(new CinemaxAdapters.OnImageClickListener() {
-            private ConcernPresenter concernPresenter;
 
             @Override
-            public void OnImageClick(int position, CarouselData carouselData) {
-                if (userId ==0 || sessionId==null || sessionId==""){
+            public void OnImageClick(int i,int position, CarouselData carouselData) {
+                if (userInfoBean == null) {
                     Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
-                }else {
-                    if (carouselData.getFollowMovie() ==2){
-                        concernPresenter = new ConcernPresenter(new ConcernCall());
-                        concernPresenter.requestNet(userId,sessionId,position);
-                    }else {
-                        Toast.makeText(getActivity(), "已关注", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (carouselData.getFollowMovie() == 1) {
+                        cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position,i);
+
+                    } else {
+                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position,i);
+
                     }
+                }
             }
-
-
-
-            }
-
 
         });
     }
+
     class IsHitCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }
@@ -90,25 +91,52 @@ public class IsHitFragment extends BaseFragment {
         }
     }
     //关注
-    class ConcernCall implements DataCall<Result>{
+    class ConcernCall implements DataCall<Result> {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), "关注成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
+                if (data.getStatus().equals("0000")) {
+                    int o = (int) data.getArgs()[4];
+                    cinemaxAdapter.getItem(o).setFollowMovie(1);
+                    cinemaxAdapter.notifyItemChanged(o);
             }
         }
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "关注失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "gggg失败", Toast.LENGTH_SHORT).show();
         }
     }
+
+    //取消关注
+    class CancelCall implements DataCall<Result> {
+
+        @Override
+        public void success(Result data) {
+            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
+            if (data.getStatus().equals("0000")) {
+                int po = (int) data.getArgs()[4];
+                cinemaxAdapter.getItem(po).setFollowMovie(2);
+                cinemaxAdapter.notifyItemChanged(po);
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getContext(), "q失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         isHitPresenter.unBind();
+        cancelConcernPresenter.unBind();
+        concernPresenter.unBind();
     }
 
     @Override
@@ -120,6 +148,6 @@ public class IsHitFragment extends BaseFragment {
     protected void initView(View view) {
         ishitRecy = (RecyclerView) view.findViewById(R.id.ishit_recy);
         initData();
-
+        concernPresenter = new ConcernPresenter(new ConcernCall()); cancelConcernPresenter = new CancelConcernPresenter(new CancelCall());
     }
 }

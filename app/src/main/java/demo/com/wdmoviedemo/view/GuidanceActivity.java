@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bw.movie.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,5 +203,19 @@ public class GuidanceActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(2);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MobclickAgent.onPageStart("引导页面");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("引导页面");
+        MobclickAgent.onPause(this);
     }
 }

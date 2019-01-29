@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.umeng.analytics.MobclickAgent;
 
 import org.w3c.dom.Text;
 
@@ -459,5 +460,19 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         searchPresenter.unBind();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MobclickAgent.onPageStart("影片详情页面");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("影片详情页面");
+        MobclickAgent.onPause(this);
     }
 }

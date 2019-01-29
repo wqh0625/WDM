@@ -26,6 +26,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler.getInstance().init(this);
         context = this;
         Fresco.initialize(this,ImagePipelineConfig.newBuilder(this)
                 .setMainDiskCacheConfig(DiskCacheConfig.newBuilder(this)

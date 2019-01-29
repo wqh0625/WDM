@@ -1,5 +1,7 @@
 package demo.com.wdmoviedemo.bean;
 
+import java.util.List;
+
 /**
  * 作者: Wang on 2019/1/22 16:10
  * 寄语：加油！相信自己可以！！！
@@ -13,6 +15,7 @@ public class Result<T> {
     private String message;
     private String status;
     private Object[] args;
+
     private String prepayId;
     private String partnerId;
     private String nonceStr;
@@ -21,6 +24,15 @@ public class Result<T> {
     private String appId;
     private String packageValue;
     private String orderId;
+    private String headPath;
+
+    public void setHeadPath(String headPath) {
+        this.headPath = headPath;
+    }
+
+    public String getHeadPath() {
+        return headPath;
+    }
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;

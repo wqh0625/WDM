@@ -14,6 +14,8 @@ import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.Result2;
 import demo.com.wdmoviedemo.bean.TicketDetailsData;
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -51,18 +53,22 @@ public interface IRequest {
     //首页轮播,热门电影
     @GET("movieApi/movie/v1/findHotMovieList")
     Observable<Result<List<CarouselData>>> getcarousel(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionID,
             @Query("page") int page,
             @Query("count") int count);
 
     //首页正在热映
     @GET("movieApi/movie/v1/findReleaseMovieList")
-    Observable<Result<List<CarouselData>>> getisHit(
-            @Query("page") int page,
-            @Query("count") int count);
+    Observable<Result<List<CarouselData>>> getisHit(@Header("userId") int userId,
+                                                    @Header("sessionId") String sessionID,
+                                                    @Query("page") int page,
+                                                    @Query("count") int count);
 
     //即将上映
     @GET("movieApi/movie/v1/findComingSoonMovieList")
-    Observable<Result<List<CarouselData>>> getonNext(@Query("page") int page,
+    Observable<Result<List<CarouselData>>> getonNext(@Header("userId") int userId,
+                                                     @Header("sessionId") String sessionID, @Query("page") int page,
                                                      @Query("count") int count);
 
     // 查询我的页面movieApi/user/v1/verify/getUserInfoByUserId
@@ -140,7 +146,7 @@ public interface IRequest {
     @FormUrlEncoded
     Observable<Result> buyMovieTicket(
             @Header("userId") int userId,
-            @Header("sessionId")String sessionId,
+            @Header("sessionId") String sessionId,
             @Field("scheduleId") int scheduleId,
             @Field("amount") int amount,
             @Field("sign") String sign);
@@ -149,7 +155,31 @@ public interface IRequest {
     @POST("movieApi/movie/v1/verify/pay")
     @FormUrlEncoded
     Observable<Result> pay(@Header("userId") int userId,
-                           @Header("sessionId")String sessionId,
+                           @Header("sessionId") String sessionId,
                            @Field("payType") int scheduleId,
-                           @Field("orderId") String  orderId);
+                           @Field("orderId") String orderId);
+
+    // 上传头像
+    @POST("movieApi/user/v1/verify/uploadHeadPic")
+    Observable<Result> headPic(@Header("userId") int userId,
+                               @Header("sessionId") String sessionId,
+                               @Body MultipartBody image);
+
+    // 签到http://172.17.8.100/movieApi/user/v1/verify/userSignIn
+    @GET("movieApi/user/v1/verify/userSignIn")
+    Observable<Result> userSignIn(@Header("userId") int userId,
+                                  @Header("sessionId") String sessionId);
+
+    //6.关注影院
+    //接口地址：http://172.17.8.100/movieApi/cinema/v1/verify/followCinema
+    @GET("movieApi/cinema/v1/verify/followCinema")
+    Observable<Result> followCinema(@Header("userId") int userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Query("cinemaId") int id);
+    //7.取消关注影院
+    //接口地址：http://172.17.8.100/movieApi/cinema/v1/verify/cancelFollowCinema
+    @GET("movieApi/cinema/v1/verify/cancelFollowCinema")
+    Observable<Result> cancelFollowCinema(@Header("userId") int userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Query("cinemaId") int id);
 }

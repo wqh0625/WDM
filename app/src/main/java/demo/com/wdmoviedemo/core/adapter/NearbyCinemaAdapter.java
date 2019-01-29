@@ -18,6 +18,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity;
 
@@ -30,6 +31,11 @@ import demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity;
 public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapter.Vh> {
     private List<NearbyData> list;
     private FragmentActivity context;
+    private OnLikeLister onLikeLister;
+
+    public void setOnLikeLister(OnLikeLister onLikeLister) {
+        this.onLikeLister = onLikeLister;
+    }
 
     public void setList(List<NearbyData> list) {
         if (list != null) {
@@ -42,6 +48,14 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
         this.context = context;
     }
 
+    public NearbyData getItem(int o) {
+        return list.get(o);
+    }
+
+    public interface OnLikeLister {
+        void onlike(int i, int Id, NearbyData nearbyData);
+    }
+
     @NonNull
     @Override
     public Vh onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -50,12 +64,18 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Vh vh, int i) {
+    public void onBindViewHolder(@NonNull Vh vh, final int i) {
         final NearbyData nearbyData = list.get(i);
         vh.icon.setImageURI(Uri.parse(nearbyData.getLogo()));
         vh.title.setText(nearbyData.getName());
         vh.location.setText(nearbyData.getAddress());
         vh.size.setText(nearbyData.getDistance() + "km");
+        vh.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLikeLister.onlike(i, list.get(i).getId(), list.get(i));
+            }
+        });
         if (nearbyData.getFollowcinema() == 1) {
             // 已关注
             vh.like.setImageResource(R.drawable.icon_collection_selected);
@@ -63,6 +83,7 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
             // 未关注
             vh.like.setImageResource(R.drawable.aix);
         }
+
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +92,7 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
                 intent.putExtra("Caddress", nearbyData.getAddress());
                 intent.putExtra("CimageUrl", nearbyData.getLogo());
                 intent.putExtra("CcinameName", nearbyData.getName());
-                intent.putExtra("Cid",nearbyData.getId());
+                intent.putExtra("Cid", nearbyData.getId());
                 context.startActivity(intent);
                 context.overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }

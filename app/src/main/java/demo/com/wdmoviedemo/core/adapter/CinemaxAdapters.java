@@ -40,6 +40,9 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
         list = new ArrayList<>();
     }
 
+    public CarouselData getItem(int i){
+        return list.get(i);
+    }
     //接口回调
     public interface OnCinemaxItemClickListener {
         void onMovieClick(int position);
@@ -52,7 +55,7 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
     }
 
     public interface OnImageClickListener {
-        void OnImageClick(int position, CarouselData carouselData);
+        void OnImageClick(int i,int position, CarouselData carouselData);
 
     }
 
@@ -79,15 +82,21 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getImageUrl()));
-        viewHolder.txtName.setText(list.get(i).getName());
-        viewHolder.txtContent.setText(list.get(i).getSummary());
+        final CarouselData carouselData = list.get(i);
+        viewHolder.sdvImage.setImageURI(Uri.parse(carouselData.getImageUrl()));
+        viewHolder.txtName.setText(carouselData.getName());
+        viewHolder.txtContent.setText(carouselData.getSummary());
+        if (carouselData.getFollowMovie() == 1) {
+            viewHolder.image.setImageResource(R.drawable.icon_collection_selected);
+        } else {
+            viewHolder.image.setImageResource(R.drawable.com_icon_collection_default);
+        }
         viewHolder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int ids = list.get(i).getId();
+                int ids = carouselData.getId();
                 if (mOnImageClickListener != null) {
-                    mOnImageClickListener.OnImageClick(ids, list.get(i));
+                    mOnImageClickListener.OnImageClick(i,ids, list.get(i));
                 }
             }
         });
@@ -95,18 +104,14 @@ public class CinemaxAdapters extends RecyclerView.Adapter<CinemaxAdapters.ViewHo
             @Override
             public void onClick(View view) {
                 //根据id获取
-                int id = list.get(i).getId();
+                int id = carouselData.getId();
                 if (mOnCinemaxItemClickListener != null) {
                     mOnCinemaxItemClickListener.onMovieClick(id);
                 }
             }
         });
-         int followMovie = list.get(i).getFollowMovie();
-        if (followMovie == 2) {
-            viewHolder.image.setBackgroundResource(R.drawable.icon_collection_selected);
-        } else {
-            viewHolder.image.setBackgroundResource(R.drawable.com_icon_collection_default);
-        }
+
+
 
     }
 

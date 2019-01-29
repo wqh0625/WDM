@@ -27,6 +27,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +96,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onPageSelected(int i) {
+//                detailsVp.setCurrentItem(i);
                 ChangeBackGround(i);
             }
 
@@ -163,6 +165,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 return;
             }
             txtLocation.setText(addr);
+            mLocationClient.stop();
         }
 
     }
@@ -283,5 +286,18 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         txtComing.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_back);
         txtComing.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        MobclickAgent.onPageStart("影片页面");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("影片页面");
+        MobclickAgent.onPause(this);
+    }
 }

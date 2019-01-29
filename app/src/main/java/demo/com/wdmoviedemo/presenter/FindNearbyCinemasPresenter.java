@@ -24,6 +24,6 @@ public class FindNearbyCinemasPresenter extends BasePresenter{
         }else{
             page++;
         }
-        return iRequest.findNearbyCinemas( (int) args[0], (String) args[1],page,10);
+        return iRequest.findNearbyCinemas( (int) args[0], (String) args[1],page,20);
     }
 }

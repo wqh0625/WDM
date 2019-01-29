@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bw.movie.R;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -50,5 +51,20 @@ public class StartActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeMessages(1);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MobclickAgent.onPageStart("倒计时页面");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("倒计时页面");
+        MobclickAgent.onPause(this);
     }
 }

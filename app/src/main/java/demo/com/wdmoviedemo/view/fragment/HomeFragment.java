@@ -13,6 +13,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import demo.com.wdmoviedemo.core.adapter.CinemaxAdapter;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.core.utils.MyApp;
 import demo.com.wdmoviedemo.presenter.CarouselPresenter;
 import demo.com.wdmoviedemo.presenter.ComingPresenter;
 import demo.com.wdmoviedemo.presenter.IsHitPresenter;
@@ -59,7 +61,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         carouselAdapter = new CarouselAdapter(getActivity());
         recycarousel.setAdapter(carouselAdapter);//设置适配器
         carouselPresenter = new CarouselPresenter(new Carousel());
-        carouselPresenter.requestNet(1, 10);
+        if (userInfoBean == null) {
+            carouselPresenter.requestNet(0, "", 1, 10);
+        } else {
+            carouselPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1, 10);
+        }
         recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {//滑动监听
             @Override
             public void onItemSelected(int position) {
@@ -107,15 +113,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         recyOnnow.setAdapter(comingAdapter);
 
         carouselPresenter = new CarouselPresenter(new CarouselCall());
-        carouselPresenter.requestNet(1, 10);
+        if (userInfoBean == null) {
+            carouselPresenter.requestNet(0, "", 1, 10);
+        } else {
+            carouselPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1, 10);
+        }
+
 
         //正在热映
         isHitPresenter = new IsHitPresenter(new IsHitCall());
-        isHitPresenter.requestNet(2, 10);
-
+        if (userInfoBean == null) {
+            isHitPresenter.requestNet(0, "", 2, 10);
+        } else {
+            isHitPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1, 10);
+        }
         //即将上映
         comingPresenter = new ComingPresenter(new ComingCall());
-        comingPresenter.requestNet(1, 20);
+        if (userInfoBean == null) {
+            comingPresenter.requestNet(0, "", 1, 20);
+        } else {
+            comingPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), 1, 10);
+        }
 
         //接口回调跳转页面
         cinemaxAdapter.setOnMovieItemClickListener(new CinemaxAdapter.OnMovieItemClickListener() {
@@ -248,6 +266,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 return;
             }
             txtLocation.setText(addr);
+            mLocationClient.stop();
         }
 
     }
@@ -257,7 +276,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.recommend_cinema_linear:
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra("image",image1);
+                intent.putExtra("image", image1);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
@@ -290,6 +309,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         carouselPresenter.unBind();
         isHitPresenter.unBind();
         comingPresenter.unBind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MobclickAgent.onPageStart("HomeFragmen页面");
+        MobclickAgent.onResume(MyApp.getContext());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("HomeFragmen页面");
+        MobclickAgent.onPause(MyApp.getContext());
     }
 
     @Override

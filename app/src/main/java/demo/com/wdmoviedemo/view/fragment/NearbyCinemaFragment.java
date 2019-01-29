@@ -25,7 +25,9 @@ import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
+import demo.com.wdmoviedemo.presenter.CancelFollowCinemaPresenter;
 import demo.com.wdmoviedemo.presenter.FindNearbyCinemasPresenter;
+import demo.com.wdmoviedemo.presenter.FollowCinemaPresenter;
 import demo.com.wdmoviedemo.view.LoginActivity;
 
 /**
@@ -34,13 +36,13 @@ import demo.com.wdmoviedemo.view.LoginActivity;
  */
 
 
-public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.LoadingListener {
+public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.LoadingListener, NearbyCinemaAdapter.OnLikeLister {
     @BindView(R.id.nearby_rec)
     XRecyclerView rec;
-
-
     private NearbyCinemaAdapter adapter;
     private FindNearbyCinemasPresenter findNearbyCinemasPresenter;
+    private FollowCinemaPresenter followCinemaPresenter;
+    private CancelFollowCinemaPresenter cancelFollowCinemaPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -56,7 +58,11 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         findNearbyCinemasPresenter = new FindNearbyCinemasPresenter(new find());
 
         adapter = new NearbyCinemaAdapter(getActivity());
+        adapter.setOnLikeLister(this);
         rec.setAdapter(adapter);
+
+        followCinemaPresenter = new FollowCinemaPresenter(new ConcernCall());
+        cancelFollowCinemaPresenter = new CancelFollowCinemaPresenter(new CancelCall());
     }
 
     @Override
@@ -75,7 +81,11 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-        findNearbyCinemasPresenter.requestNet(0, "", true);
+        if (userInfoBean == null) {
+            findNearbyCinemasPresenter.requestNet(0, "", true);
+        }else{
+            findNearbyCinemasPresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(), true);
+        }
     }
 
     @Override
@@ -87,6 +97,61 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         rec.refreshComplete();
         rec.loadMoreComplete();
 //        findNearbyCinemasPresenter.requestNet(0,"",false);
+    }
+
+    @Override
+    public void onlike(int i,int id, NearbyData nearbyData) {
+        if (userInfoBean == null) {
+//                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        } else {
+            if (nearbyData.getFollowcinema() == 1) {
+                cancelFollowCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
+            } else {
+                followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id,nearbyData.getId(), i);
+            }
+        }
+    }
+
+    //关注
+    class ConcernCall implements DataCall<Result> {
+
+        @Override
+        public void success(Result data) {
+            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
+            if (data.getStatus().equals("0000")) {
+                    int o = (int) data.getArgs()[4];
+                    adapter.getItem(o).setFollowcinema(1);
+                    adapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getActivity(), "gggg失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //取消关注
+    class CancelCall implements DataCall<Result> {
+
+        @Override
+        public void success(Result data) {
+            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
+            if (data.getStatus().equals("0000")) {
+                int o = (int) data.getArgs()[4];
+                adapter.getItem(o).setFollowcinema(2);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getContext(), "q失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     class find implements DataCall<Result<List<NearbyData>>> {
@@ -112,5 +177,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
     public void onDestroyView() {
         super.onDestroyView();
         findNearbyCinemasPresenter.unBind();
+        cancelFollowCinemaPresenter.unBind();
+        followCinemaPresenter.unBind();
     }
 }

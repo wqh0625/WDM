@@ -9,69 +9,40 @@ import java.util.List;
 
 
 public class Result2 {
-
-    private List<Cinemaslist> cinemaslist;
-    private String headpic;
+    private String headPath;
     private int integral;
-    private List<Movielist> movielist;
-    private String nickname;
-    private String phone;
-    private int usersignstatus;
+    private int userSignStatus;
+    private String nickName;
 
-    public void setCinemaslist(List<Cinemaslist> cinemaslist) {
-        this.cinemaslist = cinemaslist;
+    public String getHeadPath() {
+        return headPath;
     }
 
-    public List<Cinemaslist> getCinemaslist() {
-        return cinemaslist;
-    }
-
-    public void setHeadpic(String headpic) {
-        this.headpic = headpic;
-    }
-
-    public String getHeadpic() {
-        return headpic;
-    }
-
-    public void setIntegral(int integral) {
-        this.integral = integral;
+    public void setHeadPath(String headPath) {
+        this.headPath = headPath;
     }
 
     public int getIntegral() {
         return integral;
     }
 
-    public void setMovielist(List<Movielist> movielist) {
-        this.movielist = movielist;
+    public void setIntegral(int integral) {
+        this.integral = integral;
     }
 
-    public List<Movielist> getMovielist() {
-        return movielist;
+    public int getUserSignStatus() {
+        return userSignStatus;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUserSignStatus(int userSignStatus) {
+        this.userSignStatus = userSignStatus;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setUsersignstatus(int usersignstatus) {
-        this.usersignstatus = usersignstatus;
-    }
-
-    public int getUsersignstatus() {
-        return usersignstatus;
-    }
-
 }
