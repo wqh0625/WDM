@@ -38,5 +38,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"></android.support.v7.widget.RecyclerView>
+        android:layout_marginRight="24dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/home_lucency">
+        <ImageView
+            android:id="@+id/img_finnish"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/com_icon_my_default"
+            android:layout_marginLeft="24dp"/>
+    </LinearLayout>
+
 </RelativeLayout>

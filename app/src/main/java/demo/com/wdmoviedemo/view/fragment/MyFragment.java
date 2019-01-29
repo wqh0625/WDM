@@ -70,6 +70,7 @@ public class MyFragment extends BaseFragment {
     private PopupWindow popWindow;
     private TopPhotoPresenter topPhotoPresenter;
     private UserSignInPresenter userSignInPresenter;
+    private View popView;
 
     @Override
     public void initView(View view) {
@@ -305,7 +306,7 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
-                View popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
+                popView = View.inflate(getActivity(), R.layout.my_icon_update, null);
                 popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT, true);
                 popWindow.setTouchable(true);
