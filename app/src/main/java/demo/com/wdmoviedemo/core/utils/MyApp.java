@@ -7,6 +7,7 @@ import android.os.Environment;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
 
@@ -27,6 +28,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         CrashHandler.getInstance().init(this);
+        CrashReport.initCrashReport(getApplicationContext(), "20c1faeed8", false);
         context = this;
         Fresco.initialize(this,ImagePipelineConfig.newBuilder(this)
                 .setMainDiskCacheConfig(DiskCacheConfig.newBuilder(this)
