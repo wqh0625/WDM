@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,6 +86,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private String address;
     private String imageUrl;
     private String names;
+    private TextView xq,pl;
     int id;
 
 
@@ -185,21 +187,78 @@ public class CinemaDetailActivity extends BaseActivity {
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.cinema_detail_image_icon:
-                View rootview4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.activity_cinema_detail, null);
-                View view4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.fragment_cinema_pop_, null, false);
-                final PopupWindow popupWindow4 = new PopupWindow(view4);
+                View rootview4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.fragment_cinema_pop_, null);
+                pop = rootview4;
+                final PopupWindow popupWindow4 = new PopupWindow(rootview4);
+
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
+//                popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //设置布局
-                popupWindow4.setContentView(view4);
-                activityReviewPopwindowDown = view4.findViewById(R.id.fragment_review_popwindow_down);
-
-
+                activityReviewPopwindowDown = pop.findViewById(R.id.fragment_review_popwindow_down);
+                vp = pop.findViewById(R.id.fragment_details_vp);
+                xqV = pop.findViewById(R.id.fragment_details_v);
+                plV = pop.findViewById(R.id.fragment_details_vv);
+                pl = pop.findViewById(R.id.fragment_details_pinglun);
+                xq = pop.findViewById(R.id.fragment_details_xiangqing);
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
-//                initPow(view4);
+                fragments = new ArrayList<>();
+                fragments.add(new CinemaDetailsXqFragment());
+                fragments.add(new CinemaDetailsPlFragment());
+
+                xq.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        vp.setCurrentItem(0);
+                        ChangeBackGround(0);
+//                        Intent intent = new Intent(CinemaDetailActivity.this,CinemaDetailsXqFragment.class);
+//                        intent.putExtra("cinemaId",cinemaId);
+//                        startActivity(intent);
+
+                    }
+                });
+                pl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        vp.setCurrentItem(1);
+                        ChangeBackGround(1);
+//                        Intent intent = new Intent(CinemaDetailActivity.this,CinemaDetailsPlFragment.class);
+//                        intent.putExtra("cinemaId",cinemaId);
+//                        startActivity(intent);
+
+                    }
+                });
+
+                vp.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                    @Override
+                    public Fragment getItem(int i) {
+                        return fragments.get(i);
+                    }
+
+                    @Override
+                    public int getCount() {
+                        return fragments.size();
+                    }
+                });
+                vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int i, float v, int i1) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int i) {
+                        ChangeBackGround(i);
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int i) {
+
+                    }
+                });
+
                 //设置关闭popupWindow的点击事件
                 activityReviewPopwindowDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -212,42 +271,13 @@ public class CinemaDetailActivity extends BaseActivity {
                 break;
         }
     }
-
-    private void initPow(View view4) {
-        vp = view4.findViewById(R.id.fragment_details_vp);
-        xqV = view4.findViewById(R.id.fragment_details_v);
-        plV = view4.findViewById(R.id.fragment_details_vv);
-        fragments = new ArrayList<>();
-        fragments.add(new CinemaDetailsXqFragment());
-        fragments.add(new CinemaDetailsPlFragment());
-        ChangeBackGround(0);
-        vp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int i) {
-                return fragments.get(i);
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
-        });
-        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                ChangeBackGround(i);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
+    private View pop;
+    @Override
+    public <T extends View> T findViewById(int id) {
+        if (id == R.id.fragment_details_vp && pop !=null){
+            return pop.findViewById(id);
+        }
+        return super.findViewById(id);
     }
 
     private void ChangeBackGround(int index) {
