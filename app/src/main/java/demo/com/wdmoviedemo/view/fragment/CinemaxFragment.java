@@ -180,6 +180,7 @@ public class CinemaxFragment extends BaseFragment {
         super.onDestroyView();
         carouselPresenter.unBind();
         cancelConcernPresenter.unBind();
+        concernPresenter.unBind();
     }
 
     @Override

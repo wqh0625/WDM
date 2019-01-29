@@ -164,6 +164,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         detailsTxtReview.setOnClickListener(this);
         detailsImageBack.setOnClickListener(this);
         detailsTxtBuy.setOnClickListener(this);
+        reviewAdapter = new ReviewAdapter(this);
+        predictionAdapter = new PredictionAdapter(this);
+        stillsAdapter = new StillsAdapter(this);
+
     }
 
     @Override
@@ -240,7 +244,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityPredictionPopwindowRecyclerview = view2.findViewById(R.id.activity_prediction_popwindow_recyclerview);
                 popupWindow2.showAtLocation(rootview2, Gravity.BOTTOM, 0, 0);
 
-                predictionAdapter = new PredictionAdapter(this);
 
                 activityPredictionPopwindowRecyclerview.setAdapter(predictionAdapter);
 
@@ -272,7 +275,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow3.showAtLocation(rootview3, Gravity.BOTTOM, 0, 0);
 
 
-                stillsAdapter = new StillsAdapter(this);
                 activityStillsPopwindowRecy.setAdapter(stillsAdapter);
                 activityStillsPopwindowRecy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
@@ -304,7 +306,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
-                reviewAdapter = new ReviewAdapter(this);
                 activityreviewpopwindowrecy.setAdapter(reviewAdapter);
                 activityreviewpopwindowrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 reviewPresenter = new ReviewPresenter(new ReviewCall());
@@ -360,15 +361,11 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
             default:
                 break;
-
         }
-
     }
 
     //详情
     class FilmDetailsCall implements DataCall<Result<FilmDetailsData>> {
-
-
         @Override
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")) {
@@ -396,9 +393,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Film_Details_Activity.this, "详情失败", Toast.LENGTH_SHORT).show();
         }
     }
+
     //预告片
     class PredictionCall implements DataCall<Result<FilmDetailsData>> {
 
@@ -411,15 +409,15 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 FilmDetailsData result = data.getResult();
                 //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
-                predictionAdapter.addAll(shortFilmList);
-                predictionAdapter.notifyDataSetChanged();
+//                predictionAdapter.addAll(shortFilmList);
+//                predictionAdapter.notifyDataSetChanged();
 
             }
         }
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Film_Details_Activity.this, "预告片失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -445,7 +443,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void success(Result<List<ReviewData>> data) {
-            if (data.getStatus().equals("0000")) {
+            if ("0000".equals(data.getStatus())) {
                 reviewAdapter.addAll(data.getResult());
                 reviewAdapter.notifyDataSetChanged();
             }
@@ -453,6 +451,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
+            Toast.makeText(Film_Details_Activity.this, ""+a.getCode(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -461,6 +460,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         super.onDestroy();
         searchPresenter.unBind();
     }
+
     @Override
     public void onResume() {
         super.onResume();

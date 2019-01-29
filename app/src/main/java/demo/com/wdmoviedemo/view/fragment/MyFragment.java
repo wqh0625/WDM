@@ -87,9 +87,10 @@ public class MyFragment extends BaseFragment {
             DbManager dbManager = new DbManager(getActivity());
             student = dbManager.getStudent();
             if (student.size()==0) {
-                Toast.makeText(getActivity(), "空", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "空", Toast.LENGTH_SHORT).show();
                 icon.setImageResource(R.drawable.my_icon);
                 nickNameTv.setText("未登录");
+                qdBtn.setText("签到");
                 return;
             }
         } catch (SQLException e) {
@@ -440,14 +441,12 @@ public class MyFragment extends BaseFragment {
                         MediaStore.ACTION_IMAGE_CAPTURE);
 
                 tempUri = Uri.parse(FileUtils.getDir("/image/bimap") + "1.jpg");
-
                 Log.e("zmz", "=====" + tempUri);
 
                 //启动相机程序
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
                 startActivityForResult(intent, 0);
-
             }
         });
 
