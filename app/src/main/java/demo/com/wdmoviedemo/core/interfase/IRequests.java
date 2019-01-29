@@ -6,6 +6,7 @@ import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.FilmDetailsData;
 import demo.com.wdmoviedemo.bean.ListofCinemaData;
 import demo.com.wdmoviedemo.bean.LoginData;
+import demo.com.wdmoviedemo.bean.MessageData;
 import demo.com.wdmoviedemo.bean.ObligationData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.bean.ReviewData;
@@ -76,4 +77,11 @@ public interface IRequests {
                                                            @Query("count") int count,
                                                            @Query("status") int status);
 
+
+    //系统消息
+    @GET("movieApi/tool/v1/verify/findAllSysMsgList")
+    Observable<Result<List<MessageData>>> getMessage(@Header("userId") int userId,
+                                                     @Header("sessionId") String sessionId,
+                                                     @Query("page") int page,
+                                                     @Query("count") int count);
 }

@@ -75,6 +75,8 @@ public class CheckInActivity extends BaseActivity {
     private int selectedTableCount = 0;
     private BuyMovieTicketPresenter buyMovieTicketPresenter;
     private int type = 0;
+    private String cinameName;
+    private String addre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +183,8 @@ public class CheckInActivity extends BaseActivity {
         endTime = intent.getExtras().getString("EndTime");
         price = intent.getExtras().getDouble("Price");
         id = intent.getExtras().getInt("Id");
+        cinameName = intent.getExtras().getString("cinameName");
+        addre = intent.getExtras().getString("addre");
         checkinName.setText(name);
         checkinAddress.setText(address);
         checkinNames.setText(names);
@@ -188,6 +192,8 @@ public class CheckInActivity extends BaseActivity {
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
         checkinPrices.setText("" + 0.00);
+        checkinName.setText(cinameName);
+        checkinAddress.setText(addre);
     }
 
     @OnClick({R.id.img_confirm, R.id.img_abandon})
