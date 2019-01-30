@@ -71,7 +71,6 @@
             android:name="UMENG_CHANNEL"
             android:value="Wang" />
             // 名字
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.MessageActivity" />
         <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.DetailsPopActivity"></activity>
             
     </application>

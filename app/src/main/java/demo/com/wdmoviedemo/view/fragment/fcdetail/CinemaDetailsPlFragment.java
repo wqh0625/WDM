@@ -1,14 +1,15 @@
 package demo.com.wdmoviedemo.view.fragment.fcdetail;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -21,7 +22,6 @@ import demo.com.wdmoviedemo.core.adapter.CommentAdapter;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
-import demo.com.wdmoviedemo.presenter.ComingPresenter;
 import demo.com.wdmoviedemo.presenter.CommentPresenter;
 
 /**
@@ -54,7 +54,6 @@ public class CinemaDetailsPlFragment extends BaseFragment {
     }
 
     private void initData() {
-//        cinemaId = getArguments().getInt("cinemaId");
         userId = userInfoBean.getUserId();
         sessionId = userInfoBean.getSessionId();
         commentAdapter = new CommentAdapter(getActivity());
@@ -84,5 +83,6 @@ public class CinemaDetailsPlFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 }
