@@ -4,10 +4,10 @@ import java.util.List;
 
 import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.CinemaDetailListData;
-import demo.com.wdmoviedemo.bean.CinemaDetailListDataBottom;
 import demo.com.wdmoviedemo.bean.FindCinemaPageListData;
 import demo.com.wdmoviedemo.bean.FindMoviePageListData;
 import demo.com.wdmoviedemo.bean.LoginData;
+import demo.com.wdmoviedemo.bean.MyMessage;
 import demo.com.wdmoviedemo.bean.MyMessageData;
 import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.bean.Result;
@@ -96,6 +96,8 @@ public interface IRequest {
     @GET("movieApi/cinema/v1/findNearbyCinemas")
     Observable<Result<List<NearbyData>>> findNearbyCinemas(@Header("userId") int userId,
                                                            @Header("sessionId") String Id,
+                                                           @Query("longitude") String longitude,
+                                                           @Query("latitude") String latitude,
                                                            @Query("page") int page,
                                                            @Query("count") int count);
 
@@ -189,9 +191,9 @@ public interface IRequest {
     @FormUrlEncoded
     @POST("movieApi/user/v1/verify/modifyUserInfo")
     Observable<Result<MyMessage>> modifyUserI (@Header("userId") int userId,
-                                                 @Header("sessionId") String sessionId,
-                                                 @Field("nickName") String nickName,
-                                                 @Field("sex") int sex,
-                                                 @Field("email") String email);
+                                               @Header("sessionId") String sessionId,
+                                               @Field("nickName") String nickName,
+                                               @Field("sex") int sex,
+                                               @Field("email") String email);
 
 }

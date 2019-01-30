@@ -70,8 +70,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             rec.refreshComplete();
             return;
         }
-        rec.refreshComplete();
-        rec.loadMoreComplete();
+
         if (userInfoBean == null) {
             findRecommendCinemasPresenter.requestNet(0, "", true);
         } else {
@@ -86,8 +85,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             rec.loadMoreComplete();
             return;
         }
-        rec.refreshComplete();
-        rec.loadMoreComplete();
+
 //        findRecommendCinemasPresenter.requestNet(0, "", true);
     }
 
@@ -98,7 +96,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         } else {
-            if (nearbyData.getFollowcinema() == 1) {
+            if (nearbyData.getFollowCinema() == 1) {
                 cancelFollowCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
             } else {
                 followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
@@ -121,7 +119,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             }
             if (data.getStatus().equals("0000")) {
                 int o = (int) data.getArgs()[4];
-                adapter.getItem(o).setFollowcinema(1);
+                adapter.getItem(o).setFollowCinema(1);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -146,7 +144,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             }
             if (data.getStatus().equals("0000")) {
                 int o = (int) data.getArgs()[4];
-                adapter.getItem(o).setFollowcinema(2);
+                adapter.getItem(o).setFollowCinema(2);
                 adapter.notifyDataSetChanged();
             }
         }

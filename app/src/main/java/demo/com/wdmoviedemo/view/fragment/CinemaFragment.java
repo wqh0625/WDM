@@ -53,7 +53,8 @@ public class CinemaFragment extends BaseFragment {
     RelativeLayout cineatRel;
     private MyLocationListener myListener = new MyLocationListener();
     private LocationClient mLocationClient = null;
-
+    public static double latitude;
+    public static double longitude;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_cinema;
@@ -68,9 +69,10 @@ public class CinemaFragment extends BaseFragment {
     private void initData() {
         fragments = new ArrayList<>();
         // 附近
-        fragments.add(new NearbyCinemaFragment());
         // 推荐
         fragments.add(new RecommendCinemaFragment());
+        fragments.add(new NearbyCinemaFragment());
+
         vp.setCurrentItem(0);
         ChangeBackGround(0);
         vp.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
@@ -128,6 +130,10 @@ public class CinemaFragment extends BaseFragment {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
 //            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
+            //获取纬度信息
+            latitude = location.getLatitude();
+            //获取经度信息
+            longitude = location.getLongitude();
             if (addr == null) {
                 return;
             }

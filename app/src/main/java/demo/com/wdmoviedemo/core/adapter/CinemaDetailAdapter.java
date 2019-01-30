@@ -76,13 +76,11 @@ public class CinemaDetailAdapter extends RecyclerView.Adapter<CinemaDetailAdapte
 
         private final SimpleDraweeView sdvImage;
         private final TextView txtName;
-        private final TextView txtTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sdvImage = itemView.findViewById(R.id.home_sdv_image);
             txtName = itemView.findViewById(R.id.home_txt_name);
-            txtTime = itemView.findViewById(R.id.home_txt_time);
         }
     }
 }

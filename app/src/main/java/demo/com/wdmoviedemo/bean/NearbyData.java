@@ -10,7 +10,7 @@ public class NearbyData {
     private String address;
     private int commenttotal;
     private int distance;
-    private int followcinema;
+    private int followCinema;
     private int id;
     private String logo;
     private String name;
@@ -39,12 +39,12 @@ public class NearbyData {
         this.distance = distance;
     }
 
-    public int getFollowcinema() {
-        return followcinema;
+    public int getFollowCinema() {
+        return followCinema;
     }
 
-    public void setFollowcinema(int followcinema) {
-        this.followcinema = followcinema;
+    public void setFollowCinema(int followCinema) {
+        this.followCinema = followCinema;
     }
 
     public int getId() {

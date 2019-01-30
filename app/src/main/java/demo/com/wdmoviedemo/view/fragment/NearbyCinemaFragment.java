@@ -1,19 +1,13 @@
 package demo.com.wdmoviedemo.view.fragment;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -22,7 +16,6 @@ import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.adapter.NearbyCinemaAdapter;
 import demo.com.wdmoviedemo.core.base.BaseFragment;
-import demo.com.wdmoviedemo.core.dao.DbManager;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.utils.MyApp;
@@ -73,6 +66,8 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         rec.refresh();
 
     }
+    double latitude = CinemaFragment.latitude;
+    double longitude = CinemaFragment.longitude;
 
     @Override
     public void onRefresh() {
@@ -83,9 +78,9 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         rec.refreshComplete();
         rec.loadMoreComplete();
         if (userInfoBean == null) {
-            findNearbyCinemasPresenter.requestNet(0, "", true);
+            findNearbyCinemasPresenter.requestNet(0, "", true,String.valueOf(longitude),String.valueOf(latitude));
         }else{
-            findNearbyCinemasPresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(), true);
+            findNearbyCinemasPresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(), true,String.valueOf(longitude),String.valueOf(latitude));
         }
     }
 
@@ -107,7 +102,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         } else {
-            if (nearbyData.getFollowcinema() == 1) {
+            if (nearbyData.getFollowCinema() == 1) {
                 cancelFollowCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
             } else {
                 followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id,nearbyData.getId(), i);
@@ -129,7 +124,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
             }
             if (data.getStatus().equals("0000")) {
                     int o = (int) data.getArgs()[4];
-                    adapter.getItem(o).setFollowcinema(1);
+                    adapter.getItem(o).setFollowCinema(1);
                     adapter.notifyDataSetChanged();
             }
         }
@@ -154,7 +149,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
             }
             if (data.getStatus().equals("0000")) {
                 int o = (int) data.getArgs()[4];
-                adapter.getItem(o).setFollowcinema(2);
+                adapter.getItem(o).setFollowCinema(2);
                 adapter.notifyDataSetChanged();
             }
         }

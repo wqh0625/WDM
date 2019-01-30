@@ -35,7 +35,7 @@ import demo.com.wdmoviedemo.core.utils.MyApp;
 public abstract class BaseFragment extends Fragment {
     public final static int PHOTO = 0;// 相册选取
     public final static int CAMERA = 1;// 拍照
-    private DbManager dbManager;
+    public DbManager dbManager;
     public UserInfoBean userInfoBean;
     private Unbinder unbinder;
     @Nullable

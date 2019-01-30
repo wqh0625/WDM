@@ -2,11 +2,9 @@ package demo.com.wdmoviedemo.view.myactivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -16,19 +14,15 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import demo.com.wdmoviedemo.bean.MyMessageData;
 import demo.com.wdmoviedemo.bean.Result;
-import demo.com.wdmoviedemo.bean.UserInfoBean;
 import demo.com.wdmoviedemo.core.base.BaseActivity;
 import demo.com.wdmoviedemo.core.exception.ApiException;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
-import demo.com.wdmoviedemo.core.interfase.MyMessage;
+import demo.com.wdmoviedemo.bean.MyMessage;
 import demo.com.wdmoviedemo.core.utils.ToDate;
 import demo.com.wdmoviedemo.presenter.MyMessagePresenter;
 import demo.com.wdmoviedemo.presenter.UpdateMysessagePresenter;

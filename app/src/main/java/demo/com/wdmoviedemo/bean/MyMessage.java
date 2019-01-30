@@ -1,4 +1,4 @@
-package demo.com.wdmoviedemo.core.interfase;
+package demo.com.wdmoviedemo.bean;
 
 /**
  * 作者: Wang on 2019/1/29 20:38

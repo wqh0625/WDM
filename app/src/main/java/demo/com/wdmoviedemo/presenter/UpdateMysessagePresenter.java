@@ -4,7 +4,7 @@ import demo.com.wdmoviedemo.bean.Result;
 import demo.com.wdmoviedemo.core.http.NetWorks;
 import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.core.interfase.IRequest;
-import demo.com.wdmoviedemo.core.interfase.MyMessage;
+import demo.com.wdmoviedemo.bean.MyMessage;
 import io.reactivex.Observable;
 
 /**

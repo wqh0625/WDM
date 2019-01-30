@@ -56,7 +56,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private int image2 = 1;
     private int image3 = 2;
 
-
+    private double longitude;
+    private double latitude;
     private void initBanner() {
         carouselAdapter = new CarouselAdapter(getActivity());
         recycarousel.setAdapter(carouselAdapter);//设置适配器
@@ -172,7 +173,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             if (data.getStatus().equals("0000")) {
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
-
             }
         }
 
@@ -257,11 +257,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     class MyLocationListener implements BDLocationListener {
 
+
+
         @Override
         public void onReceiveLocation(BDLocation location) {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
 //            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             if (addr == null) {
                 return;
             }

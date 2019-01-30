@@ -1,6 +1,5 @@
 package demo.com.wdmoviedemo.core.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -18,7 +16,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
-import demo.com.wdmoviedemo.bean.CarouselData;
 import demo.com.wdmoviedemo.bean.NearbyData;
 import demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity;
 
@@ -76,7 +73,7 @@ public class NearbyCinemaAdapter extends RecyclerView.Adapter<NearbyCinemaAdapte
                 onLikeLister.onlike(i, list.get(i).getId(), list.get(i));
             }
         });
-        if (nearbyData.getFollowcinema() == 1) {
+        if (nearbyData.getFollowCinema() == 1) {
             // 已关注
             vh.like.setImageResource(R.drawable.icon_collection_selected);
         } else {

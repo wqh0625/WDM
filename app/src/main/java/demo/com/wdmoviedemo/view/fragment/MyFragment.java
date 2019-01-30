@@ -86,7 +86,7 @@ public class MyFragment extends BaseFragment {
         try {
             DbManager dbManager = new DbManager(getActivity());
             student = dbManager.getStudent();
-            if (student.size()==0) {
+            if (student.size() == 0) {
 //                Toast.makeText(getActivity(), "空", Toast.LENGTH_SHORT).show();
                 icon.setImageResource(R.drawable.my_icon);
                 nickNameTv.setText("未登录");
@@ -96,9 +96,10 @@ public class MyFragment extends BaseFragment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String headPic = userInfoBean.getHeadPic();
-        String nickName = userInfoBean.getNickName();
-        if (headPic == null || headPic == "" || userInfoBean == null) {
+        UserInfoBean userInfoBeana = student.get(0);
+        String headPic =  userInfoBeana.getHeadPic();
+        String nickName = userInfoBeana.getNickName();
+        if (headPic == null || headPic == "" ||  userInfoBeana == null) {
             return;
         } else {
             icon.setImageURI(Uri.parse(headPic));
@@ -106,7 +107,7 @@ public class MyFragment extends BaseFragment {
         }
         topPhotoPresenter = new TopPhotoPresenter(new top());
         findUserHomeInfoPresenter = new FindUserHomeInfoPresenter(new find());
-        findUserHomeInfoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
+        findUserHomeInfoPresenter.requestNet(this.userInfoBean.getUserId(), this.userInfoBean.getSessionId());
         userSignInPresenter = new UserSignInPresenter(new usersignIn());
 
     }
@@ -170,10 +171,10 @@ public class MyFragment extends BaseFragment {
         return R.layout.fragment_mys;
     }
 
-    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback, R.id.my_btn_qd, R.id.my_image_icom, R.id.message})
+    @OnClick({R.id.mRb_messiage, R.id.mRb_aixin, R.id.mRb_logout, R.id.mRb_rccord, R.id.mRb_vsersion, R.id.mRb_feedback, R.id.my_btn_qd, R.id.my_image_icom, R.id.message, R.id.my_tv_nickName})
     public void onck(View v) {
         if (v.getId() == R.id.mRb_messiage) {
-            if (userInfoBean.getUserId() == 0||student.size()==0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -192,7 +193,7 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_aixin) {
-            if (userInfoBean.getUserId() == 0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -215,7 +216,7 @@ public class MyFragment extends BaseFragment {
         } else if (v.getId() == R.id.mRb_vsersion) {
             // 版本
         } else if (v.getId() == R.id.mRb_rccord) {
-            if (userInfoBean.getUserId() == 0||student.size()==0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -235,7 +236,7 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_feedback) {
-            if (userInfoBean.getUserId() == 0||student.size()==0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -281,8 +282,7 @@ public class MyFragment extends BaseFragment {
             //    显示出该对话框
             builder.show();
         } else if (v.getId() == R.id.my_btn_qd) {
-
-            if (userInfoBean == null || userInfoBean.getUserId() == 0||student.size()==0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -301,7 +301,7 @@ public class MyFragment extends BaseFragment {
             }
         } else if (v.getId() == R.id.my_image_icom) {
 
-            if (userInfoBean == null || userInfoBean.getSessionId() == "" || userInfoBean.getUserId() == 0||student.size()==0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -332,11 +332,8 @@ public class MyFragment extends BaseFragment {
                 cancel = popView.findViewById(R.id.open_cancel);
                 initPop(popView);
             }
-
-            cancel = popView.findViewById(R.id.open_cancel);
-            initPop(popView);
         } else if (v.getId() == R.id.message) {
-            if (userInfoBean.getUserId() == 0||student.size()==0) {
+            if (student.size() == 0) {
                 DbManager dbManager = null;
                 try {
                     dbManager = new DbManager(getContext());
@@ -352,6 +349,22 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
                 startActivity(new Intent(getActivity(), MessageActivity.class));
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
+        } else if (v.getId() == R.id.my_tv_nickName) {
+            if (student.size() == 0) {
+                DbManager dbManager = null;
+                try {
+                    dbManager = new DbManager(getContext());
+                    int i = dbManager.deleteStudentByS(userInfoBean);
+                    Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+                // 跳转
+                startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         }

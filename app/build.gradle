@@ -1,6 +1,37 @@
 apply plugin: 'com.android.application'
 
 android {
+    flavorDimensions "channl"
+    productFlavors {
+        yingyongbao {
+            dimension "channl"
+        }
+        huawei {
+            dimension "channl"
+        }
+        baidu {
+            dimension "channl"
+        }
+        xiaomi {
+            dimension "channl"
+        }
+        qh360 {
+            dimension "channl"
+        }
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->// each 改为 all
+            def fileName = "${variant.versionName}_${variant.productFlavors[0].name}_release.apk"
+            def outFile = output.outputFile
+            if (outFile != null && outFile.name.endsWith('.apk')) {
+                outputFileName = fileName  //  output.outputFile 改为 outputFileName
+            }
+        }
+    }
+
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
     }
