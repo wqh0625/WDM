@@ -27,53 +27,51 @@
             android:layout_toRightOf="@id/cinema_image_location"
             android:text="北京"
             android:textSize="14sp" />
-
         <RelativeLayout
             android:id="@+id/serch_line_ref"
-            android:layout_width="48dp"
-            android:layout_height="24dp"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/cinema_search_shape">
-
+            android:background="@drawable/cinema_search_shape"
+            android:layout_marginRight="12dp"
+            >
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_width="220dp"
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                >
 
                 <ImageView
                     android:id="@+id/cinema_search_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:onClick="onClick"
-                    android:paddingLeft="6dp"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginLeft="10dp"
                     android:src="@drawable/search" />
 
                 <EditText
                     android:id="@+id/cinema_edname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@null"
-                    android:ems="8"
-                    android:padding="5dp"
-                    android:textColor="#f2f2f2"
-                    android:textSize="12sp" />
+                    android:hint="输入要搜索的影片"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/cinema_textName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:onClick="onClick"
-                    android:paddingTop="3dp"
+                    android:layout_marginRight="20dp"
                     android:text="搜索"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:textColor="#ffffff" />
+
             </LinearLayout>
+
         </RelativeLayout>
     </RelativeLayout>
 
@@ -117,7 +115,7 @@
         android:layout_below="@id/center"
 
         android:layout_marginTop="10dp"
-          />
+        />
 
     <RelativeLayout
         android:layout_width="360dp"

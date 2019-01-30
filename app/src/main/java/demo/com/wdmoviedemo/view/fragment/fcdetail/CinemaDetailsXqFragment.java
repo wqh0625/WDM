@@ -1,14 +1,14 @@
 package demo.com.wdmoviedemo.view.fragment.fcdetail;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +57,6 @@ public class CinemaDetailsXqFragment extends BaseFragment {
     }
 
     private void initData() {
-//        cinemaId = getArguments().getInt("cinemaId");
         userId = userInfoBean.getUserId();
         sessionId = userInfoBean.getSessionId();
         DetailsPresenter detailsPresenter  = new DetailsPresenter(new DetailsCall());
@@ -92,5 +91,9 @@ public class CinemaDetailsXqFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        //取消订阅
+        EventBus.getDefault().unregister(this);
+
     }
+
 }

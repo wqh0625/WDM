@@ -1,12 +1,10 @@
 package demo.com.wdmoviedemo.view.cinemaactivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,9 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import demo.com.wdmoviedemo.bean.CinemaDetailListData;
-import demo.com.wdmoviedemo.bean.CinemaDetailListDataBottom;
 import demo.com.wdmoviedemo.bean.Result;
-import demo.com.wdmoviedemo.bean.ReviewData;
 import demo.com.wdmoviedemo.bean.TicketDetailsData;
 import demo.com.wdmoviedemo.core.adapter.CinemaDetailAdapter;
 import demo.com.wdmoviedemo.core.adapter.ReviewAdapter;
@@ -44,9 +40,7 @@ import demo.com.wdmoviedemo.core.interfase.DataCall;
 import demo.com.wdmoviedemo.presenter.FindCinemasListByMovieIdPresenter;
 import demo.com.wdmoviedemo.presenter.FindMovieListByCinemaIdPresenter;
 import demo.com.wdmoviedemo.presenter.ReviewPresenter;
-import demo.com.wdmoviedemo.view.Film_Details_Activity;
 import demo.com.wdmoviedemo.view.detailsactvity.CheckInActivity;
-import demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity;
 import demo.com.wdmoviedemo.view.fragment.fcdetail.CinemaDetailsPlFragment;
 import demo.com.wdmoviedemo.view.fragment.fcdetail.CinemaDetailsXqFragment;
 import recycler.coverflow.CoverFlowLayoutManger;
@@ -213,10 +207,9 @@ public class CinemaDetailActivity extends BaseActivity {
                     public void onClick(View view) {
                         vp.setCurrentItem(0);
                         ChangeBackGround(0);
-//                        Intent intent = new Intent(CinemaDetailActivity.this,CinemaDetailsXqFragment.class);
-//                        intent.putExtra("cinemaId",cinemaId);
-//                        startActivity(intent);
 
+//                        EventBus.getDefault().postSticky(new EvBean(cinemaId));
+//                        startActivity(new Intent(CinemaDetailActivity.this,CinemaDetailsXqFragment.class));
                     }
                 });
                 pl.setOnClickListener(new View.OnClickListener() {
@@ -224,10 +217,8 @@ public class CinemaDetailActivity extends BaseActivity {
                     public void onClick(View view) {
                         vp.setCurrentItem(1);
                         ChangeBackGround(1);
-//                        Intent intent = new Intent(CinemaDetailActivity.this,CinemaDetailsPlFragment.class);
-//                        intent.putExtra("cinemaId",cinemaId);
-//                        startActivity(intent);
-
+//                        EventBus.getDefault().postSticky(new EvBean(cinemaId));
+//                        startActivity(new Intent(CinemaDetailActivity.this,CinemaDetailsPlFragment.class));
                     }
                 });
 

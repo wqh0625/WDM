@@ -1,5 +1,6 @@
 package demo.com.wdmoviedemo.view;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -56,11 +57,9 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private EditText recommendCinemaEdname;
     private TextView recommendCinemaTextName;
     private RelativeLayout recommendCinemaLinear;
-    boolean flag = true;
-    private AutoTransition transition;
-    private int position;
     private int image;
-    private String etName;
+    private boolean animatort = false;
+    private boolean animatorf = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +128,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         recommendCinemaEdname.setOnClickListener(this);
         recommendCinemaTextName = (TextView) findViewById(R.id.recommend_cinema_textName);
         recommendCinemaTextName.setOnClickListener(this);
-        recommendCinemaLinear = (RelativeLayout) findViewById(R.id.recommend_cinema_linear);
+        recommendCinemaLinear =  findViewById(R.id.recommend_cinema_linear);
         recommendCinemaLinear.setOnClickListener(this);
         detailsVp.setCurrentItem(image);
         ChangeBackGround(image);
@@ -191,90 +190,32 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.recommend_cinem_search_image:
-                if (flag) {
-                    initExpand();//点击搜索 伸展
-                } else {
-                    initReduce();//点击text收缩
+                if (animatort) {
+                    return;
                 }
-                flag = !flag;
+                animatort = true;
+                animatorf = false;
+                //这是显示出现的动画
+                ObjectAnimator animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 510f, 30f);
+                animator.setDuration(1500);
+                animator.start();
+
                 break;
             case R.id.recommend_cinema_textName:
-                //点击搜索,获取输入的值
-                etName = recommendCinemaEdname.getText().toString().trim();
-                if (TextUtils.isEmpty(etName)) {
-                    Toast.makeText(this, "输入内容不能为空", Toast.LENGTH_SHORT).show();
-                } else {
-
+                if (animatorf) {
+                    return;
                 }
+                animatorf = true;
+                animatort = false;
+                //这是隐藏进去的动画
+                ObjectAnimator animator2 = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 30f, 350f);
+                animator2.setDuration(1500);
+                animator2.start();
                 break;
             default:
                 break;
         }
     }
-
-    /*设置伸展状态时的布局*/
-    public void initExpand() {
-        recommendCinemaEdname.setHint("CGV影城");
-        recommendCinemaEdname.requestFocus();
-        recommendCinemaEdname.setHintTextColor(Color.WHITE);
-        recommendCinemaTextName.setText("搜索");
-        recommendCinemaTextName.setVisibility(View.VISIBLE);
-        recommendCinemaEdname.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recommendCinemaLinear.getLayoutParams();
-        layoutParams.width = dip2px(210);
-        layoutParams.setMargins(dip2px(0), dip2px(20), dip2px(0), dip2px(0));
-        recommendCinemaLinear.setLayoutParams(layoutParams);
-        recommendCinemaEdname.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                recommendCinemaEdname.setFocusable(true);
-                recommendCinemaEdname.setFocusableInTouchMode(true);
-                return false;
-            }
-        });
-        //开始动画
-        beginDelayedTransition(recommendCinemaLinear);
-
-    }
-
-    /*设置收缩状态时的布局*/
-    private void initReduce() {
-        recommendCinemaEdname.setCursorVisible(false);
-        recommendCinemaEdname.setVisibility(View.GONE);
-        recommendCinemaTextName.setVisibility(View.GONE);
-        LinearLayout.LayoutParams LayoutParams = (LinearLayout.LayoutParams) recommendCinemaLinear.getLayoutParams();
-        LayoutParams.width = dip2px(40);
-        LayoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
-        recommendCinemaLinear.setLayoutParams(LayoutParams);
-
-        //隐藏键盘
-        InputMethodManager imm = (InputMethodManager) this
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(this.getWindow()
-                .getDecorView().getWindowToken(), 0);
-
-
-        recommendCinemaEdname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recommendCinemaEdname.setCursorVisible(true);
-            }
-        });
-        //开始动画
-        beginDelayedTransition(recommendCinemaLinear);
-    }
-
-    private void beginDelayedTransition(ViewGroup view) {
-        transition = new AutoTransition();
-        transition.setDuration(500);
-        TransitionManager.beginDelayedTransition(view, transition);
-    }
-
-    private int dip2px(float dpVale) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dpVale * scale + 0.5f);
-    }
-
     public void ChangeBackGround(int index) {
 
         //背景颜色
