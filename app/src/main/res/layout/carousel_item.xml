@@ -13,6 +13,7 @@
             android:layout_width="158dp"
             android:layout_height="223dp"
             fresco:placeholderImageScaleType="centerCrop"
+            fresco:roundWithOverlayColor="#fff"
             fresco:roundedCornerRadius="8dp"/>
         <LinearLayout
             android:layout_width="158dp"

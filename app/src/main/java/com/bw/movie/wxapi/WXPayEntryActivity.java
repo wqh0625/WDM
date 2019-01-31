@@ -16,13 +16,13 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import demo.com.wdmoviedemo.bean.LoginData;
-import demo.com.wdmoviedemo.bean.Result;
-import demo.com.wdmoviedemo.core.exception.ApiException;
-import demo.com.wdmoviedemo.core.interfase.DataCall;
-import demo.com.wdmoviedemo.presenter.WxLoginPresenter;
-import demo.com.wdmoviedemo.view.HomeActivity;
-import demo.com.wdmoviedemo.view.LoginActivity;
+import com.bw.movie.bean.LoginData;
+import com.bw.movie.bean.Result;
+import com.bw.movie.core.exception.ApiException;
+import com.bw.movie.core.interfase.DataCall;
+import com.bw.movie.presenter.WxLoginPresenter;
+import com.bw.movie.view.HomeActivity;
+import com.bw.movie.view.LoginActivity;
 
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 	private IWXAPI api;

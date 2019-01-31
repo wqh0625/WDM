@@ -17,39 +17,39 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name="demo.com.wdmoviedemo.core.utils.MyApp"
+        android:name=".core.utils.MyApp"
         android:allowBackup="true"
         android:icon="@drawable/bootpagefour"
         android:label="@string/app_name"
         android:roundIcon="@drawable/bootpagefour"
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme">
-        <activity android:name="demo.com.wdmoviedemo.view.HomeActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.LoginActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.RegisterActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.GuidanceActivity" />
+        <activity android:name="com.bw.movie.view.HomeActivity" />
+        <activity android:name="com.bw.movie.view.LoginActivity" />
+        <activity android:name="com.bw.movie.view.RegisterActivity" />
+        <activity android:name="com.bw.movie.view.GuidanceActivity" />
         <activity
-            android:name="demo.com.wdmoviedemo.view.DetailsActivity"
+            android:name="com.bw.movie.view.DetailsActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Messiage_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Attention_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Feedback_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.My_Rccord_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.UpdatePwd_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.StartActivity">
+        <activity android:name="com.bw.movie.view.myactivity.My_Messiage_Activity" />
+        <activity android:name="com.bw.movie.view.myactivity.My_Attention_Activity" />
+        <activity android:name="com.bw.movie.view.myactivity.My_Feedback_Activity" />
+        <activity android:name="com.bw.movie.view.myactivity.My_Rccord_Activity" />
+        <activity android:name="com.bw.movie.view.myactivity.UpdatePwd_Activity" />
+        <activity android:name="com.bw.movie.view.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.com.wdmoviedemo.view.Film_Details_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.ListofCinemaActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.CinemaDetailActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.TicketDetailsActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.detailsactvity.CheckInActivity" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.FeedbackSuccess_Activity" />
-        <activity android:name="demo.com.wdmoviedemo.view.myactivity.MessageActivity"></activity>
+        <activity android:name="com.bw.movie.view.Film_Details_Activity" />
+        <activity android:name="com.bw.movie.view.detailsactvity.ListofCinemaActivity" />
+        <activity android:name="com.bw.movie.view.cinemaactivity.CinemaDetailActivity" />
+        <activity android:name="com.bw.movie.view.cinemaactivity.TicketDetailsActivity" />
+        <activity android:name="com.bw.movie.view.detailsactvity.CheckInActivity" />
+        <activity android:name="com.bw.movie.view.myactivity.FeedbackSuccess_Activity" />
+        <activity android:name="com.bw.movie.view.myactivity.MessageActivity" />
         <!-- 微信支付 -->
         <activity
             android:name="com.bw.movie.wxapi.WXPayEntryActivity"
@@ -66,8 +66,15 @@
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
 
-        <activity android:name="demo.com.wdmoviedemo.view.cinemaactivity.DetailsPopActivity" />
-            
+        <activity android:name="com.bw.movie.view.cinemaactivity.DetailsPopActivity" />
+            // 今日头条
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
+
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.j256.ormlite.dao.Dao;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -14,16 +15,17 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 import java.sql.SQLException;
 
-import demo.com.wdmoviedemo.bean.LoginData;
-import demo.com.wdmoviedemo.bean.Result;
-import demo.com.wdmoviedemo.bean.UserInfoBean;
-import demo.com.wdmoviedemo.core.base.BaseActivity;
-import demo.com.wdmoviedemo.core.exception.ApiException;
-import demo.com.wdmoviedemo.core.interfase.DataCall;
+import com.bw.movie.bean.LoginData;
+import com.bw.movie.bean.Result;
+import com.bw.movie.bean.UserInfoBean;
+import com.bw.movie.core.base.BaseActivity;
+import com.bw.movie.core.dao.DbManager;
+import com.bw.movie.core.exception.ApiException;
+import com.bw.movie.core.interfase.DataCall;
 
-import demo.com.wdmoviedemo.core.utils.WeiXinUtil;
-import demo.com.wdmoviedemo.presenter.WxLoginPresenter;
-import demo.com.wdmoviedemo.view.HomeActivity;
+import com.bw.movie.core.utils.WeiXinUtil;
+import com.bw.movie.presenter.WxLoginPresenter;
+import com.bw.movie.view.HomeActivity;
 
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
     private WxLoginPresenter wxLoginPresenter;
@@ -64,7 +66,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
                 userInfoBean.setUserId(data.getResult().getUserId());
                 userInfoBean.setSessionId(data.getResult().getSessionId());
                 try {
-                    addUser(userInfoBean);
+                    Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
+                    userDao.createOrUpdate(userInfoBean);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

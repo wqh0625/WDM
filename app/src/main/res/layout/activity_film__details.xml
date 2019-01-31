@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="demo.com.wdmoviedemo.view.Film_Details_Activity"
+    tools:context=".view.Film_Details_Activity"
     android:background="@drawable/details_details"
     android:orientation="vertical"
     android:paddingTop="20dp">
