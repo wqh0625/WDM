@@ -24,40 +24,80 @@
         android:roundIcon="@drawable/bootpagefour"
         android:supportsRtl="true"
         android:theme="@style/TranslucentTheme">
-        <activity android:name="com.bw.movie.view.HomeActivity" />
-        <activity android:name="com.bw.movie.view.LoginActivity" />
-        <activity android:name="com.bw.movie.view.RegisterActivity" />
-        <activity android:name="com.bw.movie.view.GuidanceActivity" />
+        <activity
+            android:name="com.bw.movie.view.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.GuidanceActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.bw.movie.view.DetailsActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name="com.bw.movie.view.myactivity.My_Messiage_Activity" />
-        <activity android:name="com.bw.movie.view.myactivity.My_Attention_Activity" />
-        <activity android:name="com.bw.movie.view.myactivity.My_Feedback_Activity" />
-        <activity android:name="com.bw.movie.view.myactivity.My_Rccord_Activity" />
-        <activity android:name="com.bw.movie.view.myactivity.UpdatePwd_Activity" />
-        <activity android:name="com.bw.movie.view.StartActivity">
+        <activity
+            android:name="com.bw.movie.view.myactivity.My_Messiage_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.myactivity.My_Attention_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.myactivity.My_Feedback_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.myactivity.My_Rccord_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.myactivity.UpdatePwd_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.StartActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bw.movie.view.Film_Details_Activity" />
-        <activity android:name="com.bw.movie.view.detailsactvity.ListofCinemaActivity" />
-        <activity android:name="com.bw.movie.view.cinemaactivity.CinemaDetailActivity" />
-        <activity android:name="com.bw.movie.view.cinemaactivity.TicketDetailsActivity" />
-        <activity android:name="com.bw.movie.view.detailsactvity.CheckInActivity" />
-        <activity android:name="com.bw.movie.view.myactivity.FeedbackSuccess_Activity" />
-        <activity android:name="com.bw.movie.view.myactivity.MessageActivity" />
+        <activity
+            android:name="com.bw.movie.view.Film_Details_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.detailsactvity.ListofCinemaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.cinemaactivity.CinemaDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.cinemaactivity.TicketDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.detailsactvity.CheckInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.myactivity.FeedbackSuccess_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.myactivity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bw.movie.view.cinemaactivity.DetailsPopActivity"
+            android:screenOrientation="portrait" />
         <!-- 微信支付 -->
         <activity
             android:name="com.bw.movie.wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.bw.movie.wxapi.WXEntryActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <!-- 友盟 -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -65,8 +105,6 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
-
-        <activity android:name="com.bw.movie.view.cinemaactivity.DetailsPopActivity" />
             // 今日头条
         <meta-data
             android:name="design_width_in_dp"
@@ -74,7 +112,6 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="640" />
-
     </application>
 
 </manifest>

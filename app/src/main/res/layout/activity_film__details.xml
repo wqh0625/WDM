@@ -35,7 +35,7 @@
             android:id="@+id/actvity_image_details"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/com_icon_collection_default"
+
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
     <TextView

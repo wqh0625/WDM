@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
 import com.bw.movie.bean.LoginData;
 import com.bw.movie.bean.Result;
 import com.bw.movie.bean.UserInfoBean;
@@ -80,24 +81,36 @@ public class LoginActivity extends BaseActivity {
         boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
         boolean reme_login = sp0123.getBoolean("reme_login", false);
         if (reme_pwd) {
-            UserInfoBean user = userInfoBean;
-            if (user.getStats() == 1) {
-            }
-            if (user.getPhone() == null) {
-                tel_pwd.setText("");
-                tel_number.setText("");
+
+            try {
+                Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
+                List<UserInfoBean> userInfoBeans = userDao.queryForAll();
+                if (userInfoBeans.size() == 0) {
+                    return;
+                }else{
+                    UserInfoBean user = userInfoBeans.get(0);
+
+                    if (user.getPhone() == null) {
+                        tel_pwd.setText("");
+                        tel_number.setText("");
 //                Toast.makeText(this, "nullllll" + student.size(), Toast.LENGTH_SHORT).show();
-                return;
+                        return;
+                    }
+                    tel_number.setText(user.getPhone() + "");
+                    this.reme_pwd.setChecked(true);
+                    if (reme_login) {
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                        return;
+                    }
+                    return;
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            tel_number.setText(user.getPhone() + "");
-            this.reme_pwd.setChecked(true);
-            if (reme_login) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
-                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
-                return;
-            }
-            return;
+
 
         }
         // 设置密码不可见
@@ -110,7 +123,7 @@ public class LoginActivity extends BaseActivity {
         edit.commit();
     }
 
-    @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login,R.id.iv_wx})
+    @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login, R.id.iv_wx})
     void onclick(View v) {
         switch (v.getId()) {
             case R.id.eye:
@@ -162,8 +175,8 @@ public class LoginActivity extends BaseActivity {
                     WeiXinUtil.reg(LoginActivity.this).sendReq(req);
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
@@ -208,6 +221,7 @@ public class LoginActivity extends BaseActivity {
         unBind.unbind();// 解绑
         loginPresenter.unBind();
     }
+
     @Override
     public void onResume() {
         super.onResume();
