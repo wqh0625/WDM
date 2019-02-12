@@ -49,6 +49,7 @@
         <activity
             android:name="com.bw.movie.view.myactivity.My_Feedback_Activity"
             android:screenOrientation="portrait" />
+        
         <activity
             android:name="com.bw.movie.view.myactivity.My_Rccord_Activity"
             android:screenOrientation="portrait" />
