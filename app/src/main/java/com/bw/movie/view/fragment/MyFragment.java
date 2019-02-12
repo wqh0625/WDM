@@ -4,7 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.presenter.VersionsPresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.j256.ormlite.dao.Dao;
 
@@ -42,16 +43,12 @@ import com.bw.movie.bean.Result2;
 import com.bw.movie.bean.UserInfoBean;
 import com.bw.movie.core.base.BaseFragment;
 import com.bw.movie.core.dao.DbManager;
-import com.bw.movie.core.dao.MyHelpter;
 import com.bw.movie.core.exception.ApiException;
 import com.bw.movie.core.interfase.DataCall;
 import com.bw.movie.core.utils.FileUtils;
-import com.bw.movie.core.utils.MyApp;
 import com.bw.movie.presenter.FindUserHomeInfoPresenter;
 import com.bw.movie.presenter.TopPhotoPresenter;
 import com.bw.movie.presenter.UserSignInPresenter;
-import com.bw.movie.view.HomeActivity;
-import com.bw.movie.view.LoginActivity;
 import com.bw.movie.view.myactivity.MessageActivity;
 import com.bw.movie.view.myactivity.My_Attention_Activity;
 import com.bw.movie.view.myactivity.My_Feedback_Activity;
@@ -78,6 +75,8 @@ public class MyFragment extends BaseFragment {
     private List<UserInfoBean> student;
     private View popView;
     private Dao<UserInfoBean, String> userDao;
+    private int userId;
+    private String sessionId;
 
     @Override
     public void initView(View view) {
@@ -101,7 +100,7 @@ public class MyFragment extends BaseFragment {
                 nickNameTv.setText("未登录");
                 qdBtn.setText("签到");
                 return;
-            } else {
+            }else{
                 UserInfoBean userInfoBeana = student.get(0);
                 String headPic = userInfoBeana.getHeadPic();
                 String nickName = userInfoBeana.getNickName();
@@ -198,6 +197,20 @@ public class MyFragment extends BaseFragment {
             }
         } else if (v.getId() == R.id.mRb_vsersion) {
             // 版本
+            if (student.size() == 0) {
+                s();
+            } else {
+                userId = userInfoBean.getUserId();
+                sessionId = userInfoBean.getSessionId();
+                VersionsPresenter versionsPresenter = new VersionsPresenter(new VersionsCall());
+                try {
+                    String versionName = getVersionName(getContext());
+                    versionsPresenter.requestNet(userId,sessionId,versionName);
+
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
 
         } else if (v.getId() == R.id.mRb_rccord) {
             if (student.size() == 0) {
@@ -431,4 +444,33 @@ public class MyFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 获取版本号
+     *
+     * @throws PackageManager.NameNotFoundException
+     */
+    public static String getVersionName(Context context) throws PackageManager.NameNotFoundException {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        String version = packInfo.versionName;
+        return version;
+    }
+
+    //查询新版本
+    class VersionsCall implements DataCall<Result>{
+
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(getActivity(), "查询失败", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -39,7 +39,7 @@ android {
         config {
             keyAlias 'bw_movie'
             keyPassword '123456'
-            storeFile file('C:/SouGouDownload/movie_keystore/movie.keystore')
+            storeFile file('D:/movie.keystore')
             storePassword '123456'
         }
     }
@@ -119,17 +119,14 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:3.6.0'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     implementation 'org.greenrobot:eventbus:3.1.1'
-
-    implementation  'com.tencent.xinge:xinge:4.0.5-release'
+    implementation 'com.tencent.xinge:xinge:4.0.5-release'
     //implementation'com.tencent.xinge:xinge:4.3.1-beta'
     //jg包
-    implementation'com.tencent.jg:jg:1.1'
+    implementation 'com.tencent.jg:jg:1.1'
     //wup包
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包，minSdkVersion 14
     implementation 'com.tencent.mid:mid:4.0.7-Release'
-
     // 今日头条适配
     implementation 'me.jessyan:autosize:0.9.5'
-
 }
