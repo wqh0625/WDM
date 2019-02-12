@@ -14,6 +14,7 @@ import com.bw.movie.bean.Result;
 import com.bw.movie.bean.ReviewData;
 import com.bw.movie.bean.SearchData;
 import com.bw.movie.bean.TicketDetailsData;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -102,4 +103,11 @@ public interface IRequests {
                                                @Query("cinemaId") int cinemaId,
                                                @Query("page") int page,
                                                @Query("count") int count);
+
+
+    //查询新版本
+    @GET("movieApi/tool/v1/findNewVersion")
+    Observable<Result> getVersions(@Header("userId") int userId,
+                                        @Header("sessionId") String sessionId,
+                                        @Query("ak") String ak);
 }

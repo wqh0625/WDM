@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.bw.movie.bean.CinemaDetailListData;
 import com.bw.movie.bean.Result;
 import com.bw.movie.bean.TicketDetailsData;
@@ -43,6 +44,7 @@ import com.bw.movie.presenter.ReviewPresenter;
 import com.bw.movie.view.detailsactvity.CheckInActivity;
 import com.bw.movie.view.fragment.fcdetail.CinemaDetailsPlFragment;
 import com.bw.movie.view.fragment.fcdetail.CinemaDetailsXqFragment;
+
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
@@ -80,7 +82,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private String address;
     private String imageUrl;
     private String names;
-    private TextView xq,pl;
+    private TextView xq, pl;
     int id;
 
 
@@ -109,7 +111,6 @@ public class CinemaDetailActivity extends BaseActivity {
         //设置适配器
         recycarousel.setAdapter(cinemaDetailAdapter);
         //滑动监听
-
         recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
@@ -188,7 +189,6 @@ public class CinemaDetailActivity extends BaseActivity {
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-//                popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //设置布局
                 activityReviewPopwindowDown = pop.findViewById(R.id.fragment_review_popwindow_down);
                 vp = pop.findViewById(R.id.fragment_details_vp);
@@ -207,9 +207,6 @@ public class CinemaDetailActivity extends BaseActivity {
                     public void onClick(View view) {
                         vp.setCurrentItem(0);
                         ChangeBackGround(0);
-
-//                        EventBus.getDefault().postSticky(new EvBean(cinemaId));
-//                        startActivity(new Intent(CinemaDetailActivity.this,CinemaDetailsXqFragment.class));
                     }
                 });
                 pl.setOnClickListener(new View.OnClickListener() {
@@ -217,8 +214,6 @@ public class CinemaDetailActivity extends BaseActivity {
                     public void onClick(View view) {
                         vp.setCurrentItem(1);
                         ChangeBackGround(1);
-//                        EventBus.getDefault().postSticky(new EvBean(cinemaId));
-//                        startActivity(new Intent(CinemaDetailActivity.this,CinemaDetailsPlFragment.class));
                     }
                 });
 
@@ -262,10 +257,12 @@ public class CinemaDetailActivity extends BaseActivity {
                 break;
         }
     }
+
     private View pop;
+
     @Override
     public <T extends View> T findViewById(int id) {
-        if (id == R.id.fragment_details_vp && pop !=null){
+        if (id == R.id.fragment_details_vp && pop != null) {
             return pop.findViewById(id);
         }
         return super.findViewById(id);
@@ -308,7 +305,7 @@ public class CinemaDetailActivity extends BaseActivity {
                     Toast.makeText(CinemaDetailActivity.this, "此影片暂时无排期", Toast.LENGTH_SHORT).show();
                     ticketDetailsAdapter.clearList();
                     ticketDetailsAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     ticketDetailsAdapter.clearList();
                     ticketDetailsAdapter.addAll(data.getResult());
                     ticketDetailsAdapter.notifyDataSetChanged();

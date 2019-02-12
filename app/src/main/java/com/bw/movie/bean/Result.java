@@ -25,6 +25,24 @@ public class Result<T> {
     private String packageValue;
     private String orderId;
     private String headPath;
+    private int flag;
+    private String downloadUrl;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
 
     public void setHeadPath(String headPath) {
         this.headPath = headPath;
