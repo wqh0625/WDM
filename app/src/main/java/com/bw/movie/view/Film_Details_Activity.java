@@ -143,7 +143,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if ("0000".equals(data.getStatus())) {
                 actvityImageDetails.setBackgroundResource(R.drawable.com_icon_collection_default);
-                followMovie=2;
+                followMovie = 2;
             }
         }
 
@@ -181,18 +181,18 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private void init() {
         Intent intent = getIntent();
         position = intent.getExtras().getInt("position");
-        imageDetails =   findViewById(R.id.image_details);
-        txtDetails =   findViewById(R.id.txt_details);
-        actvityImageDetails =  findViewById(R.id.actvity_image_details);
-        top =   findViewById(R.id.top);
-        detailsTxtName =  findViewById(R.id.details_txt_name);
-        detailsSdvImage =   findViewById(R.id.details_sdv_image);
-        detailsTxtDetails =   findViewById(R.id.details_btn_details);
-        detailsTxtPrediction =  findViewById(R.id.details_btn_prediction);
+        imageDetails = findViewById(R.id.image_details);
+        txtDetails = findViewById(R.id.txt_details);
+        actvityImageDetails = findViewById(R.id.actvity_image_details);
+        top = findViewById(R.id.top);
+        detailsTxtName = findViewById(R.id.details_txt_name);
+        detailsSdvImage = findViewById(R.id.details_sdv_image);
+        detailsTxtDetails = findViewById(R.id.details_btn_details);
+        detailsTxtPrediction = findViewById(R.id.details_btn_prediction);
         detailsTxtStills = findViewById(R.id.details_btn_stills);
-        detailsTxtReview =    findViewById(R.id.details_btn_review);
-        detailsImageBack =   findViewById(R.id.details_image_back);
-        detailsTxtBuy =   findViewById(R.id.details_btn_buy);
+        detailsTxtReview = findViewById(R.id.details_btn_review);
+        detailsImageBack = findViewById(R.id.details_image_back);
+        detailsTxtBuy = findViewById(R.id.details_btn_buy);
         detailsTxtDetails.setOnClickListener(this);
         detailsTxtPrediction.setOnClickListener(this);
         detailsTxtStills.setOnClickListener(this);
@@ -460,9 +460,9 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         @Override
         public void success(Result data) {
             if ("0000".equals(data.getStatus())) {
-                Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 actvityImageDetails.setBackgroundResource(R.drawable.icon_collection_selected);
-                followMovie=1;
+                followMovie = 1;
             }
         }
 
