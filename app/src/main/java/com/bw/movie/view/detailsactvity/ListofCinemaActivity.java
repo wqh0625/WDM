@@ -24,7 +24,6 @@ import com.bw.movie.core.base.BaseActivity;
 import com.bw.movie.core.exception.ApiException;
 import com.bw.movie.core.interfase.DataCall;
 import com.bw.movie.presenter.ListofCinemaPresenter;
-import com.bw.movie.view.cinemaactivity.TicketDetailsActivity;
 
 public class ListofCinemaActivity extends BaseActivity {
 

@@ -28,8 +28,13 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
+import com.bw.movie.core.base.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +44,7 @@ import com.bw.movie.view.fragment.HomeFragment;
 import com.bw.movie.view.fragment.IsHitFragment;
 
 
-public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailsActivity extends BaseActivity implements View.OnClickListener {
     private MyLocationListener myListener = new MyLocationListener();
     private LocationClient mLocationClient = null;
 
@@ -70,6 +75,52 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         initData();
         initMap();
     }
+
+
+        /**
+         * 将数据存到文件中
+         *
+         * @param context context
+         * @param data 需要保存的数据
+         * @param fileName 文件名
+         */
+//        private void saveDataToFile(Context context, String data, String fileName)
+//        {
+//            FileOutputStream fileOutputStream = null;
+//            BufferedWriter bufferedWriter = null;
+//            try
+//            {
+//                /**
+//                 * "data"为文件名,MODE_PRIVATE表示如果存在同名文件则覆盖，
+//                 * 还有一个MODE_APPEND表示如果存在同名文件则会往里面追加内容
+//                 */
+//                fileOutputStream = context.openFileOutput(fileName,
+//                        Context.MODE_PRIVATE);
+//                bufferedWriter = new BufferedWriter(
+//                        new OutputStreamWriter(fileOutputStream));
+//                bufferedWriter.write(data);
+//            }
+//            catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//
+//            finally
+//            {
+//                try
+//                {
+//                    if (bufferedWriter != null)
+//                    {
+//                        bufferedWriter.close();
+//                    }
+//                }
+//                catch (IOException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
 
     private void initData() {
         fragments = new ArrayList<>();

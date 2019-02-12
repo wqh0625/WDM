@@ -1,4 +1,4 @@
-package com.bw.movie.view.cinemaactivity;
+package com.bw.movie.view.detailsactvity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.core.base.BaseActivity;
 import com.bw.movie.view.detailsactvity.CheckInActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -26,7 +27,7 @@ import com.bw.movie.core.exception.ApiException;
 import com.bw.movie.core.interfase.DataCall;
 import com.bw.movie.presenter.TicketPresenter;
 
-public class TicketDetailsActivity extends AppCompatActivity {
+public class TicketDetailsActivity extends BaseActivity {
 
     @BindView(R.id.ticket_image)
     ImageView ticketImage;

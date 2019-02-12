@@ -6,11 +6,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.bean.UserInfoBean;
+import com.bw.movie.core.dao.DbManager;
+import com.bw.movie.core.utils.FileUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.dao.Dao;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
+import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.BindView;
+
 import com.bw.movie.bean.NearbyData;
 import com.bw.movie.bean.Result;
 import com.bw.movie.core.adapter.NearbyCinemaAdapter;
@@ -61,6 +70,7 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
     @Override
     public void onResume() {
         super.onResume();
+
         rec.refresh();
     }
 
@@ -71,12 +81,20 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             return;
         }
 
-        if (userInfoBean == null) {
-            findRecommendCinemasPresenter.requestNet(0, "", true);
-        } else {
-            findRecommendCinemasPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), true);
+        try {
+            DbManager dbManager = new DbManager(getContext());
+            Dao<UserInfoBean, String> userDao = dbManager.getUserDao();
+            List<UserInfoBean> userInfoBeans = userDao.queryForAll();
 
+            if (userInfoBeans != null && userInfoBeans.size() > 0) {
+                findRecommendCinemasPresenter.requestNet(userInfoBeans.get(0).getUserId(), userInfoBeans.get(0).getSessionId(), true);
+            } else {
+                findRecommendCinemasPresenter.requestNet(0, "", true);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
@@ -92,7 +110,6 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
     @Override
     public void onlike(int i, int id, NearbyData nearbyData) {
         if (userInfoBean == null) {
-//                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         } else {
@@ -167,15 +184,29 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
             if (data.getStatus().equals("0000")) {
+                List<NearbyData> nearbyData = data.getResult();
+                String s = new Gson().toJson(nearbyData);
+                // 存
+                FileUtils.saveDataToFile(MyApp.getContext(), s, "推荐影院List");
+
+                // 设置显示
                 adapter.setList(data.getResult());
                 adapter.notifyDataSetChanged();
             }
-
         }
 
         @Override
         public void fail(ApiException a) {
+            rec.refreshComplete();
+            rec.loadMoreComplete();
+            String list = FileUtils.loadDataFromFile(MyApp.getContext(), "推荐影院List");
+            Type type = new TypeToken<List<NearbyData>>() {
+            }.getType();
 
+            List<NearbyData> result = new Gson().fromJson(list, type);
+//            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+            adapter.setList(result);
+            adapter.notifyDataSetChanged();
         }
     }
 

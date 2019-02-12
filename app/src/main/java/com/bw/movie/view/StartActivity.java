@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bw.movie.R;
+import com.bw.movie.core.base.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
 
@@ -20,7 +21,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends BaseActivity {
 
     int time = 3;
     Handler handler = new Handler(Looper.getMainLooper()) {

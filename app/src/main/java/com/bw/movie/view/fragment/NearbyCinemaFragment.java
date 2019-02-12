@@ -6,12 +6,21 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.bean.UserInfoBean;
+import com.bw.movie.core.dao.DbManager;
+import com.bw.movie.core.utils.FileUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.dao.Dao;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
+import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.List;
 
 
 import butterknife.BindView;
+
 import com.bw.movie.bean.NearbyData;
 import com.bw.movie.bean.Result;
 import com.bw.movie.core.adapter.NearbyCinemaAdapter;
@@ -66,6 +75,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         rec.refresh();
 
     }
+
     double latitude = CinemaFragment.latitude;
     double longitude = CinemaFragment.longitude;
 
@@ -77,11 +87,22 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-        if (userInfoBean == null) {
-            findNearbyCinemasPresenter.requestNet(0, "", true,String.valueOf(longitude),String.valueOf(latitude));
-        }else{
-            findNearbyCinemasPresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(), true,String.valueOf(longitude),String.valueOf(latitude));
+
+
+        try {
+            DbManager dbManager = new DbManager(getContext());
+            Dao<UserInfoBean, String> userDao = dbManager.getUserDao();
+            List<UserInfoBean> userInfoBeans = userDao.queryForAll();
+
+            if (userInfoBeans != null && userInfoBeans.size() > 0) {
+                findNearbyCinemasPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), true, String.valueOf(longitude), String.valueOf(latitude));
+            } else {
+                findNearbyCinemasPresenter.requestNet(0, "", true, String.valueOf(longitude), String.valueOf(latitude));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
@@ -96,16 +117,15 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
     }
 
     @Override
-    public void onlike(int i,int id, NearbyData nearbyData) {
+    public void onlike(int i, int id, NearbyData nearbyData) {
         if (userInfoBean == null) {
-//                    Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         } else {
             if (nearbyData.getFollowCinema() == 1) {
                 cancelFollowCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
             } else {
-                followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id,nearbyData.getId(), i);
+                followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
             }
         }
     }
@@ -123,9 +143,9 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
             if (data.getStatus().equals("0000")) {
-                    int o = (int) data.getArgs()[4];
-                    adapter.getItem(o).setFollowCinema(1);
-                    adapter.notifyDataSetChanged();
+                int o = (int) data.getArgs()[4];
+                adapter.getItem(o).setFollowCinema(1);
+                adapter.notifyDataSetChanged();
             }
         }
 
@@ -164,23 +184,37 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         @Override
         public void success(Result<List<NearbyData>> data) {
             rec.refreshComplete();
-            rec.loadMoreComplete();if (data.getStatus().equals("9999")) {
+            rec.loadMoreComplete();
+            if (data.getStatus().equals("9999")) {
                 Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
                 // 跳转
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
             if (data.getStatus().equals("0000")) {
+                List<NearbyData> nearbyData = data.getResult();
+                String s = new Gson().toJson(nearbyData);
+                // 存
+                FileUtils.saveDataToFile(MyApp.getContext(), s, "附近影院List");
+
                 adapter.setList(data.getResult());
                 adapter.notifyDataSetChanged();
             }
-//            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void fail(ApiException a) {
+            rec.refreshComplete();
+            rec.loadMoreComplete();
+            String list = FileUtils.loadDataFromFile(MyApp.getContext(), "附近影院List");
+            Type type = new TypeToken<List<NearbyData>>() {
+            }.getType();
 
+            List<NearbyData> result = new Gson().fromJson(list, type);
+//            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+            adapter.setList(result);
+            adapter.notifyDataSetChanged();
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -14,8 +15,13 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
 import com.bw.movie.bean.CarouselData;
+import com.bw.movie.bean.NearbyData;
+import com.bw.movie.core.utils.FileUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.bw.movie.bean.Result;
@@ -30,6 +36,7 @@ import com.bw.movie.presenter.ComingPresenter;
 import com.bw.movie.presenter.IsHitPresenter;
 import com.bw.movie.view.DetailsActivity;
 import com.bw.movie.view.Film_Details_Activity;
+
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
@@ -58,6 +65,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     private double longitude;
     private double latitude;
+
     private void initBanner() {
         carouselAdapter = new CarouselAdapter(getActivity());
         recycarousel.setAdapter(carouselAdapter);//设置适配器
@@ -86,6 +94,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void success(Result<List<CarouselData>> data) {
             if (data.getStatus().equals("0000")) {
+                List<CarouselData> nearbyData = data.getResult();
+                String s = new Gson().toJson(nearbyData);
+                // 存
+                FileUtils.saveDataToFile(MyApp.getContext(), s, "首页轮播List");
                 carouselAdapter.setList(data.getResult());
                 carouselAdapter.notifyDataSetChanged();
             }
@@ -93,6 +105,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         public void fail(ApiException a) {
+            String list = FileUtils.loadDataFromFile(MyApp.getContext(), "首页轮播List");
+            Type type = new TypeToken<List<CarouselData>>() {
+            }.getType();
+
+            List<CarouselData> result = new Gson().fromJson(list, type);
+            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+            carouselAdapter.setList(result);
+            carouselAdapter.notifyDataSetChanged();
         }
     }
 
@@ -160,11 +180,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
     }
 
+    // 热门电影
     class CarouselCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
             if (data.getStatus().equals("0000")) {
+                List<CarouselData> nearbyData = data.getResult();
+                String s = new Gson().toJson(nearbyData);
+                // 存
+                FileUtils.saveDataToFile(MyApp.getContext(), s, "热门电影List");
                 cinemaxAdapter.addAll(data.getResult());
                 cinemaxAdapter.notifyDataSetChanged();
             }
@@ -172,6 +197,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         public void fail(ApiException a) {
+            String list = FileUtils.loadDataFromFile(MyApp.getContext(), "热门电影List");
+            Type type = new TypeToken<List<CarouselData>>() {
+            }.getType();
+
+            List<CarouselData> result = new Gson().fromJson(list, type);
+            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+            cinemaxAdapter.addAll(result);
+            cinemaxAdapter.notifyDataSetChanged();
         }
     }
 
@@ -180,6 +213,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void success(Result<List<CarouselData>> data) {
             if (data.getStatus().equals("0000")) {
+                List<CarouselData> nearbyData = data.getResult();
+                String s = new Gson().toJson(nearbyData);
+                // 存
+                FileUtils.saveDataToFile(MyApp.getContext(), s, "正在热映List");
+
                 ishitAdapter.addAll(data.getResult());
                 ishitAdapter.notifyDataSetChanged();
             }
@@ -187,14 +225,28 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         public void fail(ApiException a) {
+            String list = FileUtils.loadDataFromFile(MyApp.getContext(), "正在热映List");
+            Type type = new TypeToken<List<CarouselData>>() {
+            }.getType();
+
+            List<CarouselData> result = new Gson().fromJson(list, type);
+            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+            ishitAdapter.addAll(result);
+            ishitAdapter.notifyDataSetChanged();
         }
     }
 
+    //即将上映
     class ComingCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
             if (data.getStatus().equals("0000")) {
+                List<CarouselData> nearbyData = data.getResult();
+                String s = new Gson().toJson(nearbyData);
+                // 存
+                FileUtils.saveDataToFile(MyApp.getContext(), s, "即将上映List");
+
                 comingAdapter.addAll(data.getResult());
                 comingAdapter.notifyDataSetChanged();
             }
@@ -202,6 +254,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         public void fail(ApiException a) {
+            String list = FileUtils.loadDataFromFile(MyApp.getContext(), "即将上映List");
+            Type type = new TypeToken<List<CarouselData>>() {
+            }.getType();
+
+            List<CarouselData> result = new Gson().fromJson(list, type);
+            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+            comingAdapter.addAll(result);
+            comingAdapter.notifyDataSetChanged();
         }
     }
 
@@ -250,8 +310,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     class MyLocationListener implements BDLocationListener {
-
-
 
         @Override
         public void onReceiveLocation(BDLocation location) {

@@ -75,7 +75,7 @@
             android:name="com.bw.movie.view.cinemaactivity.CinemaDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.bw.movie.view.cinemaactivity.TicketDetailsActivity"
+            android:name="com.bw.movie.view.detailsactvity.TicketDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.bw.movie.view.detailsactvity.CheckInActivity"
@@ -106,7 +106,7 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
-            // 今日头条
+            <!--今日头条-->
         <meta-data
             android:name="design_width_in_dp"
             android:value="360" />

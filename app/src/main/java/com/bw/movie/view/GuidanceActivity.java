@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bw.movie.R;
+import com.bw.movie.core.base.BaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import com.bw.movie.core.guidancedata.ViewPagerAdatper;
  */
 
 
-public class GuidanceActivity extends AppCompatActivity {
+public class GuidanceActivity extends BaseActivity {
 
     private ViewPager mInVp;
     private LinearLayout mInLl;

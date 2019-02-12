@@ -70,7 +70,7 @@ public class CinemaxFragment extends BaseFragment {
         });
     }
 
-    // 得到列表信息
+    /* 得到列表信息*/
     class CinemaxCall implements DataCall<Result<List<CarouselData>>> {
 
         @Override
