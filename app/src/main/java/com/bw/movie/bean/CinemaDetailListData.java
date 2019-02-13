@@ -11,7 +11,7 @@ public class CinemaDetailListData {
 //    {"duration":"116分钟","fare":0.28,"id":15,"imageUrl":"http://mobile.bwstudent.com/images/movie/stills/aqgy/aqgy1.jpg","name":"爱情公寓","releaseTime":1565366400000,"summary":"《爱情公寓》电影版归来，原班人马十年催泪重聚。曾小贤、胡一菲、唐悠悠、吕子乔、张伟、陈美嘉悉数回归，还是熟悉的场景和熟悉的人，嘻嘻哈哈、打打闹闹，笑声从没停过。老朋友的故事将继续展开，印证了电视剧的那句主题语——“最好的朋友在身边，最爱的人就在对面”。不过这一次，他们打算搞个大事情……"}
     private double fare;
     private int id;
-    private String imageurl;
+    private String imageUrl;
     private String name;
     private long releasetime;
     private String summary;
@@ -33,11 +33,11 @@ public class CinemaDetailListData {
     }
 
     public String getImageurl() {
-        return imageurl;
+        return imageUrl;
     }
 
     public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
+        this.imageUrl = imageurl;
     }
 
     public String getName() {

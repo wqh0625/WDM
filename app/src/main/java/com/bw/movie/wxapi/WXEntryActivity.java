@@ -30,11 +30,12 @@ import com.bw.movie.view.HomeActivity;
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
     private WxLoginPresenter wxLoginPresenter;
     private String code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wxentry);
-        WeiXinUtil.reg(WXEntryActivity.this).handleIntent(getIntent(),this);
+        WeiXinUtil.reg(WXEntryActivity.this).handleIntent(getIntent(), this);
     }
 
     @Override
@@ -44,23 +45,24 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 
     @Override
     public void onResp(final BaseResp baseResp) {
-    switch (baseResp.errCode){
-        case BaseResp.ErrCode.ERR_OK:
-            code = ((SendAuth.Resp) baseResp).code;
-            wxLoginPresenter = new WxLoginPresenter(new WxCall());
-            wxLoginPresenter.requestNet(code);
-            break;
+        switch (baseResp.errCode) {
+            case BaseResp.ErrCode.ERR_OK:
+                code = ((SendAuth.Resp) baseResp).code;
+                wxLoginPresenter = new WxLoginPresenter(new WxCall());
+                wxLoginPresenter.requestNet(code);
+                break;
             default:
                 break;
+        }
     }
-    }
+
     class WxCall implements DataCall<Result<LoginData>> {
 
         @Override
         public void success(Result<LoginData> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 //登录成功
-                Toast.makeText(WXEntryActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(WXEntryActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 //将登录信息存入数据库
                 UserInfoBean userInfoBean = data.getResult().getUserInfo();
                 userInfoBean.setUserId(data.getResult().getUserId());
@@ -68,14 +70,14 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
                 try {
                     Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
                     userDao.createOrUpdate(userInfoBean);
+
+                    finish();
+                    //下面只是一个跳转页面的动画，可不加
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                //跳转登录成功后的页面
-                startActivity(new Intent(WXEntryActivity.this, HomeActivity.class));
-                finish();
-                //下面只是一个跳转页面的动画，可不加
-                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
 
             }
         }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.core.utils.MyApp;
 import com.j256.ormlite.dao.Dao;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.umeng.analytics.MobclickAgent;
@@ -74,20 +75,23 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        unBind = ButterKnife.bind(this);
-        loginPresenter = new LoginPresenter(new login());
-        sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
-        boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
-        boolean reme_login = sp0123.getBoolean("reme_login", false);
-        if (reme_pwd) {
+        try {
+            setContentView(R.layout.activity_login);
+            unBind = ButterKnife.bind(this);
+            loginPresenter = new LoginPresenter(new login());
+            sp0123 = getSharedPreferences("sp0123", MODE_PRIVATE);
+            boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
+            boolean reme_login = sp0123.getBoolean("reme_login", false);
 
-            try {
+
+            if (reme_pwd) {
+
+
                 Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
                 List<UserInfoBean> userInfoBeans = userDao.queryForAll();
                 if (userInfoBeans.size() == 0) {
                     return;
-                }else{
+                } else {
                     UserInfoBean user = userInfoBeans.get(0);
 
                     if (user.getPhone() == null) {
@@ -107,11 +111,10 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+
             }
-
-
+        } catch (SQLException eq) {
+            eq.printStackTrace();
         }
         // 设置密码不可见
         tel_pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -122,6 +125,24 @@ public class LoginActivity extends BaseActivity {
         edit.putBoolean("reme_login", false);
         edit.commit();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+            DbManager dbManager = new DbManager(MyApp.getContext());
+            List<UserInfoBean> userInfoBeanxc = dbManager.getUserDao().queryForAll();
+            if (userInfoBeanxc.size() > 0) {
+                finish();
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @OnClick({R.id.tv_register, R.id.button_login, R.id.eye, R.id.cb_reme_pwd, R.id.cb_reme_login, R.id.iv_wx})
     void onclick(View v) {
@@ -225,7 +246,16 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-
+        try {
+            DbManager dbManager = new DbManager(MyApp.getContext());
+            List<UserInfoBean> userInfoBeanxc = dbManager.getUserDao().queryForAll();
+            if (userInfoBeanxc.size() > 0) {
+                finish();
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         MobclickAgent.onPageStart("登录页面");
         MobclickAgent.onResume(this);
     }

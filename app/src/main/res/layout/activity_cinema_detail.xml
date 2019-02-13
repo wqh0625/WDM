@@ -69,21 +69,42 @@
             android:layout_marginTop="110dp"
             android:layout_marginRight="24dp" />
 
-        <View
-            android:id="@+id/cccccc"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/cinema_detail_recy_carousel"
+            android:layout_height="3dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="24dp"
-            android:background="#BBBBBB" />
+            android:layout_below="@id/cinema_detail_recy_carousel"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shadow">
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/movie_text_xian"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/cinema_detail_recy_carousel"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="20dp"
+            />
+        <TextView
+            android:id="@+id/movie_text_dong"
+            android:layout_width="35dp"
+            android:layout_height="3dp"
+            android:layout_below="@id/cinema_detail_recy_carousel"
+            android:layout_centerHorizontal="false"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/moviefragment_shu" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cinema_detail_rec"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/cccccc"
+            android:layout_below="@id/movie_text_dong"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="24dp" />

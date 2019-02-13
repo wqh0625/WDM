@@ -1,5 +1,6 @@
 package com.bw.movie.view.cinemaactivity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -84,17 +85,18 @@ public class CinemaDetailActivity extends BaseActivity {
     private String names;
     private TextView xq, pl;
     int id;
+    @BindView(R.id.movie_text_dong)
+    TextView movieTextDong;
+    @BindView(R.id.movie_text_xian)
+    TextView xian;
 
-
-    private ReviewAdapter reviewAdapter;
     private ImageView activityReviewPopwindowDown;
-    private RecyclerView activityreviewpopwindowrecy;
-    private ReviewPresenter reviewPresenter;
     private ViewPager vp;
     private List<Fragment> fragments;
     private View xqV, plV;
     private String addre;
     private String cinameName;
+    private int mCoun;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +116,14 @@ public class CinemaDetailActivity extends BaseActivity {
         recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
+                int selectedPos = recycarousel.getSelectedPos();
+                ObjectAnimator animator = ObjectAnimator.ofFloat(movieTextDong, "translationX", mCoun * (selectedPos));
+                animator.setDuration(500);
+
                 CinemaDetailListData cinemaDetailListData = resuleeee.get(position);
 
                 findMovieScheduleListPresenter.requestNet(cinemaId, cinemaDetailListData.getId());
+                animator.start();
             }
         });
 
@@ -287,6 +294,9 @@ public class CinemaDetailActivity extends BaseActivity {
                 findMovieScheduleListPresenter.requestNet(cinemaId, id);
                 cinemaDetailAdapter.setList(data.getResult());
                 cinemaDetailAdapter.notifyDataSetChanged();
+                int mWidth = xian.getWidth();
+                int mItemCount = cinemaDetailAdapter.getItemCount();
+                mCoun = mWidth / mItemCount;
             }
         }
 

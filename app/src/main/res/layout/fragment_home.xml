@@ -67,21 +67,42 @@
 
         </RelativeLayout>
 
-        <View
-            android:id="@+id/views"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_below="@id/top"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shadow">
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/movie_text_xian"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@id/top"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
-            android:background="#b3adad" />
+            />
+        <TextView
+            android:id="@+id/movie_text_dong"
+            android:layout_width="35dp"
+            android:layout_height="3dp"
+            android:layout_below="@id/top"
+            android:layout_centerHorizontal="false"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/moviefragment_shu" />
 
         <RelativeLayout
             android:id="@+id/relat_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/views"
+            android:layout_below="@id/movie_text_dong"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="24dp"

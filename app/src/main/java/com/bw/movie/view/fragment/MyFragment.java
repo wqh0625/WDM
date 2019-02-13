@@ -72,7 +72,7 @@ public class MyFragment extends BaseFragment {
     private TopPhotoPresenter topPhotoPresenter;
     private UserSignInPresenter userSignInPresenter;
 
-    private List<UserInfoBean> student;
+    private List<UserInfoBean> a;
     private View popView;
     private Dao<UserInfoBean, String> userDao;
     private int userId;
@@ -92,16 +92,17 @@ public class MyFragment extends BaseFragment {
 
         try {
             userDao = new DbManager(getActivity()).getUserDao();
-            student = userDao.queryForAll();
-            Toast.makeText(getContext(), "数据库" + student.size(), Toast.LENGTH_SHORT).show();
-            if (student.size() == 0) {
-//                Toast.makeText(getActivity(), "空", Toast.LENGTH_SHORT).show();
+            a = userDao.queryForAll();
+            Log.v("/////--",a.toString());
+            Toast.makeText(getContext(), "数据库剩：：：" + a.size(), Toast.LENGTH_SHORT).show();
+
+            if (a.size() == 0) {
                 icon.setImageResource(R.drawable.my_icon);
                 nickNameTv.setText("未登录");
                 qdBtn.setText("签到");
                 return;
             }else{
-                UserInfoBean userInfoBeana = student.get(0);
+                UserInfoBean userInfoBeana = a.get(0);
                 String headPic = userInfoBeana.getHeadPic();
                 String nickName = userInfoBeana.getNickName();
                 if (headPic == null || headPic == "" || userInfoBeana == null) {
@@ -162,10 +163,11 @@ public class MyFragment extends BaseFragment {
         public void success(Result<Result2> data) {
             if (data.getResult().getUserSignStatus() == 1) {
                 qdBtn.setText("签到");
+                nickNameTv.setText(""+data.getResult().getNickName());
             } else {
                 qdBtn.setText("已签到");
+                nickNameTv.setText(""+data.getResult().getNickName());
             }
-
         }
 
         @Override
@@ -242,9 +244,10 @@ public class MyFragment extends BaseFragment {
                     DbManager dbManager = null;
                     try {
                         Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
-//                        myHelpter.getDao()
-                        int i = userDao.delete(userInfoBean);
-                        Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
+                        UserInfoBean auserInfoBean = userDao.queryForAll().get(0);
+
+                        int i = userDao.delete( auserInfoBean);
+                        Toast.makeText(getContext(), "删除" + i, Toast.LENGTH_SHORT).show();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

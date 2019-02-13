@@ -30,7 +30,6 @@ import com.bw.movie.view.fragment.MyFragment;
 import static com.bw.movie.core.utils.MyApp.getContext;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
-    private FrameLayout frag;
     private ImageView homeactivityImagefilm;
     private ImageView homeactivityImagecinema;
     private ImageView homeactivityImagemy;
@@ -54,7 +53,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         }
 
         initV();
-        initData();
         initEvent();
 
     }
@@ -80,25 +78,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         }
 
         //添加Frgamnt
-        beginTransaction.add(R.id.frag, homeFragment);
-        beginTransaction.add(R.id.frag, cinemaFragment);
-        beginTransaction.add(R.id.frag, myFragment);
-        //显示和隐藏
-        beginTransaction.hide(cinemaFragment);
-        beginTransaction.hide(myFragment);
-        beginTransaction.show(homeFragment);
+//        beginTransaction.add(R.id.frag, homeFragment);
+//        beginTransaction.add(R.id.frag, cinemaFragment);
+//        beginTransaction.add(R.id.frag, myFragment);
+//        //显示和隐藏
+//        beginTransaction.hide(cinemaFragment);
+//        beginTransaction.hide(myFragment);
+//        beginTransaction.show(homeFragment);
 
+        beginTransaction.replace(R.id.frag, homeFragment);
         //提交
         beginTransaction.commit();
     }
 
-    private void initData() {
-
-    }
-
 
     private void initV() {
-        frag = (FrameLayout) findViewById(R.id.frag);
         homeactivityImagefilm = (ImageView) findViewById(R.id.homeactivity_imagefilm);
         homeactivityImagecinema = (ImageView) findViewById(R.id.homeactivity_imagecinema);
         homeactivityImagemy = (ImageView) findViewById(R.id.homeactivity_imagemy);
@@ -135,8 +129,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 isimagemy(transaction);
 
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
         transaction.commit();
     }
@@ -144,9 +138,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     //切换电影页
     private void isimagefilm(FragmentTransaction transaction) {
         //显示和隐藏
-        transaction.hide(cinemaFragment);
-        transaction.hide(myFragment);
-        transaction.show(homeFragment);
+
+        transaction.replace(R.id.frag, homeFragment);
+//        transaction.show(homeFragment);
         //切换图片
         homeactivityImagefilm.setImageResource(R.drawable.homes);
         homeactivityImagecinema.setImageResource(R.drawable.cinema);
@@ -170,9 +164,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     //切换影院页
     public void isimagecinema(FragmentTransaction transaction) {
         //显示和隐藏
-        transaction.show(cinemaFragment);
-        transaction.hide(myFragment);
-        transaction.hide(homeFragment);
+        transaction.replace(R.id.frag, cinemaFragment);
+
         //切换图片
         homeactivityImagefilm.setImageResource(R.drawable.home);
         homeactivityImagecinema.setImageResource(R.drawable.cinemas);
@@ -198,9 +191,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     //切换我的页面
     private void isimagemy(FragmentTransaction transaction) {
         //显示和隐藏
-        transaction.hide(cinemaFragment);
-        transaction.show(myFragment);
-        transaction.hide(homeFragment);
+        transaction.replace(R.id.frag, myFragment);
         //切换图片
         homeactivityImagefilm.setImageResource(R.drawable.home);
         homeactivityImagecinema.setImageResource(R.drawable.cinema);

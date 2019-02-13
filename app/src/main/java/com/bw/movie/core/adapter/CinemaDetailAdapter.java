@@ -50,10 +50,8 @@ public class CinemaDetailAdapter extends RecyclerView.Adapter<CinemaDetailAdapte
         strings.add("http://mobile.bwstudent.com/images/movie/stills/wxwd/wxwd1.jpg");
         strings.add("http://mobile.bwstudent.com/images/movie/stills/zljgy/zljgy1.jpg");
 
-        viewHolder.sdvImage.setImageURI(Uri.parse(strings.get(i)));
+        viewHolder.sdvImage.setImageURI(cinemaDetailListData.getImageurl());
         viewHolder.txtName.setText(cinemaDetailListData.getName());
-
-//        viewHolder.txtTime.setText("分钟");
     }
 
     @Override

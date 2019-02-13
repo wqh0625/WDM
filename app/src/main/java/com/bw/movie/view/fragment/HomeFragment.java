@@ -1,5 +1,6 @@
 package com.bw.movie.view.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,6 +66,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     private double longitude;
     private double latitude;
+    private TextView movieTextDong;
+    private TextView xian;
+    private int mCoun;
 
     private void initBanner() {
         carouselAdapter = new CarouselAdapter(getActivity());
@@ -78,7 +82,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {//滑动监听
             @Override
             public void onItemSelected(int position) {
-
+                int selectedPos = recycarousel.getSelectedPos();
+                ObjectAnimator animator = ObjectAnimator.ofFloat(movieTextDong, "translationX", mCoun * (selectedPos));
+                animator.setDuration(500);
+                animator.start();
             }
         });
         carouselAdapter.setOnCarouselClickListener(new CarouselAdapter.OnCarouselClickListener() {
@@ -98,8 +105,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 String s = new Gson().toJson(nearbyData);
                 // 存
                 FileUtils.saveDataToFile(MyApp.getContext(), s, "首页轮播List");
+
                 carouselAdapter.setList(data.getResult());
                 carouselAdapter.notifyDataSetChanged();
+                int mWidth = xian.getWidth();
+                int mItemCount = carouselAdapter.getItemCount();
+                mCoun = mWidth / mItemCount;
             }
         }
 
@@ -274,10 +285,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         imageMore3 = view.findViewById(R.id.image_more3);
         recyOnnow = view.findViewById(R.id.recy_onnow);
         relativeLayout = view.findViewById(R.id.recommend_cinema_linear);
+        movieTextDong = view.findViewById(R.id.movie_text_dong);
+        xian = view.findViewById(R.id.movie_text_xian);
         relativeLayout.setOnClickListener(this);
         imagemore1.setOnClickListener(this);
         imageMore2.setOnClickListener(this);
         imageMore3.setOnClickListener(this);
+
         //初始化数据
         initData();
         //轮播

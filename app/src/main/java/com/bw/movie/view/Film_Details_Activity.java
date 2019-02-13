@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,6 +56,8 @@ import com.bw.movie.presenter.FilmDetailsPresenter;
 import com.bw.movie.presenter.ReviewPresenter;
 import com.bw.movie.presenter.SearchPresenter;
 import com.bw.movie.view.detailsactvity.ListofCinemaActivity;
+
+import cn.jzvd.JZVideoPlayer;
 
 public class Film_Details_Activity extends BaseActivity implements View.OnClickListener {
 
@@ -304,6 +307,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onClick(View v) {
                         popupWindow2.dismiss();
+                        JZVideoPlayer.releaseAllVideos();
                     }
                 });
                 break;
@@ -388,7 +392,32 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
         }
     }
+    private int mFlag=0;
+    private long mTime1,mTime2;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //返回按键监听
+        if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 0) {
+            mFlag = 1;
+            //获取当前系统时间
+            mTime1 = System.currentTimeMillis();
+            Toast.makeText(this, "在按一次就退出", Toast.LENGTH_SHORT).show();
 
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 1) {
+            mTime2 = System.currentTimeMillis();
+            if (mTime2 - mTime1 < 2000) {
+                finish();
+            } else {
+                Toast.makeText(this, "在按一次就退出22222", Toast.LENGTH_SHORT).show();
+            }
+            mFlag = 0;
+            mTime1 = 0;
+            mTime2 = 0;
+
+        }
+
+        return true;
+    }
     //预告片
     class PredictionCall implements DataCall<Result<FilmDetailsData>> {
 
@@ -397,7 +426,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             if (data.getStatus().equals("0000")) {
                 //设置popupWindow内部的数据
                 FilmDetailsData result = data.getResult();
-//                FilmDetailsData result = data.getResult();
                 movieTypes = result.getMovieTypes();
                 director = result.getDirector();
                 duration = result.getDuration();
@@ -422,6 +450,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         }
     }
 
+
+
     //关注
     class ConcernCall implements DataCall<Result> {
 
@@ -436,7 +466,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "关注失败", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -452,7 +482,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "" + a.getCode(), Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -463,6 +493,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         concernPresenter.unBind();
         filmDetailsPresenter.unBind();
         reviewPresenter.unBind();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -476,6 +507,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     @Override
     public void onPause() {
         super.onPause();
+        JZVideoPlayer.releaseAllVideos();
         MobclickAgent.onPageEnd("影片详情页面");
         MobclickAgent.onPause(this);
     }

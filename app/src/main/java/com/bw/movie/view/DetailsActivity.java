@@ -80,9 +80,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         /**
          * 将数据存到文件中
          *
-         * @param context context
-         * @param data 需要保存的数据
-         * @param fileName 文件名
+         *
          */
 //        private void saveDataToFile(Context context, String data, String fileName)
 //        {
