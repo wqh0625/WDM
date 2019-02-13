@@ -3,6 +3,9 @@ package com.bw.movie.core.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import com.bw.movie.bean.TicketDetailsData;
 public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdapter.ViewHolder> {
     private Context context;
     private List<TicketDetailsData> list;
+    private SpannableString spannableString;
 
     public TicketDetailsAdapter(Context context) {
         this.context = context;
@@ -54,7 +58,8 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
         viewHolder.txtScreeningHall.setText(list.get(i).getScreeningHall());
         viewHolder.txtBeginTime.setText(list.get(i).getBeginTime());
         viewHolder.txtEndTime.setText(list.get(i).getEndTime());
-        viewHolder.txtPrice.setText("" + list.get(i).getPrice());
+        SpannableString spannableString = changTVsize("" + list.get(i).getPrice());
+        viewHolder.txtPrice.setText(spannableString);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +73,19 @@ public class TicketDetailsAdapter extends RecyclerView.Adapter<TicketDetailsAdap
                 }
             }
         });
+    }
+    /**
+     * 小数点前后大小不一致
+     *
+     * @param value
+     * @return
+     */
+    public static SpannableString changTVsize(String value) {
+        SpannableString spannableString = new SpannableString(value);
+        if (value.contains(".")) {
+            spannableString.setSpan(new RelativeSizeSpan(0.5f), value.indexOf("."), value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
     }
 
     @Override

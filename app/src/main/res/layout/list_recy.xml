@@ -8,8 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginTop="13dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginLeft="14dp"
         android:background="@drawable/beijingxuhua"
         android:orientation="horizontal">
 

@@ -115,7 +115,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film__details);
-
         init();
         initData();
     }
