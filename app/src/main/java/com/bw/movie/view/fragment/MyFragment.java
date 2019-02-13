@@ -410,14 +410,15 @@ public class MyFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getFlag()==2){
+                Toast.makeText(getActivity(), "当前已是最新版本!", Toast.LENGTH_SHORT).show();
+            }else if (data.getFlag()==1){
+                Toast.makeText(getActivity(), "有新版本，请进行下载!", Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "查询失败", Toast.LENGTH_SHORT).show();
         }
     }
 }

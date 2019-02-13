@@ -202,7 +202,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }.getType();
 
             List<CarouselData> result = new Gson().fromJson(list, type);
-            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
             cinemaxAdapter.addAll(result);
             cinemaxAdapter.notifyDataSetChanged();
         }
@@ -230,7 +229,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }.getType();
 
             List<CarouselData> result = new Gson().fromJson(list, type);
-            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
             ishitAdapter.addAll(result);
             ishitAdapter.notifyDataSetChanged();
         }
@@ -259,7 +257,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }.getType();
 
             List<CarouselData> result = new Gson().fromJson(list, type);
-            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
             comingAdapter.addAll(result);
             comingAdapter.notifyDataSetChanged();
         }

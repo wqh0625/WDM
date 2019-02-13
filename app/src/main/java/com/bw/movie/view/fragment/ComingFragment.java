@@ -73,7 +73,6 @@ public class ComingFragment extends BaseFragment {
 
         @Override
         public void success(Result<List<CarouselData>> data) {
-            Toast.makeText(getContext(), ".0.." + data.getResult().size(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("9999")) {
                 s();
             }
@@ -85,7 +84,6 @@ public class ComingFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "asas", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,7 +111,6 @@ public class ComingFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "gggg失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,7 +135,6 @@ public class ComingFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "q失败", Toast.LENGTH_SHORT).show();
         }
     }
 

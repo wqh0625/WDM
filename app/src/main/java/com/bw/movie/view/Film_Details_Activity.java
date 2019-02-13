@@ -119,7 +119,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
     private void initData() {
         searchPresenter = new SearchPresenter(new SearchCall());
-//        filmDetailsPresenter = new FilmDetailsPresenter(new FilmDetailsCall());
         concernPresenter = new ConcernPresenter(new ConcernCall());
         filmDetailsPresenter = new FilmDetailsPresenter(new PredictionCall());
         cancelConcernPresenter = new CancelConcernPresenter(new canCenGz());
@@ -161,9 +160,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 imageUrl = data.getResult().getImageUrl();
                 detailsTxtName.setText(name);
                 detailsSdvImage.setImageURI(imageUrl);
-//                new FilmDetailsData()
                 int followMovie = data.getResult().getFollowMovie();
-//                Toast.makeText(Film_Details_Activity.this, ""+followMovie, Toast.LENGTH_SHORT).show();
                 if (followMovie == 1) {
                     actvityImageDetails.setBackgroundResource(R.drawable.icon_collection_selected);
                 } else {
@@ -174,7 +171,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -213,7 +209,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 try {
                     Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
                     List<UserInfoBean> userInfoBeans = userDao.queryForAll();
-                    Toast.makeText(this, "101", Toast.LENGTH_SHORT).show();
                     if (followMovie == 1) {
                         // 取消关注
                         if (userInfoBeans.size() == 0) {
@@ -269,7 +264,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityDetailsRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 activityDetailsSimpledraweeview.setImageURI(imageUrl);
                 activityDetailsType.setText("类型：" + movieTypes);
-                Toast.makeText(this, "" + movieTypes, Toast.LENGTH_SHORT).show();
                 popwindowDetailsDirect.setText("导演:" + director);
                 activityDetailsTime.setText("时长:" + duration);
                 activityDetailsLocation.setText("地区:" + placeOrigin);
@@ -372,29 +366,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                         popupWindow4.dismiss();
                     }
                 });
-                //写评价弹框
-//                listImageBack.setOnClickListener(new View.OnClickListener() {
-//
-//                    private TextView btnSend;
-//                    private EditText etContent;
-//
-//                    @Override
-//                    public void onClick(View view) {
-//                        View rootview5= LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-//                        View view5 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.actvity_evaluate_popwindow, null, false);
-//                        final PopupWindow popupWindow5 = new PopupWindow(view5);
-//                        //设置充满父窗体
-//                        popupWindow5.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-//                        popupWindow5.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-//                        popupWindow5.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-//                        //设置布局
-//                        popupWindow5.setContentView(view5);
-////                        etContent = view5.findViewById(R.id.et_content);
-////                        btnSend = view5.findViewById(R.id.btn_send);
-//                        popupWindow5.showAtLocation(rootview5, Gravity.BOTTOM, 0, 0);
-//                    }
-//                });
-
                 break;
             case R.id.details_image_back:
                 //返回
@@ -425,10 +396,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         public void success(Result<FilmDetailsData> data) {
             if (data.getStatus().equals("0000")) {
                 //设置popupWindow内部的数据
-                Toast.makeText(Film_Details_Activity.this, "预告" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 FilmDetailsData result = data.getResult();
 //                FilmDetailsData result = data.getResult();
-                Toast.makeText(Film_Details_Activity.this, "success" + result.getMovieTypes(), Toast.LENGTH_SHORT).show();
                 movieTypes = result.getMovieTypes();
                 director = result.getDirector();
                 duration = result.getDuration();
@@ -450,7 +419,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "预告片失败", Toast.LENGTH_SHORT).show();
         }
     }
 
