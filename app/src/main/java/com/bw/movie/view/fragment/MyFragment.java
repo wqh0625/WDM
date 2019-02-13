@@ -93,14 +93,14 @@ public class MyFragment extends BaseFragment {
         try {
             userDao = new DbManager(getActivity()).getUserDao();
             student = userDao.queryForAll();
-            Toast.makeText(getContext(), "数据库"+student.size(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "数据库" + student.size(), Toast.LENGTH_SHORT).show();
             if (student.size() == 0) {
 //                Toast.makeText(getActivity(), "空", Toast.LENGTH_SHORT).show();
                 icon.setImageResource(R.drawable.my_icon);
                 nickNameTv.setText("未登录");
                 qdBtn.setText("签到");
                 return;
-            }else{
+            } else {
                 UserInfoBean userInfoBeana = student.get(0);
                 String headPic = userInfoBeana.getHeadPic();
                 String nickName = userInfoBeana.getNickName();
@@ -205,7 +205,7 @@ public class MyFragment extends BaseFragment {
                 VersionsPresenter versionsPresenter = new VersionsPresenter(new VersionsCall());
                 try {
                     String versionName = getVersionName(getContext());
-                    versionsPresenter.requestNet(userId,sessionId,versionName);
+                    versionsPresenter.requestNet(userId, sessionId, versionName);
 
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
@@ -241,9 +241,11 @@ public class MyFragment extends BaseFragment {
                     DbManager dbManager = null;
                     try {
                         Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
-                        int i = userDao.delete(userInfoBean);
                         List<UserInfoBean> userInfoBeans = userDao.queryForAll();
-                        Toast.makeText(getContext(), "数据库剩余"+userInfoBeans.size(), Toast.LENGTH_SHORT).show();
+                        int i = userDao.delete(userInfoBeans.get(0));
+
+                        List<UserInfoBean> userInfoBeans1 = userDao.queryForAll();
+                        Toast.makeText(getContext(), i + "数据库剩余" + userInfoBeans1.size(), Toast.LENGTH_SHORT).show();
                         onResume();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -459,12 +461,12 @@ public class MyFragment extends BaseFragment {
     }
 
     //查询新版本
-    class VersionsCall implements DataCall<Result>{
+    class VersionsCall implements DataCall<Result> {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 

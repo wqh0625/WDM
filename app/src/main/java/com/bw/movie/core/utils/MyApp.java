@@ -42,6 +42,7 @@ public class MyApp extends Application {
                 //token在设备卸载重装的时候有可能会变
                 Log.d("TPush", "注册成功，设备token为：" + data);
             }
+
             @Override
             public void onFail(Object data, int errCode, String msg) {
                 Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
@@ -51,9 +52,9 @@ public class MyApp extends Application {
         CrashHandler.getInstance().init(this);
         CrashReport.initCrashReport(getApplicationContext(), "20c1faeed8", false);
         context = this;
-        Fresco.initialize(this,ImagePipelineConfig.newBuilder(this)
+        Fresco.initialize(this, ImagePipelineConfig.newBuilder(this)
                 .setMainDiskCacheConfig(DiskCacheConfig.newBuilder(this)
-                        .setBaseDirectoryPath(new File(Environment.getExternalStorageDirectory()+File.separator+"wdmoview"))
+                        .setBaseDirectoryPath(new File(Environment.getExternalStorageDirectory() + File.separator + "wdmoview"))
                         .build())
                 .build());
     }
