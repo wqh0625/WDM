@@ -202,7 +202,6 @@ public class MyFragment extends BaseFragment {
                 try {
                     String versionName = getVersionName(getContext());
                     versionsPresenter.requestNet(userId,sessionId,versionName);
-
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -404,8 +403,11 @@ public class MyFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getFlag()==2){
+                Toast.makeText(getActivity(), "当前已是最新版本!", Toast.LENGTH_SHORT).show();
+            }else if (data.getFlag()==1){
+                Toast.makeText(getActivity(), "有新版本，请进行下载！", Toast.LENGTH_SHORT).show();
+
             }
         }
 

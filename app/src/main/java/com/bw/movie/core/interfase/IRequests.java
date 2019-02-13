@@ -99,15 +99,15 @@ public interface IRequests {
     //影院评论明细
     @GET("movieApi/cinema/v1/findAllCinemaComment")
     Observable<Result<List<CommentData>>> getComment(@Header("userId") int userId,
-                                               @Header("sessionId") String sessionId,
-                                               @Query("cinemaId") int cinemaId,
-                                               @Query("page") int page,
-                                               @Query("count") int count);
+                                                     @Header("sessionId") String sessionId,
+                                                     @Query("cinemaId") int cinemaId,
+                                                     @Query("page") int page,
+                                                     @Query("count") int count);
 
 
     //查询新版本
     @GET("movieApi/tool/v1/findNewVersion")
     Observable<Result> getVersions(@Header("userId") int userId,
-                                        @Header("sessionId") String sessionId,
-                                        @Query("ak") String ak);
+                                   @Header("sessionId") String sessionId,
+                                   @Header("ak") String ak);
 }
