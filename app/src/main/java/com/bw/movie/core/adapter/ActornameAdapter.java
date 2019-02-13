@@ -21,11 +21,11 @@ import com.bw.movie.bean.FilmDetailsData;
  */
 public class ActornameAdapter extends RecyclerView.Adapter<ActornameAdapter.ViewHolder> {
     private Context context;
-    private List<FilmDetailsData> list;
+    private List<String> list;
 
-    public ActornameAdapter(Context context) {
+    public ActornameAdapter(Context context, List<String> list) {
         this.context = context;
-        this.list = new ArrayList<>();
+        this.list = list;
     }
 
     @NonNull
@@ -38,18 +38,13 @@ public class ActornameAdapter extends RecyclerView.Adapter<ActornameAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.txtActorName.setText(list.get(i).getStarring());
+        viewHolder.txtActorName.setText(list.get(i));
+        viewHolder.txtRole.setText(list.get(i));
     }
 
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    public void addAll(List<FilmDetailsData> result) {
-        if (result !=null){
-            list.addAll(result);
-        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

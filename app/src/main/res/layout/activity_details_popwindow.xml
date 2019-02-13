@@ -145,7 +145,7 @@
         android:textSize="12sp"
         android:textColor="#ffffff"
         android:text="饰演角色"
-        android:layout_marginRight="48dp"
+        android:layout_marginRight="24dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/view_pr"
         android:layout_marginTop="8dp"

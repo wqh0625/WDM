@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +85,6 @@ public class CheckInActivity extends BaseActivity {
     private int selectedTableCount = 0;
     private BuyMovieTicketPresenter buyMovieTicketPresenter;
     private int type = 0;
-    private String cinameName;
-    private String addre;
     private UserInfoBean user;
 
 
@@ -192,8 +191,6 @@ public class CheckInActivity extends BaseActivity {
         endTime = intent.getExtras().getString("EndTime");
         price = intent.getExtras().getDouble("Price");
         id = intent.getExtras().getInt("Id");
-        cinameName = intent.getExtras().getString("cinameName");
-        addre = intent.getExtras().getString("addre");
         checkinName.setText(name);
         checkinAddress.setText(address);
         checkinNames.setText(names);
@@ -201,8 +198,6 @@ public class CheckInActivity extends BaseActivity {
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
         checkinPrices.setText("" + 0.00);
-        checkinName.setText(cinameName);
-        checkinAddress.setText(addre);
     }
 
     @Override
@@ -265,7 +260,6 @@ public class CheckInActivity extends BaseActivity {
                         } else if (zfb_Btn.isChecked()) {
                             type = 2;
                         }
-                        Toast.makeText(CheckInActivity.this, "排期ID为：" + id + "数量" + selectedTableCount, Toast.LENGTH_SHORT).show();
                         String md = user.getUserId() + "" + id + "" + selectedTableCount + "movie";
                         String s = EncryptUtil.MD5(md);
 
