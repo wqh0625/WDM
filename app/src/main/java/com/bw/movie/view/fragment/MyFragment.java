@@ -100,7 +100,7 @@ public class MyFragment extends BaseFragment {
                 nickNameTv.setText("未登录");
                 qdBtn.setText("签到");
                 return;
-            } else {
+            }else{
                 UserInfoBean userInfoBeana = student.get(0);
                 String headPic = userInfoBeana.getHeadPic();
                 String nickName = userInfoBeana.getNickName();
@@ -207,6 +207,7 @@ public class MyFragment extends BaseFragment {
                     String versionName = getVersionName(getContext());
                     versionsPresenter.requestNet(userId, sessionId, versionName);
 
+                    versionsPresenter.requestNet(userId,sessionId,versionName);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -241,15 +242,13 @@ public class MyFragment extends BaseFragment {
                     DbManager dbManager = null;
                     try {
                         Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
-                        List<UserInfoBean> userInfoBeans = userDao.queryForAll();
-                        int i = userDao.delete(userInfoBeans.get(0));
-
-                        List<UserInfoBean> userInfoBeans1 = userDao.queryForAll();
-                        Toast.makeText(getContext(), i + "数据库剩余" + userInfoBeans1.size(), Toast.LENGTH_SHORT).show();
-                        onResume();
+//                        myHelpter.getDao()
+                        int i = userDao.delete(userInfoBean);
+                        Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+                    onResume();
 
                 }
             });
@@ -286,13 +285,15 @@ public class MyFragment extends BaseFragment {
             }
         } else if (v.getId() == R.id.message) {
             if (student.size() == 0) {
-                s();
+                 s();
             } else {
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.my_tv_nickName) {
-            FileUtils.saveDataToFile(getContext(), "hahahha", "测试文件1");
+            if (student.size() == 0) {
+
+            }
         }
     }
 
@@ -367,6 +368,7 @@ public class MyFragment extends BaseFragment {
                     //用startActivityForResult方法，待会儿重写onActivityResult()方法，拿到图片做裁剪操作
                     startActivityForResult(openAlbumIntent, 1);
                 }
+
             }
         });
         //相机
@@ -375,75 +377,18 @@ public class MyFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
+                Intent openCameraIntent = new Intent(
+                        MediaStore.ACTION_IMAGE_CAPTURE);
 
-                //        checkSelfPermission 检测有没有 权限
-//        PackageManager.PERMISSION_GRANTED 有权限
-//        PackageManager.PERMISSION_DENIED  拒绝权限
-                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    //权限发生了改变 true  //  false 小米
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
+                tempUri = Uri.parse(FileUtils.getDir("/image/bimap") + "1.jpg");
+                Log.e("zmz", "=====" + tempUri);
 
-
-                        new AlertDialog.Builder(getContext()).setTitle("title")
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // 请求授权
-                                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 1);
-
-                                    }
-                                }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).create().show();
-
-                        Toast.makeText(getContext(), "aaasssssss", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Intent openCameraIntent = new Intent(
-                                MediaStore.ACTION_IMAGE_CAPTURE);
-
-                        tempUri = Uri.parse(FileUtils.getDir("/image/bimap") + "1.jpg");
-                        Log.e("zmz", "=====" + tempUri);
-
-                        //启动相机程序
-                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                        startActivityForResult(intent, 0);
-
-                    }
-
-                } else {
-
-                    Intent openCameraIntent = new Intent(
-                            MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    tempUri = Uri.parse(FileUtils.getDir("/image/bimap") + "1.jpg");
-                    Log.e("zmz", "=====" + tempUri);
-
-                    //启动相机程序
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                    startActivityForResult(intent, 0);
-
-                }
-
-
-                //------------------
-
+                //启动相机程序
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+                startActivityForResult(intent, 0);
             }
         });
-    }
-
-    public void camear() {
-        try {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -461,12 +406,12 @@ public class MyFragment extends BaseFragment {
     }
 
     //查询新版本
-    class VersionsCall implements DataCall<Result> {
+    class VersionsCall implements DataCall<Result>{
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")) {
-                Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 
