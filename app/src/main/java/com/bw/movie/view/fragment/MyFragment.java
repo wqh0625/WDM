@@ -93,7 +93,7 @@ public class MyFragment extends BaseFragment {
         try {
             userDao = new DbManager(getActivity()).getUserDao();
             a = userDao.queryForAll();
-            Log.v("/////--",a.toString());
+            Log.v("/////--", a.toString());
             Toast.makeText(getContext(), "数据库剩：：：" + a.size(), Toast.LENGTH_SHORT).show();
 
             if (a.size() == 0) {
@@ -101,7 +101,7 @@ public class MyFragment extends BaseFragment {
                 nickNameTv.setText("未登录");
                 qdBtn.setText("签到");
                 return;
-            }else{
+            } else {
                 UserInfoBean userInfoBeana = a.get(0);
                 String headPic = userInfoBeana.getHeadPic();
                 String nickName = userInfoBeana.getNickName();
@@ -163,10 +163,10 @@ public class MyFragment extends BaseFragment {
         public void success(Result<Result2> data) {
             if (data.getResult().getUserSignStatus() == 1) {
                 qdBtn.setText("签到");
-                nickNameTv.setText(""+data.getResult().getNickName());
+                nickNameTv.setText("" + data.getResult().getNickName());
             } else {
                 qdBtn.setText("已签到");
-                nickNameTv.setText(""+data.getResult().getNickName());
+                nickNameTv.setText("" + data.getResult().getNickName());
             }
         }
 
@@ -209,7 +209,7 @@ public class MyFragment extends BaseFragment {
                     String versionName = getVersionName(getContext());
                     versionsPresenter.requestNet(userId, sessionId, versionName);
 
-                    versionsPresenter.requestNet(userId,sessionId,versionName);
+                    versionsPresenter.requestNet(userId, sessionId, versionName);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -231,34 +231,46 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_logout) {
-            // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            //    设置Title的内容
-            builder.setTitle("温馨提示");
-            //    设置Content来显示一个信息
-            builder.setMessage("确定退出登录吗？");
-            //    设置一个PositiveButton
-            builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    DbManager dbManager = null;
-                    try {
-                        Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
-                        UserInfoBean auserInfoBean = userDao.queryForAll().get(0);
+            try {
+                final Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
+                final List<UserInfoBean> userInfoBeans = userDao.queryForAll();
+                if (userInfoBeans.size() == 0) {
+                    Toast.makeText(getContext(), "您还未登录！", Toast.LENGTH_SHORT).show();
 
-                        int i = userDao.delete( auserInfoBean);
-                        Toast.makeText(getContext(), "删除" + i, Toast.LENGTH_SHORT).show();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    onResume();
-
+                    return;
                 }
-            });
-            //    设置一个NegativeButton
-            builder.setNegativeButton("暂不退出", null);
-            //    显示出该对话框
-            builder.show();
+
+                // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                //    设置Title的内容
+                builder.setTitle("温馨提示");
+                //    设置Content来显示一个信息
+                builder.setMessage("确定退出登录吗？");
+                //    设置一个PositiveButton
+                builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        UserInfoBean auserInfoBean = userInfoBeans.get(0);
+
+                        int i = 0;
+                        try {
+                            i = userDao.delete(auserInfoBean);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(getContext(), "删除" + i, Toast.LENGTH_SHORT).show();
+
+                        onResume();
+
+                    }
+                });
+                //    设置一个NegativeButton
+                builder.setNegativeButton("暂不退出", null);
+                //    显示出该对话框
+                builder.show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else if (v.getId() == R.id.my_btn_qd) {
             if (student.size() == 0) {
                 s();
@@ -288,7 +300,7 @@ public class MyFragment extends BaseFragment {
             }
         } else if (v.getId() == R.id.message) {
             if (student.size() == 0) {
-                 s();
+                s();
             } else {
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
@@ -409,13 +421,13 @@ public class MyFragment extends BaseFragment {
     }
 
     //查询新版本
-    class VersionsCall implements DataCall<Result>{
+    class VersionsCall implements DataCall<Result> {
 
         @Override
         public void success(Result data) {
-            if (data.getFlag()==2){
+            if (data.getFlag() == 2) {
                 Toast.makeText(getActivity(), "当前已是最新版本!", Toast.LENGTH_SHORT).show();
-            }else if (data.getFlag()==1){
+            } else if (data.getFlag() == 1) {
                 Toast.makeText(getActivity(), "有新版本，请进行下载!", Toast.LENGTH_SHORT).show();
             }
         }

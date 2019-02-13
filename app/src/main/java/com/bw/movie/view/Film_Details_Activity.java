@@ -400,14 +400,14 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             mFlag = 1;
             //获取当前系统时间
             mTime1 = System.currentTimeMillis();
-            Toast.makeText(this, "在按一次就退出", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "在按一次就退出", Toast.LENGTH_SHORT).show();
 
         } else if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 1) {
             mTime2 = System.currentTimeMillis();
             if (mTime2 - mTime1 < 2000) {
                 finish();
             } else {
-                Toast.makeText(this, "在按一次就退出22222", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "在按一次就退出22222", Toast.LENGTH_SHORT).show();
             }
             mFlag = 0;
             mTime1 = 0;
