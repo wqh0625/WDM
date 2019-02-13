@@ -112,7 +112,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film__details);
-
         init();
         initData();
     }
@@ -397,7 +396,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             if (data.getStatus().equals("0000")) {
                 //设置popupWindow内部的数据
                 FilmDetailsData result = data.getResult();
-//                FilmDetailsData result = data.getResult();
                 movieTypes = result.getMovieTypes();
                 director = result.getDirector();
                 duration = result.getDuration();

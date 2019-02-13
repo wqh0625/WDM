@@ -28,6 +28,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -87,6 +88,7 @@ public class CheckInActivity extends BaseActivity {
     private String addre;
     private UserInfoBean user;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +103,7 @@ public class CheckInActivity extends BaseActivity {
         api.registerApp("wxb3852e6a6b7d9516");
 
         buyMovieTicketPresenter = new BuyMovieTicketPresenter(new buy());
+
     }
 
     private void initSeatTable() {
@@ -144,7 +147,6 @@ public class CheckInActivity extends BaseActivity {
 
         });
         seatView.setData(10, 15);
-
     }
 
     private void initChooseMessage() {
@@ -159,19 +161,16 @@ public class CheckInActivity extends BaseActivity {
         String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
         SpannableString spannableString = changTVsize(currentPrice);
         checkinPrices.setText(spannableString);
+
     }
 
     //取消选座时价格联动
     private void changePriceWithUnSelected() {
         selectedTableCount--;
-        if (selectedTableCount == 0) {
-            checkinPrices.setText("" + 0.00);
-        } else {
             BigDecimal bigDecimal = new BigDecimal(String.valueOf(selectedTableCount));
             String currentPrice = mPriceWithCalculate.multiply(bigDecimal).toString();
             SpannableString spannableString = changTVsize(currentPrice);
             checkinPrices.setText(spannableString);
-        }
     }
 
     //小数点后面改变字体大小
