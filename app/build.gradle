@@ -39,7 +39,7 @@ android {
         config {
             keyAlias 'bw_movie'
             keyPassword '123456'
-            storeFile file('D:/movie.keystore')
+            storeFile file('C:/SouGouDownload/movie_keystore/movie.keystore')
             storePassword '123456'
         }
     }
