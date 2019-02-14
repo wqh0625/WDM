@@ -104,7 +104,7 @@ public class IsHitFragment extends BaseFragment {
             if (data.getStatus().equals("0000")) {
                 int o = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(o).setFollowMovie(1);
-                cinemaxAdapter.notifyItemChanged(o);
+                cinemaxAdapter.notifyDataSetChanged();
             }
         }
 
@@ -127,7 +127,7 @@ public class IsHitFragment extends BaseFragment {
             if (data.getStatus().equals("0000")) {
                 int po = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(po).setFollowMovie(2);
-                cinemaxAdapter.notifyItemChanged(po);
+                cinemaxAdapter.notifyDataSetChanged();
             }
         }
 

@@ -56,7 +56,7 @@ public class CinemaxFragment extends BaseFragment {
 
             @Override
             public void OnImageClick(int i, int pos, CarouselData carouselData) {
-                if (student.size()==0) {
+                if (student.size() == 0) {
                     s();
                 } else {
                     if (carouselData.getFollowMovie() == 1) {
@@ -107,7 +107,7 @@ public class CinemaxFragment extends BaseFragment {
             if (data.getStatus().equals("0000")) {
                 int po = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(po).setFollowMovie(1);
-                cinemaxAdapter.notifyItemChanged(po);
+                cinemaxAdapter.notifyDataSetChanged();
 
             }
         }
@@ -132,7 +132,7 @@ public class CinemaxFragment extends BaseFragment {
             if (data.getStatus().equals("0000")) {
                 int po = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(po).setFollowMovie(2);
-                cinemaxAdapter.notifyItemChanged(po);
+                cinemaxAdapter.notifyDataSetChanged();
             }
         }
 

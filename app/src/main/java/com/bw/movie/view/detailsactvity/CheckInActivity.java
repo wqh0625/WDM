@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.core.utils.FileUtils;
 import com.bw.movie.presenter.UploadPushTokenPresenter;
 import com.j256.ormlite.dao.Dao;
 import com.qfdqc.views.seattable.SeatTable;
@@ -36,6 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.bw.movie.bean.Result;
 import com.bw.movie.bean.UserInfoBean;
 import com.bw.movie.core.base.BaseActivity;
@@ -48,6 +50,7 @@ import com.bw.movie.core.utils.EncryptUtil;
 import com.bw.movie.core.utils.MyApp;
 import com.bw.movie.presenter.BuyMovieTicketPresenter;
 import com.bw.movie.view.LoginActivity;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -87,6 +90,8 @@ public class CheckInActivity extends BaseActivity {
     private BuyMovieTicketPresenter buyMovieTicketPresenter;
     private int type = 0;
     private UserInfoBean user;
+    private UploadPushTokenPresenter uploadPushTokenPresenter;
+    private PopupWindow popWindow;
 
 
     @Override
@@ -103,7 +108,7 @@ public class CheckInActivity extends BaseActivity {
         api.registerApp("wxb3852e6a6b7d9516");
 
         buyMovieTicketPresenter = new BuyMovieTicketPresenter(new buy());
-        new UploadPushTokenPresenter(new upload());
+        uploadPushTokenPresenter = new UploadPushTokenPresenter(new upload());
     }
 
     private void initSeatTable() {
@@ -167,10 +172,10 @@ public class CheckInActivity extends BaseActivity {
     //取消选座时价格联动
     private void changePriceWithUnSelected() {
         selectedTableCount--;
-            BigDecimal bigDecimal = new BigDecimal(String.valueOf(selectedTableCount));
-            String currentPrice = mPriceWithCalculate.multiply(bigDecimal).toString();
-            SpannableString spannableString = changTVsize(currentPrice);
-            checkinPrices.setText(spannableString);
+        BigDecimal bigDecimal = new BigDecimal(String.valueOf(selectedTableCount));
+        String currentPrice = mPriceWithCalculate.multiply(bigDecimal).toString();
+        SpannableString spannableString = changTVsize(currentPrice);
+        checkinPrices.setText(spannableString);
     }
 
     //小数点后面改变字体大小
@@ -223,7 +228,7 @@ public class CheckInActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.img_confirm:
                 final View popView = View.inflate(CheckInActivity.this, R.layout.activity_check_pop_pay, null);
-                final PopupWindow popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                popWindow = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT, true);
                 popWindow.setTouchable(true);
                 popWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -248,7 +253,6 @@ public class CheckInActivity extends BaseActivity {
                 }
 
                 onResume();
-//                btn.setText("微信支付" + checkinPrices.getText().toString() + "元");
                 btn.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -265,7 +269,7 @@ public class CheckInActivity extends BaseActivity {
                         String s = EncryptUtil.MD5(md);
 
                         buyMovieTicketPresenter.requestNet(user.getUserId(), user.getSessionId(), id, selectedTableCount, s);
-
+                        popWindow.dismiss();
                     }
                 });
                 break;
@@ -282,9 +286,11 @@ public class CheckInActivity extends BaseActivity {
     class buy implements DataCall<Result> {
         @Override
         public void success(Result result) {
-            Toast.makeText(CheckInActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (result.getStatus().equals("0000")) {
                 String orderId = result.getOrderId();
+                /*String token = FileUtils.loadDataFromFile(MyApp.getContext(), "token");
+                uploadPushTokenPresenter.requestNet(user.getUserId(),user.getSessionId(),token,1);*/
                 if (type == 1) {
                     IRequest interfacea = NetWorks.getRequest().create(IRequest.class);
                     interfacea.pay(user.getUserId(), user.getSessionId(), type, orderId).subscribeOn(Schedulers.newThread())
@@ -308,8 +314,6 @@ public class CheckInActivity extends BaseActivity {
                 } else if (type == 2) {
                     Toast.makeText(CheckInActivity.this, "暂不支持支付宝支付，请谅解", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
 
         }
@@ -325,12 +329,13 @@ public class CheckInActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         buyMovieTicketPresenter.unBind();
+        uploadPushTokenPresenter.unBind();
     }
 
     private class upload implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(CheckInActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+
         }
 
         @Override

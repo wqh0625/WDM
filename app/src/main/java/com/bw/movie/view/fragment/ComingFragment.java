@@ -104,7 +104,7 @@ public class ComingFragment extends BaseFragment {
                 if (data.getStatus().equals("0000")) {
                     int o = (int) data.getArgs()[4];
                     cinemaxAdapter.getItem(o).setFollowMovie(1);
-                    cinemaxAdapter.notifyItemChanged(o);
+                    cinemaxAdapter.notifyDataSetChanged();
                 }
             }
         }
@@ -129,7 +129,7 @@ public class ComingFragment extends BaseFragment {
             if (data.getStatus().equals("0000")) {
                 int o = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(o).setFollowMovie(2);
-                cinemaxAdapter.notifyItemChanged(o);
+                cinemaxAdapter.notifyDataSetChanged();
             }
         }
 

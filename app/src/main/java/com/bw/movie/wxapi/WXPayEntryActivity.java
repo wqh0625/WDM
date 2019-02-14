@@ -60,20 +60,22 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
 				case BaseResp.ErrCode.ERR_OK:
 					//支付成功后的逻辑
 					result = "微信支付成功";
+					payResult.setText("微信支付成功");
 					break;
 				case BaseResp.ErrCode.ERR_COMM:
 					result = "微信支付失败：" + resp.errCode + "，" + resp.errStr;
+					payResult.setText("微信支付失败");
 					break;
 				case BaseResp.ErrCode.ERR_USER_CANCEL:
 					result = "微信支付取消：" + resp.errCode + "，" + resp.errStr;
+					payResult.setText("微信支付取消");
 					break;
 				default:
 					result = "微信支付未知异常：" + resp.errCode + "，" + resp.errStr;
+					payResult.setText("微信支付未知异常");
 					break;
 			}
-			payResult.setText(result);
 		}
-		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 	}
 
 

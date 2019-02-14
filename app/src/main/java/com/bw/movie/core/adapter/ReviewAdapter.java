@@ -36,11 +36,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         list = new ArrayList<>();
     }
 
-    public interface ImagePraiseOnclickListener{
-        void ImagePraiseOnclick(int CommentId);
+
+    public ReviewData getItem(int position) {
+        return list.get(position);
     }
+
+    public interface ImagePraiseOnclickListener {
+        void ImagePraiseOnclick(int i, int Id, ReviewData reviewData);
+    }
+
     public ImagePraiseOnclickListener mImagePraiseOnclickListener;
-    public void setImagePraiseOnclickListener(ImagePraiseOnclickListener imagePraiseOnclickListener){
+
+    public void setImagePraiseOnclickListener(ImagePraiseOnclickListener imagePraiseOnclickListener) {
         mImagePraiseOnclickListener = imagePraiseOnclickListener;
     }
 
@@ -58,11 +65,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         viewHolder.txtName.setText(list.get(i).getCommentUserName());
         viewHolder.txtContent.setText(list.get(i).getCommentContent());
         //转换成日期格式
-        SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME_PATTERN,Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME_PATTERN, Locale.getDefault());
         viewHolder.txtDate.setText(dateFormat.format(list.get(i).getCommentTime()));
-        viewHolder.txtPraiseNum.setText(""+list.get(i).getGreatNum());
-        viewHolder.txtComment.setText(""+list.get(i).getReplyNum());
-        if (list.get(i).getIsGreat()==1) {
+        viewHolder.txtPraiseNum.setText("" + list.get(i).getGreatNum());
+        viewHolder.txtComment.setText("" + list.get(i).getReplyNum());
+        if (list.get(i).getIsGreat() == 1) {
             viewHolder.imagePraise.setImageResource(R.drawable.com_icon_praise_selected);
         } else {
             viewHolder.imagePraise.setImageResource(R.drawable.com_icon_praise_default);
@@ -70,8 +77,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         viewHolder.imagePraise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mImagePraiseOnclickListener !=null){
-                    mImagePraiseOnclickListener.ImagePraiseOnclick(list.get(i).getCommentId());
+                if (mImagePraiseOnclickListener != null) {
+                    ReviewData reviewData = list.get(i);
+                    mImagePraiseOnclickListener.ImagePraiseOnclick(i, reviewData.getCommentId(), reviewData);
                 }
             }
         });
@@ -84,7 +92,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     public void addAll(List<ReviewData> result) {
-        if (result !=null){
+        if (result != null) {
             list.addAll(result);
         }
     }

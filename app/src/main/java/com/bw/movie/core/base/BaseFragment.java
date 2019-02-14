@@ -106,7 +106,7 @@ public abstract class BaseFragment extends Fragment {
     }
     public void s(){
         try {
-            int i = userDao.delete(userInfoBean);
+             userDao.delete(userInfoBean);
         } catch (SQLException e) {
             e.printStackTrace();
         }

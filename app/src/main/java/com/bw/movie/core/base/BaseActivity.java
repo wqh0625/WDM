@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.bw.movie.R;
+import com.bw.movie.view.LoginActivity;
 import com.j256.ormlite.dao.Dao;
 import com.umeng.analytics.MobclickAgent;
 
@@ -79,5 +81,16 @@ public class BaseActivity extends AppCompatActivity {
         return null;
     }
 
+    public void s(){
+        try {
+            userDao.delete(userInfoBean);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
+        // 跳转
+        startActivity(intent);
+        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+    }
 }

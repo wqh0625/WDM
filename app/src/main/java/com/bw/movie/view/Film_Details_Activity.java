@@ -103,6 +103,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private ActornameAdapter actornameAdapter;
     private String starring;
     private List<String> list = new ArrayList<>();
+    private LikePresenter likePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         filmDetailsPresenter = new FilmDetailsPresenter(new PredictionCall());
         cancelConcernPresenter = new CancelConcernPresenter(new canCenGz());
         reviewPresenter = new ReviewPresenter(new ReviewCall());
+        likePresenter = new LikePresenter(new LikeCall());
 
         if (student.size() == 0) {
             searchPresenter.requestNet(0, "", position);
@@ -134,7 +136,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     class canCenGz implements DataCall<Result> {
         @Override
         public void success(Result data) {
-             if ("0000".equals(data.getStatus())) {
+            if ("0000".equals(data.getStatus())) {
                 actvityImageDetails.setBackgroundResource(R.drawable.com_icon_collection_default);
                 followMovie = 2;
             }
@@ -264,10 +266,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityDetailsJianjie.setText(summary);
 
                 String[] split = starring.split(",");
-                for (int i = 0; i < split.length ; i++) {
+                for (int i = 0; i < split.length; i++) {
                     list.add(split[i]);
                 }
-                actornameAdapter = new ActornameAdapter(Film_Details_Activity.this,list);
+                actornameAdapter = new ActornameAdapter(Film_Details_Activity.this, list);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 activityDetailsRecyclerview.setLayoutManager(linearLayoutManager);
@@ -366,9 +368,17 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //评论点赞
                 reviewAdapter.setImagePraiseOnclickListener(new ReviewAdapter.ImagePraiseOnclickListener() {
                     @Override
-                    public void ImagePraiseOnclick(int CommentId) {
-                      LikePresenter likePresenter = new LikePresenter(new LikeCall());
-                      likePresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(),CommentId);
+                    public void ImagePraiseOnclick(int i, int id, ReviewData reviewData) {
+                        if (student.size() == 0) {
+                            s();
+                        } else {
+                            if (reviewData.getIsGreat() == 1) {
+                                Toast.makeText(Film_Details_Activity.this, "2222", Toast.LENGTH_SHORT).show();
+                            } else {
+                                likePresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, i);
+                            }
+
+                        }
                     }
                 });
 
@@ -401,8 +411,10 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
         }
     }
-    private int mFlag=0;
-    private long mTime1,mTime2;
+
+    private int mFlag = 0;
+    private long mTime1, mTime2;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //返回按键监听
@@ -410,7 +422,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             mFlag = 1;
             //获取当前系统时间
             mTime1 = System.currentTimeMillis();
-//            Toast.makeText(this, "在按一次就退出", Toast.LENGTH_SHORT).show();
 
         } else if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 1) {
             mTime2 = System.currentTimeMillis();
@@ -427,6 +438,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         return true;
     }
+
     //预告片
     class PredictionCall implements DataCall<Result<FilmDetailsData>> {
 
@@ -459,7 +471,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         public void fail(ApiException a) {
         }
     }
-
 
 
     //关注
@@ -495,19 +506,24 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         }
     }
+
     //评论点赞
-    class LikeCall implements DataCall<Result>{
+    class LikeCall implements DataCall<Result> {
 
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
-                Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                int o = (int) data.getArgs()[3];
+                ReviewData item = reviewAdapter.getItem(o);
+                item.setIsGreat(1);
+                item.setGreatNum(item.getGreatNum()+1);
+                reviewAdapter.notifyDataSetChanged();
             }
         }
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(Film_Details_Activity.this, "点赞失败", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -518,13 +534,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         concernPresenter.unBind();
         filmDetailsPresenter.unBind();
         reviewPresenter.unBind();
+        likePresenter.unBind();
         JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         MobclickAgent.onPageStart("影片详情页面");
         MobclickAgent.onResume(this);
     }

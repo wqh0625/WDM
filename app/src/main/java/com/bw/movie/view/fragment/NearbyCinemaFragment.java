@@ -109,7 +109,6 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-//        findNearbyCinemasPresenter.requestNet(0,"",false);
     }
 
     @Override

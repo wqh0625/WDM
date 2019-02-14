@@ -41,6 +41,8 @@ public class MyApp extends Application {
             public void onSuccess(Object data, int flag) {
                 //token在设备卸载重装的时候有可能会变
                 Log.d("TPush", "注册成功，设备token为：" + data);
+//                FileUtils.saveDataToFile(MyApp.getContext(), (String)data, "token");
+
             }
 
             @Override
