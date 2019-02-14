@@ -36,6 +36,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         list = new ArrayList<>();
     }
 
+    public interface ImagePraiseOnclickListener{
+        void ImagePraiseOnclick(int CommentId);
+    }
+    public ImagePraiseOnclickListener mImagePraiseOnclickListener;
+    public void setImagePraiseOnclickListener(ImagePraiseOnclickListener imagePraiseOnclickListener){
+        mImagePraiseOnclickListener = imagePraiseOnclickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -45,7 +53,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.sdvImage.setImageURI(Uri.parse(list.get(i).getCommentHeadPic()));
         viewHolder.txtName.setText(list.get(i).getCommentUserName());
         viewHolder.txtContent.setText(list.get(i).getCommentContent());
@@ -54,6 +62,20 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         viewHolder.txtDate.setText(dateFormat.format(list.get(i).getCommentTime()));
         viewHolder.txtPraiseNum.setText(""+list.get(i).getGreatNum());
         viewHolder.txtComment.setText(""+list.get(i).getReplyNum());
+        if (list.get(i).getIsGreat()==1) {
+            viewHolder.imagePraise.setImageResource(R.drawable.com_icon_praise_selected);
+        } else {
+            viewHolder.imagePraise.setImageResource(R.drawable.com_icon_praise_default);
+        }
+        viewHolder.imagePraise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mImagePraiseOnclickListener !=null){
+                    mImagePraiseOnclickListener.ImagePraiseOnclick(list.get(i).getCommentId());
+                }
+            }
+        });
+
     }
 
     @Override

@@ -95,13 +95,13 @@ public interface IRequests {
     // 查询用户当前未读消息数量
     @GET("movieApi/tool/v1/verify/findUnreadMessageCount")
     Observable<Result> findUnreadMessageCount(@Header("userId") int userId,
-                                                                 @Header("sessionId") String sessionId);
+                                              @Header("sessionId") String sessionId);
 
     //系统消息读取状态修改
     @GET("movieApi/tool/v1/verify/changeSysMsgStatus")
     Observable<Result> changeSysMsgStatus(@Header("userId") int userId,
-                                                             @Header("sessionId") String sessionId,
-                                                             @Query("id") int id);
+                                          @Header("sessionId") String sessionId,
+                                          @Query("id") int id);
 
 
 
@@ -126,4 +126,11 @@ public interface IRequests {
     Observable<Result> getVersions(@Header("userId") int userId,
                                    @Header("sessionId") String sessionId,
                                    @Header("ak") String ak);
+
+    //点赞
+    @POST("movieApi/movie/v1/verify/movieCommentGreat")
+    @FormUrlEncoded
+    Observable<Result> getLike(@Header("userId") int userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("commentId") int commentId);
 }
