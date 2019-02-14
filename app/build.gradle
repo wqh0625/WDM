@@ -129,4 +129,7 @@ dependencies {
     implementation 'com.tencent.mid:mid:4.0.7-Release'
     // 今日头条适配
     implementation 'me.jessyan:autosize:0.9.5'
+
+    implementation 'com.jaydenxiao:ExpandableTextView:1.0.0'
+
 }

@@ -99,12 +99,12 @@ public class ListofCinemaActivity extends BaseActivity {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(ListofCinemaActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
         }
     }
 
     @OnClick(R.id.list_image_back)
     public void onViewClicked() {
         finish();
+        overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
     }
 }

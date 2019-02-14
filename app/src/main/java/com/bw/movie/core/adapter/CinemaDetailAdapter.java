@@ -41,14 +41,6 @@ public class CinemaDetailAdapter extends RecyclerView.Adapter<CinemaDetailAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         CinemaDetailListData cinemaDetailListData = list.get(i);
-//        Toast.makeText(context, "" + cinemaDetailListData.getName(), Toast.LENGTH_SHORT).show();
-        List<String> strings = new ArrayList<>();
-        strings.add("http://mobile.bwstudent.com/images/movie/stills/drjzsdtw/drjzsdtw1.jpg");
-        strings.add("http://mobile.bwstudent.com/images/movie/stills/xhssf/xhssf1.jpg");
-        strings.add("http://mobile.bwstudent.com/images/movie/stills/xbyz/xbyz1.jpg");
-        strings.add("http://mobile.bwstudent.com/images/movie/stills/sqmxtzdwbg/sqmxtzdwbg1.jpg");
-        strings.add("http://mobile.bwstudent.com/images/movie/stills/wxwd/wxwd1.jpg");
-        strings.add("http://mobile.bwstudent.com/images/movie/stills/zljgy/zljgy1.jpg");
 
         viewHolder.sdvImage.setImageURI(cinemaDetailListData.getImageurl());
         viewHolder.txtName.setText(cinemaDetailListData.getName());

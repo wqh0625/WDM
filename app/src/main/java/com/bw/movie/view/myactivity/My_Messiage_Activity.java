@@ -56,9 +56,7 @@ public class My_Messiage_Activity extends BaseActivity {
         setContentView(R.layout.activity_my_message_);
         ButterKnife.bind(this);
         myMessagePresenter = new MyMessagePresenter(new mymesage());
-
         updateMysessagePresenter = new UpdateMysessagePresenter(new upp());
-
     }
 
     @Override
@@ -70,7 +68,6 @@ public class My_Messiage_Activity extends BaseActivity {
     class upp implements DataCall<Result<MyMessage>> {
         @Override
         public void success(Result<MyMessage> data) {
-            Toast.makeText(My_Messiage_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 onResume();
             }
@@ -85,7 +82,7 @@ public class My_Messiage_Activity extends BaseActivity {
     class mymesage implements DataCall<Result<MyMessageData>> {
         @Override
         public void success(Result<MyMessageData> data) {
-//            Toast.makeText(My_Messiage_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("0000")) {
                 MyMessageData result = data.getResult();
                 if (result.getPhone() == null) {
@@ -111,7 +108,6 @@ public class My_Messiage_Activity extends BaseActivity {
                     t_header.setImageURI(result.getHeadPic() + ".png");
                 } else {
                     t_header.setImageURI(result.getHeadPic());
-
                 }
                 t_name.setText(result.getNickName());
                 int s = result.getSex();
@@ -138,7 +134,6 @@ public class My_Messiage_Activity extends BaseActivity {
             finish();//关闭页面
             overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
         } else if (v.getId() == R.id.update) {
-
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final View view1 = View.inflate(this, R.layout.activity_mine_dialog, null);
 

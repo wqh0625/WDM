@@ -69,6 +69,9 @@ public abstract class BasePresenter {
                     .subscribe(new Consumer<Result>() {
                         @Override
                         public void accept(Result o) throws Exception {
+                            if (consumer == null) {
+                                return;
+                            }
                             o.setArgs(args);
                             consumer.success(o);
                             runing = false;
@@ -76,6 +79,9 @@ public abstract class BasePresenter {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            if (consumer == null) {
+                                return;
+                            }
                             consumer.fail(CustomException.handleException(throwable));
                             runing = false;
                         }

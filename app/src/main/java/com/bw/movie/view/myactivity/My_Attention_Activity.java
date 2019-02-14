@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.bw.movie.core.base.BaseActivity;
 import com.bw.movie.view.myactivity.gzfragment.GzCinemaFragment;
 import com.bw.movie.view.myactivity.gzfragment.GzMoiveFragment;
@@ -85,7 +86,7 @@ public class My_Attention_Activity extends BaseActivity {
     void on(View v) {
         if (v.getId() == R.id.back_image_a) {
             finish();
-              overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
         } else if (v.getId() == R.id.my_attention_dy) {
             vp.setCurrentItem(0);
             ChangeBackGround(0);

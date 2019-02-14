@@ -107,7 +107,6 @@ public abstract class BaseFragment extends Fragment {
     public void s(){
         try {
             int i = userDao.delete(userInfoBean);
-            Toast.makeText(getContext(), "" + i, Toast.LENGTH_SHORT).show();
         } catch (SQLException e) {
             e.printStackTrace();
         }

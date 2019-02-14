@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.bw.movie.bean.Result;
 import com.bw.movie.bean.UserInfoBean;
 import com.bw.movie.core.base.BaseActivity;
@@ -49,27 +50,23 @@ public class UpdatePwd_Activity extends BaseActivity {
         setContentView(R.layout.activity_updatepwd);
         ButterKnife.bind(this);
 
-
         modifyUserPwdPresenter = new ModifyUserPwdPresenter(new modify());
     }
 
     class modify implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(UpdatePwd_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 try {
                     Dao<UserInfoBean, String> userDao = new DbManager(UpdatePwd_Activity.this).getUserDao();
-
                     userDao.delete(userInfoBean);
                     // 删除用户
                     SharedPreferences sp0123 = getSharedPreferences("sp0123", Context.MODE_PRIVATE);
                     sp0123.edit().clear().commit();
                     Intent intent = new Intent(UpdatePwd_Activity.this, LoginActivity.class);
-                    // 清空当前栈 ，并且创建新的栈
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    // 跳转
+
                     startActivity(intent);
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -94,23 +91,9 @@ public class UpdatePwd_Activity extends BaseActivity {
     }
 
     @OnClick(R.id.back_image_upwd)
-    void ba(){
+    void ba() {
         finish();
         overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
     }
-//    public static void main(String[] args) {
-//        new Runnable() {
-//            @Override
-//            public void run() {
-//                System.out.println(Thread.currentThread().getName());
-//            }
-//        }.run();
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                System.out.println(Thread.currentThread().getName());
-//            }
-//        }.start();
-//    }
 
 }

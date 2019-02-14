@@ -16,27 +16,42 @@
             android:id="@+id/list_recy_sdv_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
-              />
+            android:layout_marginLeft="10dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/list_recy_txt_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="个蛋糕订购"
+                android:textColor="#333"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/list_recy_txt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:text="1111111111"
+                android:textColor="#333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="5.0km"
+                android:textColor="#333"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

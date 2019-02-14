@@ -130,15 +130,16 @@ public class CinemaFragment extends BaseFragment {
         public void onReceiveLocation(BDLocation location) {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
 //            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
-            String addr = location.getCity();    //获取详细地址信息
+            //获取详细地址信息
+            String addr = location.getCity();
             //获取纬度信息
             latitude = location.getLatitude();
             //获取经度信息
             longitude = location.getLongitude();
-            if (addr == null) {
+            if (addr == null||addr==""||txtLocation==null) {
                 return;
             }
-            txtLocation.setText(addr);
+            txtLocation.setText(addr+"");
             mLocationClient.stop();
         }
 

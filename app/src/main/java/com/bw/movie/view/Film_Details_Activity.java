@@ -1,24 +1,16 @@
 package com.bw.movie.view;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -32,8 +24,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.j256.ormlite.dao.Dao;
 import com.umeng.analytics.MobclickAgent;
 
-import org.w3c.dom.Text;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +31,6 @@ import java.util.List;
 import com.bw.movie.bean.FilmDetailsData;
 import com.bw.movie.bean.Result;
 import com.bw.movie.bean.ReviewData;
-import com.bw.movie.bean.SearchData;
 import com.bw.movie.bean.ShortFilmListBean;
 import com.bw.movie.bean.UserInfoBean;
 import com.bw.movie.core.adapter.ActornameAdapter;
@@ -58,6 +47,7 @@ import com.bw.movie.presenter.SearchPresenter;
 import com.bw.movie.view.detailsactvity.ListofCinemaActivity;
 
 import cn.jzvd.JZVideoPlayer;
+import jaydenxiao.com.expandabletextview.ExpandableTextView;
 
 public class Film_Details_Activity extends BaseActivity implements View.OnClickListener {
 
@@ -79,7 +69,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private TextView activityDetailsType;
     private TextView activityDetailsTime;
     private TextView activityDetailsDctorname;
-    private TextView activityDetailsJianjie;
+    private ExpandableTextView activityDetailsJianjie;
     private RecyclerView activityDetailsRecyclerview;
     private TextView activityDetailsLocation;
     private TextView popwindowDetailsDirect;
@@ -143,8 +133,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     class canCenGz implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-            if ("0000".equals(data.getStatus())) {
+             if ("0000".equals(data.getStatus())) {
                 actvityImageDetails.setBackgroundResource(R.drawable.com_icon_collection_default);
                 followMovie = 2;
             }
@@ -417,8 +406,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             mTime2 = System.currentTimeMillis();
             if (mTime2 - mTime1 < 2000) {
                 finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
-//                Toast.makeText(this, "在按一次就退出22222", Toast.LENGTH_SHORT).show();
             }
             mFlag = 0;
             mTime1 = 0;
@@ -469,7 +458,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         @Override
         public void success(Result data) {
             if ("0000".equals(data.getStatus())) {
-                Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
                 actvityImageDetails.setBackgroundResource(R.drawable.icon_collection_selected);
                 followMovie = 1;
             }
@@ -522,4 +511,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         MobclickAgent.onPageEnd("影片详情页面");
         MobclickAgent.onPause(this);
     }
+
 }
+
+

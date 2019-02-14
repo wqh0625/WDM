@@ -1,15 +1,7 @@
 package com.bw.movie.view.myactivity.gzfragment;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -19,6 +11,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 import com.bw.movie.bean.FindCinemaPageListData;
 import com.bw.movie.bean.NearbyData;
 import com.bw.movie.bean.Result;
@@ -102,13 +95,11 @@ public class GzCinemaFragment extends BaseFragment implements XRecyclerView.Load
         public void success(Result<List<FindCinemaPageListData>> data) {
             rec.refreshComplete();
             rec.loadMoreComplete();
-//            Toast.makeText(getContext(), "11111111"+data.getMessage(), Toast.LENGTH_SHORT).show();
 
             if (data.getStatus().equals("0000")) {
                 gzCinemaAdapter.setListData(data.getResult());
                 gzCinemaAdapter.notifyDataSetChanged();
             }
-//            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 

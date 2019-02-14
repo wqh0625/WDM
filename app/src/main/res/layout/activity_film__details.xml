@@ -115,6 +115,7 @@
         android:layout_height="80dp"
         android:layout_below="@id/streeBtn"
         android:layout_marginTop="12dp"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/details_transparent"
         android:paddingBottom="15dp"
         android:orientation="horizontal">

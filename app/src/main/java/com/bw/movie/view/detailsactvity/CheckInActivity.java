@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.presenter.UploadPushTokenPresenter;
 import com.j256.ormlite.dao.Dao;
 import com.qfdqc.views.seattable.SeatTable;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -102,7 +103,7 @@ public class CheckInActivity extends BaseActivity {
         api.registerApp("wxb3852e6a6b7d9516");
 
         buyMovieTicketPresenter = new BuyMovieTicketPresenter(new buy());
-
+        new UploadPushTokenPresenter(new upload());
     }
 
     private void initSeatTable() {
@@ -324,5 +325,17 @@ public class CheckInActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         buyMovieTicketPresenter.unBind();
+    }
+
+    private class upload implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            Toast.makeText(CheckInActivity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void fail(ApiException a) {
+
+        }
     }
 }

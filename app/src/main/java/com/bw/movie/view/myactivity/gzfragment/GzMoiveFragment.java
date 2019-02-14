@@ -2,16 +2,12 @@ package com.bw.movie.view.myactivity.gzfragment;
 
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-import android.widget.Toast;
+import android.view.View ;
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import com.bw.movie.bean.FindCinemaPageListData;
 import com.bw.movie.bean.FindMoviePageListData;
 import com.bw.movie.bean.Result;
 import com.bw.movie.core.adapter.GzMovieAdapter;
@@ -85,7 +81,7 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
         public void success(Result<List<FindMoviePageListData>> data) {
             rec.refreshComplete();
             rec.loadMoreComplete();
-            Toast.makeText(getContext(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("0000")) {
                 if (data.getResult().size() == 0) {
                     return;
@@ -93,14 +89,13 @@ public class GzMoiveFragment extends BaseFragment implements XRecyclerView.Loadi
                 gzMovieAdapter.setListData(data.getResult());
                 gzMovieAdapter.notifyDataSetChanged();
             }
-//            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
 
         }
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "失败", Toast.LENGTH_SHORT).show();
-        }
+         }
     }
 
     @Override

@@ -105,7 +105,7 @@ public class RegisterActivity extends BaseActivity {
         String sex = sexEdt.getText().toString().trim();
 
         String pwdencrypt = EncryptUtil.encrypt(pwd);
-        int s = 0;
+        int s;
         if (sex.equals("男")) {
             s = 1;
         } else {
@@ -113,7 +113,6 @@ public class RegisterActivity extends BaseActivity {
         }
 
         boolean email = JavaUtils.isEmail(mail);
-//        boolean mobile = JavaUtils.isMobile(phone);
         boolean password = JavaUtils.isPassword(pwd);
         boolean username = JavaUtils.isChinese(name);
         String s1 = date.replaceAll("年", "-");
@@ -132,7 +131,6 @@ public class RegisterActivity extends BaseActivity {
     class myRegister implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(RegisterActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);

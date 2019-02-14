@@ -2,53 +2,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="120dp"
-        android:background="@drawable/the_film_details_shape"
-        >
+        android:background="@drawable/the_film_details_shape">
+
         <TextView
             android:id="@+id/activity_details_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="影评"
-            android:textSize="18sp"
-            android:textColor="#000"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            />
+            android:text="影评"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
         <View
             android:layout_width="40dp"
             android:layout_height="4dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="2dp"
             android:layout_below="@id/activity_details_review"
-            android:background="@drawable/details_bgs"
-            />
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/details_bgs" />
+
         <ImageView
             android:id="@+id/activity_review_popwindow_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/com_icon_down_default"
-            android:layout_marginTop="14dp"
             android:layout_marginLeft="300dp"
-            />
+            android:layout_marginTop="14dp"
+            android:src="@drawable/com_icon_down_default" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/activity_review_popwindow_recy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
             android:layout_marginTop="60dp"
-            ></android.support.v7.widget.RecyclerView>
+            android:layout_marginRight="24dp" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:gravity="right"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/home_lucency"
-        android:layout_alignParentBottom="true">
+        android:gravity="right">
+
         <ImageView
             android:id="@+id/list_image_back"
             android:layout_width="60dp"

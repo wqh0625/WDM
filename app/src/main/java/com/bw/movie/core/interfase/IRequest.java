@@ -187,7 +187,6 @@ public interface IRequest {
                                           @Query("cinemaId") int id);
 
     // 修改个人信息
-    //
     @FormUrlEncoded
     @POST("movieApi/user/v1/verify/modifyUserInfo")
     Observable<Result<MyMessage>> modifyUserI (@Header("userId") int userId,
@@ -196,4 +195,11 @@ public interface IRequest {
                                                @Field("sex") int sex,
                                                @Field("email") String email);
 
+    // 上传消息推送使用的token
+    @FormUrlEncoded
+    @POST("movieApi/tool/v1/verify/uploadPushToken")
+    Observable<Result > uploadPushToken (      @Header("userId") int userId,
+                                               @Header("sessionId") String sessionId,
+                                               @Field("token") String token,
+                                               @Field("os") int os );
 }

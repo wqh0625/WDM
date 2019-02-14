@@ -136,7 +136,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         recommendCinemaEdname.setOnClickListener(this);
         recommendCinemaTextName = (TextView) findViewById(R.id.recommend_cinema_textName);
         recommendCinemaTextName.setOnClickListener(this);
-        recommendCinemaLinear =  findViewById(R.id.recommend_cinema_linear);
+        recommendCinemaLinear = findViewById(R.id.recommend_cinema_linear);
         recommendCinemaLinear.setOnClickListener(this);
 
     }
@@ -223,8 +223,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 break;
         }
     }
-    public void ChangeBackGround(int index) {
 
+    public void ChangeBackGround(int index) {
         //背景颜色
         txtCinemax.setBackgroundResource(index == 0 ? R.drawable.details_bgs : R.drawable.details_back);
         //字体颜色
@@ -234,6 +234,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         txtComing.setBackgroundResource(index == 2 ? R.drawable.details_bgs : R.drawable.details_back);
         txtComing.setTextColor(index == 2 ? Color.WHITE : Color.BLACK);
     }
+
     @Override
     public void onResume() {
         super.onResume();

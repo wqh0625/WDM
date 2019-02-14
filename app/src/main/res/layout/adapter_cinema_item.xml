@@ -5,12 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginLeft="24dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginRight="24dp"
-    android:background="@drawable/beijingxuhua"
     tools:ignore="MissingDefaultResource">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/beijingxuhua"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="24dp"
+        android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/a_cinema_image_icon"
@@ -48,4 +52,7 @@
                 android:textColor="#333333"
                 android:textSize="12sp" />
         </RelativeLayout>
+    </LinearLayout>
+
+
 </LinearLayout>

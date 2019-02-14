@@ -74,6 +74,12 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        rec.refresh();
+    }
+
+    @Override
     public void onRefresh() {
         if (findRecommendCinemasPresenter.isRuning()) {
             rec.refreshComplete();
@@ -93,7 +99,6 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -102,23 +107,30 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             rec.loadMoreComplete();
             return;
         }
-
-//        findRecommendCinemasPresenter.requestNet(0, "", true);
     }
 
     @Override
     public void onlike(int i, int id, NearbyData nearbyData) {
-        if (userInfoBean == null) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        } else {
-            if (nearbyData.getFollowCinema() == 1) {
-                cancelFollowCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
+        try {
+            DbManager dbManager = new DbManager(MyApp.getContext());
+            Dao<UserInfoBean, String> userDao = dbManager.getUserDao();
+            List<UserInfoBean> userInfoBeans = userDao.queryForAll();
+            if (userInfoBeans != null && userInfoBeans.size() > 0) {
+                UserInfoBean userInfon = userInfoBeans.get(0);
+                if (nearbyData.getFollowCinema() == 1) {
+                    cancelFollowCinemaPresenter.requestNet(userInfon.getUserId(), userInfon.getSessionId(), id, nearbyData.getId(), i);
+                } else {
+                    followCinemaPresenter.requestNet(userInfon.getUserId(), userInfon.getSessionId(), id, nearbyData.getId(), i);
+                }
             } else {
-                followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
-        }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //关注

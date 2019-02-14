@@ -97,6 +97,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private String addre;
     private String cinameName;
     private int mCoun;
+    private String stats = "1";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,9 +114,11 @@ public class CinemaDetailActivity extends BaseActivity {
         //设置适配器
         recycarousel.setAdapter(cinemaDetailAdapter);
         //滑动监听
+
         recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
+
                 int selectedPos = recycarousel.getSelectedPos();
                 ObjectAnimator animator = ObjectAnimator.ofFloat(movieTextDong, "translationX", mCoun * (selectedPos));
                 animator.setDuration(500);
@@ -126,6 +129,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 animator.start();
             }
         });
+
 
         //接口回调传值跳转选座页
         ticketDetailsAdapter.setOnImageClickLisener(new TicketDetailsAdapter.OnImageClickLisener() {
@@ -285,18 +289,25 @@ public class CinemaDetailActivity extends BaseActivity {
     class find implements DataCall<Result<List<CinemaDetailListData>>> {
         @Override
         public void success(Result<List<CinemaDetailListData>> data) {
-
+            stats = data.getStatus();
             if (data.getStatus().equals("0000")) {
-                Log.v("影院详情", data.getResult().size() + "");
+
+                recycarousel.setVisibility(View.VISIBLE);
+                movieTextDong.setVisibility(View.VISIBLE);
+                xian.setVisibility(View.VISIBLE);
                 resuleeee = data.getResult();
                 int id = resuleeee.get(0).getId();
-
                 findMovieScheduleListPresenter.requestNet(cinemaId, id);
                 cinemaDetailAdapter.setList(data.getResult());
                 cinemaDetailAdapter.notifyDataSetChanged();
                 int mWidth = xian.getWidth();
                 int mItemCount = cinemaDetailAdapter.getItemCount();
                 mCoun = mWidth / mItemCount;
+            } else if (data.getStatus().equals("1001")) {
+                recycarousel.setVisibility(View.GONE);
+                movieTextDong.setVisibility(View.GONE);
+                xian.setVisibility(View.GONE);
+                Toast.makeText(CinemaDetailActivity.this, "此影院暂时无影片可播，谢谢", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -312,7 +323,7 @@ public class CinemaDetailActivity extends BaseActivity {
 
             if (data.getStatus().equals("0000")) {
                 if (data.getResult().size() == 0) {
-                    Toast.makeText(CinemaDetailActivity.this, "此影片暂时无排期", Toast.LENGTH_SHORT).show();
+
                     ticketDetailsAdapter.clearList();
                     ticketDetailsAdapter.notifyDataSetChanged();
                 } else {

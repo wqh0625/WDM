@@ -55,7 +55,6 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
     protected void initView(View view) {
         rec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rec.setLoadingListener(this);
-//        rec.setLoadingMoreEnabled(true);
 
         findNearbyCinemasPresenter = new FindNearbyCinemasPresenter(new find());
 
@@ -72,7 +71,6 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         super.onResume();
 
         rec.refresh();
-
     }
 
     double latitude = CinemaFragment.latitude;
@@ -87,14 +85,13 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
         rec.refreshComplete();
         rec.loadMoreComplete();
 
-
         try {
             DbManager dbManager = new DbManager(getContext());
             Dao<UserInfoBean, String> userDao = dbManager.getUserDao();
             List<UserInfoBean> userInfoBeans = userDao.queryForAll();
 
             if (userInfoBeans != null && userInfoBeans.size() > 0) {
-                findNearbyCinemasPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), true, String.valueOf(longitude), String.valueOf(latitude));
+                findNearbyCinemasPresenter.requestNet(userInfoBeans.get(0).getUserId(), userInfoBeans.get(0).getSessionId(), true, String.valueOf(longitude), String.valueOf(latitude));
             } else {
                 findNearbyCinemasPresenter.requestNet(0, "", true, String.valueOf(longitude), String.valueOf(latitude));
             }
@@ -117,16 +114,30 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onlike(int i, int id, NearbyData nearbyData) {
-        if (userInfoBean == null) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        } else {
-            if (nearbyData.getFollowCinema() == 1) {
-                cancelFollowCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
+
+        ///-***
+        try {
+            DbManager dbManager = new DbManager(MyApp.getContext());
+            Dao<UserInfoBean, String> userDao = dbManager.getUserDao();
+            List<UserInfoBean> userInfoBeans = userDao.queryForAll();
+            if (userInfoBeans != null && userInfoBeans.size() > 0) {
+                UserInfoBean userInfon = userInfoBeans.get(0);
+                if (nearbyData.getFollowCinema() == 1) {
+                    cancelFollowCinemaPresenter.requestNet(userInfon.getUserId(), userInfon.getSessionId(), id, nearbyData.getId(), i);
+                } else {
+                    followCinemaPresenter.requestNet(userInfon.getUserId(), userInfon.getSessionId(), id, nearbyData.getId(), i);
+                }
             } else {
-                followCinemaPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, nearbyData.getId(), i);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
     }
 
     //关注

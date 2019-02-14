@@ -50,7 +50,7 @@ public class ListofCinemaAdapter extends RecyclerView.Adapter<ListofCinemaAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.listRecySdvImage.setImageURI(Uri.parse(list.get(i).getLogo()));
+        viewHolder.listRecySdvImage.setImageURI(list.get(i).getLogo());
         viewHolder.listRecyTxtName.setText(list.get(i).getName());
         viewHolder.listRecyTxtAddress.setText(list.get(i).getAddress());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -94,7 +94,7 @@ public class MyFragment extends BaseFragment {
             userDao = new DbManager(getActivity()).getUserDao();
             a = userDao.queryForAll();
             Log.v("/////--", a.toString());
-//            Toast.makeText(getContext(), "数据库剩：：：" + a.size(), Toast.LENGTH_SHORT).show();
+
 
             if (a.size() == 0) {
                 icon.setImageResource(R.drawable.my_icon);
@@ -124,7 +124,7 @@ public class MyFragment extends BaseFragment {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
                 qdBtn.setText("已签到");
             }
         }
@@ -138,7 +138,7 @@ public class MyFragment extends BaseFragment {
     class top implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            Toast.makeText(getContext(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("0000")) {
                 icon.setImageURI(data.getHeadPath());
                 UserInfoBean userInfoBean = new UserInfoBean();
@@ -235,8 +235,6 @@ public class MyFragment extends BaseFragment {
                 final Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
                 final List<UserInfoBean> userInfoBeans = userDao.queryForAll();
                 if (userInfoBeans.size() == 0) {
-                    Toast.makeText(getContext(), "您还未登录！", Toast.LENGTH_SHORT).show();
-
                     return;
                 }
 
@@ -258,7 +256,6 @@ public class MyFragment extends BaseFragment {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(getContext(), "删除" + i, Toast.LENGTH_SHORT).show();
 
                         onResume();
 
