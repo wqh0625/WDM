@@ -45,16 +45,16 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/redio_pay"
-
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="38dp"
             android:text="合计:   ￥"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="#333"/>
 
         <TextView
             android:id="@+id/checkin_prices"

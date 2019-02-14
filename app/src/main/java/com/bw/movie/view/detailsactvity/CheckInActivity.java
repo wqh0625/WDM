@@ -32,6 +32,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -156,25 +157,26 @@ public class CheckInActivity extends BaseActivity {
 
     private void initChooseMessage() {
         mPriceWithCalculate = new BigDecimal(price);
-
     }
 
     //选中的座位计算价格
     private void changePriceWithSelected() {
         selectedTableCount++;
-
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(2);
         String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
-        SpannableString spannableString = changTVsize(currentPrice);
+        SpannableString spannableString = changTVsize(nf.format(Double.valueOf(currentPrice)));
         checkinPrices.setText(spannableString);
-
     }
 
     //取消选座时价格联动
     private void changePriceWithUnSelected() {
         selectedTableCount--;
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(2);
         BigDecimal bigDecimal = new BigDecimal(String.valueOf(selectedTableCount));
         String currentPrice = mPriceWithCalculate.multiply(bigDecimal).toString();
-        SpannableString spannableString = changTVsize(currentPrice);
+        SpannableString spannableString = changTVsize(nf.format(Double.valueOf(currentPrice)));
         checkinPrices.setText(spannableString);
     }
 
@@ -203,7 +205,7 @@ public class CheckInActivity extends BaseActivity {
         checkinScreeningHall.setText(screeningHall);
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
-        checkinPrices.setText("" + 0.00);
+        checkinPrices.setText("" + 0);
     }
 
     @Override
