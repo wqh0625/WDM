@@ -98,6 +98,7 @@ public class CinemaDetailActivity extends BaseActivity {
     private String cinameName;
     private int mCoun;
     private String stats = "1";
+    private String name1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class CinemaDetailActivity extends BaseActivity {
         recycarousel.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
-
+                name1 = resuleeee.get(position).getName();
                 int selectedPos = recycarousel.getSelectedPos();
                 ObjectAnimator animator = ObjectAnimator.ofFloat(movieTextDong, "translationX", mCoun * (selectedPos));
                 animator.setDuration(500);
@@ -145,6 +146,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 intent.putExtra("Price", Price);
                 intent.putExtra("name", cinameName);
                 intent.putExtra("address", addre);
+                intent.putExtra("names", name1);
                 if (id == 0) {
                     intent.putExtra("Id", cid);
                 } else {
@@ -296,6 +298,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 movieTextDong.setVisibility(View.VISIBLE);
                 xian.setVisibility(View.VISIBLE);
                 resuleeee = data.getResult();
+                name1 = resuleeee.get(0).getName();
                 int id = resuleeee.get(0).getId();
                 findMovieScheduleListPresenter.requestNet(cinemaId, id);
                 cinemaDetailAdapter.setList(data.getResult());

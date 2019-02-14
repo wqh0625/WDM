@@ -62,7 +62,7 @@
             android:layout_height="46dp"
             android:layout_marginLeft="88dp"
             android:layout_marginTop="16dp"
-            android:text="0"
+            android:text="0.00"
             android:textColor="#b11450"
             android:textSize="32dp" />
 
@@ -90,16 +90,16 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="26dp"
         android:textColor="#fff"
-        android:textSize="14sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/checkin_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="45dp"
         android:textColor="#fff"
-        android:textSize="10sp" />
+        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/checkin_names"
@@ -108,7 +108,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="70dp"
         android:textColor="#fff"
-        android:textSize="16sp" />
+        android:textSize="17sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -180,7 +180,7 @@
             android:id="@+id/image2"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/txt1"
             android:src="@drawable/selected" />
 
@@ -198,7 +198,7 @@
             android:id="@+id/image3"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/txt2"
             android:src="@drawable/sold" />
 
@@ -216,7 +216,7 @@
             android:id="@+id/image4"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/txt3"
             android:src="@drawable/area" />
 

@@ -205,7 +205,7 @@ public class CheckInActivity extends BaseActivity {
         checkinScreeningHall.setText(screeningHall);
         checkinBegintime.setText(beginTime);
         checkinEndtime.setText(endTime);
-        checkinPrices.setText("" + 0);
+        checkinPrices.setText("" + 0.00);
     }
 
     @Override
