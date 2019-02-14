@@ -219,12 +219,12 @@ public class LoginActivity extends BaseActivity {
                 // 添加数据库
                 try {
                     Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
+                    userDao.deleteBuilder().delete();
                     userDao.createOrUpdate(userInfoBean);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }

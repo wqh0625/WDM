@@ -87,9 +87,7 @@ public class MyFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         topPhotoPresenter = new TopPhotoPresenter(new top());
-
         userSignInPresenter = new UserSignInPresenter(new usersignIn());
-
         try {
             userDao = new DbManager(getActivity()).getUserDao();
             a = userDao.queryForAll();
@@ -112,7 +110,6 @@ public class MyFragment extends BaseFragment {
                     nickNameTv.setText(nickName);
                 }
                 findUserHomeInfoPresenter.requestNet(userInfoBeana.getUserId(), userInfoBeana.getSessionId());
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,10 +125,8 @@ public class MyFragment extends BaseFragment {
                 qdBtn.setText("已签到");
             }
         }
-
         @Override
         public void fail(ApiException a) {
-
         }
     }
 
@@ -202,8 +197,8 @@ public class MyFragment extends BaseFragment {
             if (student.size() == 0) {
                 s();
             } else {
-                userId = userInfoBean.getUserId();
-                sessionId = userInfoBean.getSessionId();
+                userId = a.get(0).getUserId();
+                sessionId = a.get(0).getSessionId();
                 VersionsPresenter versionsPresenter = new VersionsPresenter(new VersionsCall());
                 try {
                     String versionName = getVersionName(getContext());
@@ -231,48 +226,42 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_logout) {
-            try {
-                final Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
-                final List<UserInfoBean> userInfoBeans = userDao.queryForAll();
-                if (userInfoBeans.size() == 0) {
-                    return;
-                }
 
-                // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                //    设置Title的内容
-                builder.setTitle("温馨提示");
-                //    设置Content来显示一个信息
-                builder.setMessage("确定退出登录吗？");
-                //    设置一个PositiveButton
-                builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        UserInfoBean auserInfoBean = userInfoBeans.get(0);
 
-                        int i = 0;
-                        try {
-                            i = userDao.delete(auserInfoBean);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
+            // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            //    设置Title的内容
+            builder.setTitle("温馨提示");
+            //    设置Content来显示一个信息
+            builder.setMessage("确定退出登录吗？");
+            //    设置一个PositiveButton
+            builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        Dao<UserInfoBean, String> userDao = new DbManager(getContext()).getUserDao();
 
-                        onResume();
+                        userDao.deleteBuilder().delete();
 
+
+                        List<UserInfoBean> userInfoBeans = userDao.queryForAll();
+                        Log.v("asdas", userInfoBeans.size() + "");
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                });
-                //    设置一个NegativeButton
-                builder.setNegativeButton("暂不退出", null);
-                //    显示出该对话框
-                builder.show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+                    onResume();
+                }
+            });
+            //    设置一个NegativeButton
+            builder.setNegativeButton("暂不退出", null);
+            //    显示出该对话框
+            builder.show();
+
         } else if (v.getId() == R.id.my_btn_qd) {
             if (student.size() == 0) {
                 s();
             } else {
-                userSignInPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId());
+                userSignInPresenter.requestNet(a.get(0).getUserId(), a.get(0).getSessionId());
             }
         } else if (v.getId() == R.id.my_image_icom) {
 
@@ -325,7 +314,7 @@ public class MyFragment extends BaseFragment {
                 File imageFile = FileUtils.getImageFile();
                 String path = imageFile.getPath();
 
-                topPhotoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), path);
+                topPhotoPresenter.requestNet(a.get(0).getUserId(), a.get(0).getSessionId(), path);
                 popWindow.dismiss();
                 break;
             case 1:
@@ -355,7 +344,6 @@ public class MyFragment extends BaseFragment {
 
     private void initPop(View popView) {
 
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -367,7 +355,6 @@ public class MyFragment extends BaseFragment {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     //权限还没有授予，需要在这里写申请权限的代码

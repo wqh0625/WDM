@@ -58,6 +58,9 @@ public class GzCinemaFragment extends BaseFragment implements XRecyclerView.Load
     @Override
     public void onResume() {
         super.onResume();
+        if (userInfoBean == null) {
+
+        }
         userId = userInfoBean.getUserId();
         sessionId = userInfoBean.getSessionId();
         if (sessionId.length() > 0 && userId != 0) {
