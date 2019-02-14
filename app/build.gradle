@@ -39,7 +39,7 @@ android {
         config {
             keyAlias 'bw_movie'
             keyPassword '123456'
-            storeFile file('C:/SouGouDownload/movie_keystore/movie.keystore')
+            storeFile file('D:/movie.keystore')
             storePassword '123456'
         }
     }
@@ -65,9 +65,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+
         }
         debug {
             signingConfig signingConfigs.config
@@ -129,7 +132,5 @@ dependencies {
     implementation 'com.tencent.mid:mid:4.0.7-Release'
     // 今日头条适配
     implementation 'me.jessyan:autosize:0.9.5'
-
     implementation 'com.jaydenxiao:ExpandableTextView:1.0.0'
-
 }
