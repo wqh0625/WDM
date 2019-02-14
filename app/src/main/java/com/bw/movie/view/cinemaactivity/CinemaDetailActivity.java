@@ -139,8 +139,8 @@ public class CinemaDetailActivity extends BaseActivity {
                 intent.putExtra("BeginTime", BeginTime);
                 intent.putExtra("EndTime", EndTime);
                 intent.putExtra("Price", Price);
-                intent.putExtra("cinameName", cinameName);
-                intent.putExtra("addre", addre);
+                intent.putExtra("name", cinameName);
+                intent.putExtra("address", addre);
                 if (id == 0) {
                     intent.putExtra("Id", cid);
                 } else {

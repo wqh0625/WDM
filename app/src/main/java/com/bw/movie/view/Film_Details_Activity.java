@@ -88,7 +88,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
     private ImageView activityPredictionPopwindowDown;
     private RecyclerView activityPredictionPopwindowRecyclerview;
-    private ActornameAdapter actornameAdapter;
     private PopupWindow popupWindow;
     private PredictionAdapter predictionAdapter;
     private ImageView actvityImageDetails;
@@ -110,6 +109,9 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private ConcernPresenter concernPresenter;
     private int followMovie;
     private CancelConcernPresenter cancelConcernPresenter;
+    private ActornameAdapter actornameAdapter;
+    private String starring;
+    private List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,6 +273,16 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityDetailsLocation.setText("地区:" + placeOrigin);
                 activityDetailsJianjie.setText(summary);
 
+                String[] split = starring.split(",");
+                for (int i = 0; i < split.length ; i++) {
+                    list.add(split[i]);
+                }
+                actornameAdapter = new ActornameAdapter(Film_Details_Activity.this,list);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                activityDetailsRecyclerview.setLayoutManager(linearLayoutManager);
+                activityDetailsRecyclerview.setAdapter(actornameAdapter);
+
                 //设置关闭popupWindow的点击事件
                 activityDetailsBack.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -325,7 +337,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityStillsPopwindowDown = view3.findViewById(R.id.activity_stills_popwindow_down);
                 activityStillsPopwindowRecy = view3.findViewById(R.id.activity_stills_popwindow_recy);
                 popupWindow3.showAtLocation(rootview3, Gravity.BOTTOM, 0, 0);
-
 
                 activityStillsPopwindowRecy.setAdapter(stillsAdapter);
                 activityStillsPopwindowRecy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
@@ -431,6 +442,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 placeOrigin = result.getPlaceOrigin();
                 summary = result.getSummary();
                 followMovie = result.getFollowMovie();
+                starring = result.getStarring();
 
                 //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
