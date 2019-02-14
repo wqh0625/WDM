@@ -373,7 +373,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                             s();
                         } else {
                             if (reviewData.getIsGreat() == 1) {
-                                Toast.makeText(Film_Details_Activity.this, "2222", Toast.LENGTH_SHORT).show();
                             } else {
                                 likePresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, i);
                             }
