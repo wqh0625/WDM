@@ -87,7 +87,6 @@ public class GzCinemaFragment extends BaseFragment implements XRecyclerView.Load
         }
         rec.refreshComplete();
         rec.loadMoreComplete();
-//        findCinemaPageListPresenter.requestNet(userId,sessionId,false);
     }
 
     class find implements DataCall<Result<List<FindCinemaPageListData>>> {
