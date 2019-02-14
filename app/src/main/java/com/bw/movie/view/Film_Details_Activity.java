@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.core.dao.DbManager;
 import com.bw.movie.presenter.CancelConcernPresenter;
+import com.bw.movie.presenter.LikePresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.j256.ormlite.dao.Dao;
 import com.umeng.analytics.MobclickAgent;
@@ -362,6 +363,15 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityreviewpopwindowrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 reviewPresenter.requestNet(position, 1, 20);
 
+                //评论点赞
+                reviewAdapter.setImagePraiseOnclickListener(new ReviewAdapter.ImagePraiseOnclickListener() {
+                    @Override
+                    public void ImagePraiseOnclick(int CommentId) {
+                      LikePresenter likePresenter = new LikePresenter(new LikeCall());
+                      likePresenter.requestNet(userInfoBean.getUserId(),userInfoBean.getSessionId(),CommentId);
+                    }
+                });
+
                 //设置关闭popupWindow的点击事件
                 activityReviewPopwindowDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -483,6 +493,21 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         @Override
         public void fail(ApiException a) {
 
+        }
+    }
+    //评论点赞
+    class LikeCall implements DataCall<Result>{
+
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(Film_Details_Activity.this, ""+data.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+            Toast.makeText(Film_Details_Activity.this, "点赞失败", Toast.LENGTH_SHORT).show();
         }
     }
 
