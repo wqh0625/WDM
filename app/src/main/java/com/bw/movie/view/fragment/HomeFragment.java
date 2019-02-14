@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -121,7 +120,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             }.getType();
 
             List<CarouselData> result = new Gson().fromJson(list, type);
-            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+
             carouselAdapter.setList(result);
             carouselAdapter.notifyDataSetChanged();
         }

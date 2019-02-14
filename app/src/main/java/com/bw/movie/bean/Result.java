@@ -16,6 +16,7 @@ public class Result<T> {
     private String status;
     private Object[] args;
 
+    private int count;
     private String prepayId;
     private String partnerId;
     private String nonceStr;
@@ -27,6 +28,14 @@ public class Result<T> {
     private String headPath;
     private int flag;
     private String downloadUrl;
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
 
     public int getFlag() {
         return flag;

@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 /**
  * date: 2019/1/29.
  * Created 王思敏
- * function:系统消息
+ * function:系统消息列表
  */
 public class MessagePresenter extends BasePresenter {
 

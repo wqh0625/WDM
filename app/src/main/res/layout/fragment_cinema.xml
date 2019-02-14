@@ -3,19 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp">
+        android:background="#fff"
+        android:paddingLeft="24dp">
 
         <ImageView
             android:id="@+id/cinema_image_location"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/dw" />
 
         <TextView
@@ -23,25 +25,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="34dp"
             android:layout_toRightOf="@id/cinema_image_location"
             android:text="北京"
             android:textSize="14sp" />
+
         <RelativeLayout
             android:id="@+id/serch_line_ref"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/cinema_search_shape"
-            android:layout_marginRight="12dp"
-            >
+            android:layout_marginTop="29dp"
+            android:background="@drawable/cinema_search_shape">
+
             <LinearLayout
                 android:layout_width="220dp"
                 android:layout_height="26dp"
                 android:layout_alignParentRight="true"
-                android:gravity="center_vertical"
-                >
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/cinema_search_image"
@@ -57,7 +58,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="输入要搜索的影片"
+                    android:hint="      输入要搜索的影片"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
                     android:textSize="14sp" />
@@ -80,10 +81,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top"
-        android:layout_marginLeft="24dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="24dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
         <TextView
             android:id="@+id/cinema_txt_ishit"
@@ -111,17 +112,14 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/cinema_vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/center"
-
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="10dp" />
 
     <RelativeLayout
         android:layout_width="360dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
-
         android:background="@drawable/home_lucency"
         android:gravity="center_vertical"
         android:paddingBottom="20dp" />

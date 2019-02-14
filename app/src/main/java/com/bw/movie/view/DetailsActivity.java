@@ -76,50 +76,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         initMap();
     }
 
-
-        /**
-         * 将数据存到文件中
-         *
-         *
-         */
-//        private void saveDataToFile(Context context, String data, String fileName)
-//        {
-//            FileOutputStream fileOutputStream = null;
-//            BufferedWriter bufferedWriter = null;
-//            try
-//            {
-//                /**
-//                 * "data"为文件名,MODE_PRIVATE表示如果存在同名文件则覆盖，
-//                 * 还有一个MODE_APPEND表示如果存在同名文件则会往里面追加内容
-//                 */
-//                fileOutputStream = context.openFileOutput(fileName,
-//                        Context.MODE_PRIVATE);
-//                bufferedWriter = new BufferedWriter(
-//                        new OutputStreamWriter(fileOutputStream));
-//                bufferedWriter.write(data);
-//            }
-//            catch (IOException e)
-//            {
-//                e.printStackTrace();
-//            }
-//
-//            finally
-//            {
-//                try
-//                {
-//                    if (bufferedWriter != null)
-//                    {
-//                        bufferedWriter.close();
-//                    }
-//                }
-//                catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-
-
     private void initData() {
         fragments = new ArrayList<>();
         fragments.add(new CinemaxFragment());
@@ -182,8 +138,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         recommendCinemaTextName.setOnClickListener(this);
         recommendCinemaLinear =  findViewById(R.id.recommend_cinema_linear);
         recommendCinemaLinear.setOnClickListener(this);
-
-
 
     }
 
@@ -249,7 +203,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 animatort = true;
                 animatorf = false;
                 //这是显示出现的动画
-                ObjectAnimator animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 350f, 30f);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 450f, 0f);
                 animator.setDuration(1500);
                 animator.start();
 
@@ -261,7 +215,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 animatorf = true;
                 animatort = false;
                 //这是隐藏进去的动画
-                ObjectAnimator animator2 = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 30f, 350f);
+                ObjectAnimator animator2 = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 0f, 450f);
                 animator2.setDuration(1500);
                 animator2.start();
                 break;

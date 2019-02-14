@@ -83,12 +83,28 @@ public interface IRequests {
                                                            @Query("status") int status);
 
 
-    //系统消息
+
+
+    //系统消息列表
     @GET("movieApi/tool/v1/verify/findAllSysMsgList")
     Observable<Result<List<MessageData>>> getMessage(@Header("userId") int userId,
                                                      @Header("sessionId") String sessionId,
                                                      @Query("page") int page,
                                                      @Query("count") int count);
+
+    // 查询用户当前未读消息数量
+    @GET("movieApi/tool/v1/verify/findUnreadMessageCount")
+    Observable<Result> findUnreadMessageCount(@Header("userId") int userId,
+                                                                 @Header("sessionId") String sessionId);
+
+    //系统消息读取状态修改
+    @GET("movieApi/tool/v1/verify/changeSysMsgStatus")
+    Observable<Result> changeSysMsgStatus(@Header("userId") int userId,
+                                                             @Header("sessionId") String sessionId,
+                                                             @Query("id") int id);
+
+
+
 
     //影院详情明细
     @GET("movieApi/cinema/v1/findCinemaInfo")

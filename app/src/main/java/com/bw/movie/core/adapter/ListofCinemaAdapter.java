@@ -36,10 +36,6 @@ public class ListofCinemaAdapter extends RecyclerView.Adapter<ListofCinemaAdapte
 
     public OnListofCinemaListener mOnListofCinemaListener;
 
-    public void setmOnListofCinemaListener(OnListofCinemaListener mOnListofCinemaListener) {
-        this.mOnListofCinemaListener = mOnListofCinemaListener;
-    }
-
     public void setOnListofCinemaListener(OnListofCinemaListener onListofCinemaListener){
         mOnListofCinemaListener = onListofCinemaListener;
     }

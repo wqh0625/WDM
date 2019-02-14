@@ -3,7 +3,6 @@ package com.bw.movie.view.fragment;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.UserInfoBean;
@@ -135,7 +134,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("9999")) {
                 Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
                 // 跳转
@@ -151,7 +150,6 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "gggg失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -160,7 +158,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("9999")) {
                 Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
                 // 跳转
@@ -176,7 +174,6 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "q失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -212,7 +209,7 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
             }.getType();
 
             List<NearbyData> result = new Gson().fromJson(list, type);
-//            Toast.makeText(MyApp.getContext(), "" + result.size(), Toast.LENGTH_SHORT).show();
+
             adapter.setList(result);
             adapter.notifyDataSetChanged();
         }

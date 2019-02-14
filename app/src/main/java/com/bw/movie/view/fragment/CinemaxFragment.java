@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -89,7 +88,7 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "d失败", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -115,7 +114,6 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "gggg失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,7 +122,6 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "0000" + data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("9999")) {
                 Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
                 // 跳转
@@ -141,7 +138,6 @@ public class CinemaxFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getContext(), "q失败", Toast.LENGTH_SHORT).show();
         }
     }
 

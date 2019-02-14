@@ -80,21 +80,21 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-
+        findUserHomeInfoPresenter = new FindUserHomeInfoPresenter(new find());
     }
 
     @Override
     public void onResume() {
         super.onResume();
         topPhotoPresenter = new TopPhotoPresenter(new top());
-        findUserHomeInfoPresenter = new FindUserHomeInfoPresenter(new find());
+
         userSignInPresenter = new UserSignInPresenter(new usersignIn());
 
         try {
             userDao = new DbManager(getActivity()).getUserDao();
             a = userDao.queryForAll();
             Log.v("/////--", a.toString());
-            Toast.makeText(getContext(), "数据库剩：：：" + a.size(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "数据库剩：：：" + a.size(), Toast.LENGTH_SHORT).show();
 
             if (a.size() == 0) {
                 icon.setImageResource(R.drawable.my_icon);

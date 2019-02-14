@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -33,6 +34,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         this.context = context;
         list = new ArrayList<>();
     }
+    public OnHideText onHideText;
+
+    public void setOnHideText(OnHideText onHideText) {
+        this.onHideText = onHideText;
+    }
+
+    public interface OnHideText{
+         void onHideText(int id ,int position,MessageData messageData);
+    }
 
     @NonNull
     @Override
@@ -43,12 +53,26 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.Title.setText(list.get(i).getTitle());
         viewHolder.Content.setText(list.get(i).getContent());
         //转换日期格式
         SimpleDateFormat dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME_PATTERN,Locale.getDefault());
         viewHolder.Time.setText(dateFormat.format(list.get(i).getPushTime()));
+        if (list.get(i).getStatus() == 0) {
+            viewHolder.sd.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.sd.setVisibility(View.GONE);
+        }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    onHideText.onHideText(list.get(i).getId(),i,list.get(i));
+
+            }
+        });
     }
 
     @Override
@@ -67,12 +91,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         private final TextView Title;
         private final TextView Content;
         private final TextView Time;
+        private final TextView sd;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.activity_infor_item_title);
             Content = itemView.findViewById(R.id.activity_infor_item_neirong);
             Time = itemView.findViewById(R.id.activity_infor_item_time);
+            sd = itemView.findViewById(R.id.sd);
         }
     }
 }

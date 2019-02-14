@@ -56,7 +56,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
 
     public String getFilePath(String fileName, int requestCode, Intent data) {
