@@ -76,7 +76,6 @@ public class CinemaDetailsXqFragment extends BaseFragment {
         @Override
         public void success(Result<DetailsData> data) {
             if (data.getStatus().equals("0000")) {
-                Toast.makeText(getActivity(), "" + data.getMessage(), Toast.LENGTH_SHORT).show();
                 result = data.getResult();
                 txtDw.setText(result.getAddress());
                 txtDt.setText(result.getAddress());
@@ -90,7 +89,6 @@ public class CinemaDetailsXqFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
         }
     }
 
