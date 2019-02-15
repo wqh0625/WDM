@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="84dp"
             android:layout_marginTop="20dp"
-            android:text="详情"
+            android:text="详  情"
             android:textColor="#000"
             android:textSize="18sp" />
 
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="204dp"
             android:layout_marginTop="20dp"
-            android:text="评论"
+            android:text="评  论"
             android:textColor="#000"
             android:textSize="18sp" />
 

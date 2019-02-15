@@ -26,7 +26,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginTop="35dp"
             android:layout_toRightOf="@id/cinema_image_location"
-            android:text=" "
+            android:text="定位中..."
             android:textSize="14sp" />
 
         <RelativeLayout

@@ -27,6 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.bean.MyMessageData;
+import com.bw.movie.core.utils.ToDate;
+import com.bw.movie.presenter.MyMessagePresenter;
 import com.bw.movie.presenter.VersionsPresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.j256.ormlite.dao.Dao;
@@ -77,10 +80,15 @@ public class MyFragment extends BaseFragment {
     private Dao<UserInfoBean, String> userDao;
     private int userId;
     private String sessionId;
+    private MyMessagePresenter myMessagePresenter;
+    private String h = "";
+    private int c = 0;
 
     @Override
     public void initView(View view) {
         findUserHomeInfoPresenter = new FindUserHomeInfoPresenter(new find());
+
+        myMessagePresenter = new MyMessagePresenter(new mymesage());
     }
 
     @Override
@@ -93,7 +101,6 @@ public class MyFragment extends BaseFragment {
             a = userDao.queryForAll();
             Log.v("/////--", a.toString());
 
-
             if (a.size() == 0) {
                 icon.setImageResource(R.drawable.my_icon);
                 nickNameTv.setText("未登录");
@@ -101,14 +108,19 @@ public class MyFragment extends BaseFragment {
                 return;
             } else {
                 UserInfoBean userInfoBeana = a.get(0);
-                String headPic = userInfoBeana.getHeadPic();
+                userId = a.get(0).getUserId();
+                sessionId = a.get(0).getSessionId();
+//                String headPic = userInfoBeana.getHeadPic();
                 String nickName = userInfoBeana.getNickName();
-                if (headPic == null || headPic == "" || userInfoBeana == null) {
-                    return;
-                } else {
-                    icon.setImageURI(Uri.parse(headPic));
-                    nickNameTv.setText(nickName);
+//                if (headPic == null || headPic == "" || userInfoBeana == null) {
+//                    return;
+//                } else {
+                if (!h.equals("")) {
+                    icon.setImageURI(h);
                 }
+                nickNameTv.setText(nickName);
+//                }
+                myMessagePresenter.requestNet(userInfoBeana.getUserId(), userInfoBeana.getSessionId());
                 findUserHomeInfoPresenter.requestNet(userInfoBeana.getUserId(), userInfoBeana.getSessionId());
             }
         } catch (SQLException e) {
@@ -123,6 +135,7 @@ public class MyFragment extends BaseFragment {
                 qdBtn.setText("已签到");
             }
         }
+
         @Override
         public void fail(ApiException a) {
         }
@@ -131,15 +144,18 @@ public class MyFragment extends BaseFragment {
     class top implements DataCall<Result> {
         @Override
         public void success(Result data) {
-
             if (data.getStatus().equals("0000")) {
                 try {
-               
-                UserInfoBean userInfoBean = new UserInfoBean();
-                userInfoBean.setHeadPic(data.getHeadPath());
+                    UserInfoBean userInfoBean = new UserInfoBean();
+                    h = data.getHeadPath();
+                    userInfoBean.setHeadPic(h);
+                    userInfoBean.setUserId((int) data.getArgs()[0]);
+                    userInfoBean.setSessionId((String) data.getArgs()[1]);
+
                     userDao.createOrUpdate(userInfoBean);
                     onResume();
                     icon.setImageURI(data.getHeadPath());
+                    myMessagePresenter.requestNet(userInfoBean, sessionId);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -158,11 +174,26 @@ public class MyFragment extends BaseFragment {
             if (data.getResult().getUserSignStatus() == 1) {
                 qdBtn.setText("签到");
                 nickNameTv.setText("" + data.getResult().getNickName());
-                icon.setImageURI(data.getResult().getHeadPath());
+                onResume();
             } else {
                 qdBtn.setText("已签到");
                 nickNameTv.setText("" + data.getResult().getNickName());
-                icon.setImageURI(data.getResult().getHeadPath());
+                onResume();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+        }
+    }
+
+    class mymesage implements DataCall<Result<MyMessageData>> {
+        @Override
+        public void success(Result<MyMessageData> data) {
+
+            if (data.getStatus().equals("0000")) {
+                MyMessageData result = data.getResult();
+                icon.setImageURI(result.getHeadPic());
             }
         }
 
@@ -198,8 +229,7 @@ public class MyFragment extends BaseFragment {
             if (student.size() == 0) {
                 s();
             } else {
-                userId = a.get(0).getUserId();
-                sessionId = a.get(0).getSessionId();
+
                 VersionsPresenter versionsPresenter = new VersionsPresenter(new VersionsCall());
                 try {
                     String versionName = getVersionName(getContext());
@@ -227,8 +257,6 @@ public class MyFragment extends BaseFragment {
                 getActivity().overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
         } else if (v.getId() == R.id.mRb_logout) {
-
-
             // 退出登录 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             //    设置Title的内容
@@ -312,13 +340,28 @@ public class MyFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0:
+
+
+                popWindow.dismiss();
+                if (data == null || data.equals("")) {
+                    return;
+                }
                 File imageFile = FileUtils.getImageFile();
                 String path = imageFile.getPath();
 
-                topPhotoPresenter.requestNet(a.get(0).getUserId(), a.get(0).getSessionId(), path);
-                popWindow.dismiss();
+                try {
+                    DbManager dbManager = new DbManager(getContext());
+                    List<UserInfoBean> userInfoBeans = dbManager.getUserDao().queryForAll();
+                    topPhotoPresenter.requestNet(userInfoBeans.get(0).getUserId(), userInfoBeans.get(0).getSessionId(), path);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 1:
+                popWindow.dismiss();
+                if (data == null || data.equals("")) {
+                    return;
+                }
                 Uri data1 = data.getData();
 
                 String[] proj = {MediaStore.Images.Media.DATA};
@@ -335,13 +378,21 @@ public class MyFragment extends BaseFragment {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     actualimagecursor.close();
                 }
-                topPhotoPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), img_path);
-                popWindow.dismiss();
+
+                try {
+                    DbManager dbManager = new DbManager(getContext());
+                    List<UserInfoBean> userInfoBeans = dbManager.getUserDao().queryForAll();
+                    topPhotoPresenter.requestNet(userInfoBeans.get(0).getUserId(), userInfoBeans.get(0).getSessionId(), img_path);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 break;
             default:
                 break;
         }
     }
+
 
     private void initPop(View popView) {
 
@@ -360,7 +411,7 @@ public class MyFragment extends BaseFragment {
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     //权限还没有授予，需要在这里写申请权限的代码
                     ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 122);
                 } else {
                     Intent openAlbumIntent = new Intent(
                             Intent.ACTION_PICK);
@@ -368,7 +419,6 @@ public class MyFragment extends BaseFragment {
                     //用startActivityForResult方法，待会儿重写onActivityResult()方法，拿到图片做裁剪操作
                     startActivityForResult(openAlbumIntent, 1);
                 }
-
             }
         });
         //相机
@@ -377,16 +427,24 @@ public class MyFragment extends BaseFragment {
 
             @Override
             public void onClick(View v) {
-                Intent openCameraIntent = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
 
-                tempUri = Uri.parse(FileUtils.getDir("/image/bimap") + "1.jpg");
-                Log.e("zmz", "=====" + tempUri);
+                if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
 
-                //启动相机程序
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                startActivityForResult(intent, 0);
+                } else {
+                    Intent openCameraIntent = new Intent(
+                            MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    tempUri = Uri.parse(FileUtils.getDir("/image/bimap") + "1.jpg");
+                    Log.e("zmz", "=====" + tempUri);
+
+                    //启动相机程序
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+                    startActivityForResult(intent, 0);
+                }
+
             }
         });
     }

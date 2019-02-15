@@ -86,6 +86,8 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
             return;
         }
 
+        rec.loadMoreComplete();
+        rec.refreshComplete();
         try {
             DbManager dbManager = new DbManager(getContext());
             Dao<UserInfoBean, String> userDao = dbManager.getUserDao();
@@ -103,7 +105,10 @@ public class RecommendCinemaFragment extends BaseFragment implements XRecyclerVi
 
     @Override
     public void onLoadMore() {
+        rec.loadMoreComplete();
+        rec.refreshComplete();
         if (findRecommendCinemasPresenter.isRuning()) {
+
             rec.loadMoreComplete();
             return;
         }

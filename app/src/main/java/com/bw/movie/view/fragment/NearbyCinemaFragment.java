@@ -103,12 +103,12 @@ public class NearbyCinemaFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onLoadMore() {
+        rec.loadMoreComplete();
+        rec.refreshComplete();
         if (findNearbyCinemasPresenter.isRuning()) {
             rec.loadMoreComplete();
             return;
         }
-        rec.refreshComplete();
-        rec.loadMoreComplete();
     }
 
     @Override

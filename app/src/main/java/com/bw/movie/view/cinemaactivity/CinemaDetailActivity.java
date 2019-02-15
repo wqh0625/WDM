@@ -226,6 +226,9 @@ public class CinemaDetailActivity extends BaseActivity {
                 plV = rootview4.findViewById(R.id.fragment_details_vv);
                 pl = rootview4.findViewById(R.id.fragment_details_pinglun);
                 xq = rootview4.findViewById(R.id.fragment_details_xiangqing);
+                popupWindow4.setFocusable(true);
+                popupWindow4.setBackgroundDrawable(new ColorDrawable(0x00000000));
+                popupWindow4.setOutsideTouchable(true);
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
                 fragments = new ArrayList<>();

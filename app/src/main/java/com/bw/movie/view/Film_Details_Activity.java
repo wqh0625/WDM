@@ -443,6 +443,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow.dismiss();
                 popupWindow2.dismiss();
                 JZVideoPlayer.releaseAllVideos();
+                Toast.makeText(this, "0.0.", Toast.LENGTH_SHORT).show();
                 popupWindow3.dismiss();
                 popupWindow4.dismiss();
             }else{
@@ -455,16 +456,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
-                if (popupWindow.isShowing()||popupWindow2.isShowing()||popupWindow3.isShowing()||popupWindow4.isShowing()) {
-                    popupWindow.dismiss();
-                    popupWindow2.dismiss();
-                    JZVideoPlayer.releaseAllVideos();
-                    popupWindow3.dismiss();
-                    popupWindow4.dismiss();
-                }else{
-                    finish();
-                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
-                }
             }
             mFlag = 0;
             mTime1 = 0;
