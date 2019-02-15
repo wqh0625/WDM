@@ -61,7 +61,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/activity_details_simpledraweeviewiiii"
-        android:text="产地"
+        android:text="地区"
         android:textColor="#333333"
         android:textSize="12sp" />
 

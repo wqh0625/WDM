@@ -67,7 +67,6 @@ public class CinemaDetailsPlFragment extends BaseFragment {
         @Override
         public void success(Result<List<CommentData>> data) {
             if (data.getStatus().equals("0000")){
-                Toast.makeText(getActivity(), ""+data.getMessage(), Toast.LENGTH_SHORT).show();
                 commentAdapter.addAll(data.getResult());
                 commentAdapter.notifyDataSetChanged();
             }
@@ -75,7 +74,6 @@ public class CinemaDetailsPlFragment extends BaseFragment {
 
         @Override
         public void fail(ApiException a) {
-            Toast.makeText(getActivity(), "失败", Toast.LENGTH_SHORT).show();
         }
     }
 

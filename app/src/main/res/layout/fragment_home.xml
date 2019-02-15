@@ -22,9 +22,9 @@
 
                 <ImageView
                     android:id="@+id/image_location"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="6dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="24dp"
                     android:layout_marginTop="30dp"
                     android:src="@drawable/com_icon_loc_" />
 
@@ -104,7 +104,6 @@
             android:layout_below="@id/movie_text_dong"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
             android:orientation="horizontal">
 
             <TextView
@@ -112,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="热门电影"
+                android:textColor="#333333"
                 android:textSize="16sp" />
 
             <View
@@ -127,6 +127,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="24dp"
+
                 android:src="@drawable/com_icon_next" />
 
             <android.support.v7.widget.RecyclerView
@@ -145,7 +147,6 @@
             android:layout_below="@id/relat_1"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
             android:orientation="horizontal">
 
             <TextView
@@ -153,6 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="正在热映"
+                android:textColor="#333333"
                 android:textSize="16sp" />
 
             <View
@@ -168,6 +170,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="24dp"
                 android:src="@drawable/com_icon_next" />
 
             <android.support.v7.widget.RecyclerView
@@ -185,7 +188,6 @@
             android:layout_below="@id/relat_2"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="24dp"
             android:orientation="horizontal">
 
             <TextView
@@ -193,6 +195,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="正在上映"
+                android:textColor="#333333"
                 android:textSize="16sp" />
 
             <View
@@ -209,6 +212,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="4dp"
+                android:layout_marginRight="24dp"
                 android:src="@drawable/com_icon_next" />
 
             <android.support.v7.widget.RecyclerView
