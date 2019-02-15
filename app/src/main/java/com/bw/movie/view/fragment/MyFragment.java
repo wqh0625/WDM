@@ -134,7 +134,7 @@ public class MyFragment extends BaseFragment {
 
             if (data.getStatus().equals("0000")) {
                 try {
-                Toast.makeText(getContext(), ""+data.getMessage()+data.getHeadPath(), Toast.LENGTH_SHORT).show();
+               
                 UserInfoBean userInfoBean = new UserInfoBean();
                 userInfoBean.setHeadPic(data.getHeadPath());
                     userDao.createOrUpdate(userInfoBean);
