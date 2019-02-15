@@ -61,7 +61,7 @@ public class CinemaFragment extends BaseFragment {
         initData();
         initMap();
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(cineatRel, "translationX", 40f, 470f);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(cineatRel, "translationX", 20f, 470f);
         animator.setDuration(0);
         animator.start();
 
@@ -162,7 +162,7 @@ public class CinemaFragment extends BaseFragment {
             animatort = true;
             animatorf = false;
             //这是显示出现的动画
-            ObjectAnimator animator = ObjectAnimator.ofFloat(cineatRel, "translationX", 470f, 40f);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(cineatRel, "translationX", 470f, 20f);
             animator.setDuration(1500);
             animator.start();
         } else if (view.getId() == R.id.cinema_textName) {
@@ -172,7 +172,7 @@ public class CinemaFragment extends BaseFragment {
             animatorf = true;
             animatort = false;
             //这是隐藏进去的动画
-            ObjectAnimator animator2 = ObjectAnimator.ofFloat(cineatRel, "translationX", 40f, 470f);
+            ObjectAnimator animator2 = ObjectAnimator.ofFloat(cineatRel, "translationX", 20f, 470f);
             animator2.setDuration(1500);
             animator2.start();
 

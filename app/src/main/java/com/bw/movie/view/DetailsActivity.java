@@ -101,7 +101,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
             @Override
             public void onPageSelected(int i) {
-//                detailsVp.setCurrentItem(i);
                 ChangeBackGround(i);
             }
 
@@ -138,7 +137,9 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         recommendCinemaTextName.setOnClickListener(this);
         recommendCinemaLinear = findViewById(R.id.recommend_cinema_linear);
         recommendCinemaLinear.setOnClickListener(this);
-
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 20f, 470f);
+        animator2.setDuration(1);
+        animator2.start();
     }
 
     private void initMap() {
@@ -203,7 +204,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 animatort = true;
                 animatorf = false;
                 //这是显示出现的动画
-                ObjectAnimator animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 450f, 0f);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 470f, 20f);
                 animator.setDuration(1500);
                 animator.start();
 
@@ -215,7 +216,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 animatorf = true;
                 animatort = false;
                 //这是隐藏进去的动画
-                ObjectAnimator animator2 = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 0f, 450f);
+                ObjectAnimator animator2 = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 20f, 470f);
                 animator2.setDuration(1500);
                 animator2.start();
                 break;

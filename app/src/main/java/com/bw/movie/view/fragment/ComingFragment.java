@@ -55,7 +55,7 @@ public class ComingFragment extends BaseFragment {
 
             @Override
             public void OnImageClick(int i, int position, CarouselData carouselData) {
-                if (student.size()==0) {
+                if (student.size() == 0) {
                     s();
                 } else {
                     if (carouselData.getFollowMovie() == 1) {
@@ -64,9 +64,13 @@ public class ComingFragment extends BaseFragment {
                         concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position, i);
                     }
                 }
-
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     class ComingCall implements DataCall<Result<List<CarouselData>>> {

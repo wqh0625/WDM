@@ -29,7 +29,11 @@ public class CinemaxFragment extends BaseFragment {
 
     private ConcernPresenter concernPresenter;
     private CancelConcernPresenter cancelConcernPresenter;
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        cinemaxAdapter.notifyDataSetChanged();
+    }
     private void initData() {
 
 
@@ -108,7 +112,6 @@ public class CinemaxFragment extends BaseFragment {
                 int po = (int) data.getArgs()[4];
                 cinemaxAdapter.getItem(po).setFollowMovie(1);
                 cinemaxAdapter.notifyDataSetChanged();
-
             }
         }
 

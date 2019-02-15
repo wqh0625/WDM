@@ -146,6 +146,11 @@ public class IsHitFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.fragment_is_hit;
     }

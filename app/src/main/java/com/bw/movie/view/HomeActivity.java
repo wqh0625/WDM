@@ -133,8 +133,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             if (mTime2 - mTime1 < 2500) {
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
-            } else {
-
             }
             mFlag = 0;
             mTime1 = 0;

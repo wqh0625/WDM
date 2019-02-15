@@ -114,14 +114,12 @@ public class MyFragment extends BaseFragment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     class usersignIn implements DataCall<Result> {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-
                 qdBtn.setText("已签到");
             }
         }
@@ -135,12 +133,13 @@ public class MyFragment extends BaseFragment {
         public void success(Result data) {
 
             if (data.getStatus().equals("0000")) {
-                icon.setImageURI(data.getHeadPath());
+                try {
+                Toast.makeText(getContext(), ""+data.getMessage()+data.getHeadPath(), Toast.LENGTH_SHORT).show();
                 UserInfoBean userInfoBean = new UserInfoBean();
                 userInfoBean.setHeadPic(data.getHeadPath());
-                try {
                     userDao.createOrUpdate(userInfoBean);
                     onResume();
+                    icon.setImageURI(data.getHeadPath());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -159,9 +158,11 @@ public class MyFragment extends BaseFragment {
             if (data.getResult().getUserSignStatus() == 1) {
                 qdBtn.setText("签到");
                 nickNameTv.setText("" + data.getResult().getNickName());
+                icon.setImageURI(data.getResult().getHeadPath());
             } else {
                 qdBtn.setText("已签到");
                 nickNameTv.setText("" + data.getResult().getNickName());
+                icon.setImageURI(data.getResult().getHeadPath());
             }
         }
 

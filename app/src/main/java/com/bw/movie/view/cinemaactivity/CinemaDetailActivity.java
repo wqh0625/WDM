@@ -12,11 +12,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ import com.bw.movie.view.detailsactvity.CheckInActivity;
 import com.bw.movie.view.fragment.fcdetail.CinemaDetailsPlFragment;
 import com.bw.movie.view.fragment.fcdetail.CinemaDetailsXqFragment;
 
+import cn.jzvd.JZVideoPlayer;
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
@@ -63,6 +66,10 @@ public class CinemaDetailActivity extends BaseActivity {
     RecyclerCoverFlow recycarousel;
     @BindView(R.id.cinema_detail_image_icon)
     SimpleDraweeView icon;
+    @BindView(R.id.cinema_detail_top)
+    RelativeLayout relativeLayout;
+    @BindView(R.id.hui)
+    RelativeLayout hui;
     @BindView(R.id.cinema_detail_address)
     TextView addtess;
     @BindView(R.id.cinema_detail_text_title)
@@ -99,6 +106,8 @@ public class CinemaDetailActivity extends BaseActivity {
     private int mCoun;
     private String stats = "1";
     private String name1;
+    private View rootview4;
+    private PopupWindow popupWindow4;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,30 +194,32 @@ public class CinemaDetailActivity extends BaseActivity {
         ticketDetailsAdapter = new TicketDetailsAdapter(this);
         rec.setAdapter(ticketDetailsAdapter);
         rec.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        rootview4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.fragment_cinema_pop_, null);
+
+        popupWindow4 = new PopupWindow(rootview4);
     }
 
-    @OnClick({R.id.cinema_detail_image_back, R.id.cinema_detail_image_icon})
+    @OnClick({R.id.cinema_detail_image_back, R.id.cinema_detail_top})
     void on(View view) {
         switch (view.getId()) {
             case R.id.cinema_detail_image_back:
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
-            case R.id.cinema_detail_image_icon:
-                View rootview4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.fragment_cinema_pop_, null);
-                pop = rootview4;
-                final PopupWindow popupWindow4 = new PopupWindow(rootview4);
+            case R.id.cinema_detail_top:
+
 
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
                 //设置布局
-                activityReviewPopwindowDown = pop.findViewById(R.id.fragment_review_popwindow_down);
-                vp = pop.findViewById(R.id.fragment_details_vp);
-                xqV = pop.findViewById(R.id.fragment_details_v);
-                plV = pop.findViewById(R.id.fragment_details_vv);
-                pl = pop.findViewById(R.id.fragment_details_pinglun);
-                xq = pop.findViewById(R.id.fragment_details_xiangqing);
+                activityReviewPopwindowDown = rootview4.findViewById(R.id.fragment_review_popwindow_down);
+                vp = rootview4.findViewById(R.id.fragment_details_vp);
+                xqV = rootview4.findViewById(R.id.fragment_details_v);
+                plV = rootview4.findViewById(R.id.fragment_details_vv);
+                pl = rootview4.findViewById(R.id.fragment_details_pinglun);
+                xq = rootview4.findViewById(R.id.fragment_details_xiangqing);
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
                 fragments = new ArrayList<>();
@@ -271,12 +282,11 @@ public class CinemaDetailActivity extends BaseActivity {
         }
     }
 
-    private View pop;
 
     @Override
     public <T extends View> T findViewById(int id) {
-        if (id == R.id.fragment_details_vp && pop != null) {
-            return pop.findViewById(id);
+        if (id == R.id.fragment_details_vp && rootview4 != null) {
+            return rootview4.findViewById(id);
         }
         return super.findViewById(id);
     }
@@ -297,6 +307,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 recycarousel.setVisibility(View.VISIBLE);
                 movieTextDong.setVisibility(View.VISIBLE);
                 xian.setVisibility(View.VISIBLE);
+                hui.setVisibility(View.VISIBLE);
                 resuleeee = data.getResult();
                 name1 = resuleeee.get(0).getName();
                 int id = resuleeee.get(0).getId();
@@ -310,6 +321,7 @@ public class CinemaDetailActivity extends BaseActivity {
                 recycarousel.setVisibility(View.GONE);
                 movieTextDong.setVisibility(View.GONE);
                 xian.setVisibility(View.GONE);
+                hui.setVisibility(View.GONE);
                 Toast.makeText(CinemaDetailActivity.this, "此影院暂时无影片可播，谢谢", Toast.LENGTH_LONG).show();
             }
         }
@@ -334,7 +346,6 @@ public class CinemaDetailActivity extends BaseActivity {
                     ticketDetailsAdapter.addAll(data.getResult());
                     ticketDetailsAdapter.notifyDataSetChanged();
                 }
-
             }
         }
 
@@ -343,7 +354,44 @@ public class CinemaDetailActivity extends BaseActivity {
 
         }
     }
+    private int mFlag = 0;
+    private long mTime1, mTime2;
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //返回按键监听
+        if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 0) {
+            mFlag = 1;
+            //获取当前系统时间
+            mTime1 = System.currentTimeMillis();
+            if ( popupWindow4.isShowing()) {
+                popupWindow4.dismiss();
+            }else{
+                finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 1) {
+            mTime2 = System.currentTimeMillis();
+            if (mTime2 - mTime1 < 2500) {
+                finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            } else {
+                if ( popupWindow4.isShowing()) {
+                    JZVideoPlayer.releaseAllVideos();
+                    popupWindow4.dismiss();
+                }else{
+                    finish();
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                }
+            }
+            mFlag = 0;
+            mTime1 = 0;
+            mTime2 = 0;
+
+        }
+
+        return true;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

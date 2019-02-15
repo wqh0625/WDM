@@ -33,14 +33,14 @@
 
         <RelativeLayout
             android:id="@+id/recommend_cinema_linear"
-            android:layout_width="48dp"
+            android:layout_width="205dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
             android:background="@drawable/cinema_search_shape">
 
             <LinearLayout
-                android:layout_width="220dp"
+                android:layout_width="205dp"
                 android:layout_height="26dp"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical">
@@ -56,10 +56,10 @@
                     android:id="@+id/recommend_cinema_edname"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="20dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="     输入要搜索的影片"
+                    android:hint="输入要搜索的影片"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
                     android:textSize="14sp" />
