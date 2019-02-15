@@ -198,7 +198,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
 //            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
-            if (addr == null) {
+            if (addr == null||addr==""||txtLocation==null) {
+                 finish();
                 return;
             }
             txtLocation.setText(addr);
