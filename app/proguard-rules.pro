@@ -2,6 +2,7 @@
 #---------------------------------1.实体类---------------------------------
 -keep class com.bw.movie.bean.** { *; }
 
+
 #-------------------------------------------------------------------------
 
 #---------------------------------2.第三方包-------------------------------
@@ -45,16 +46,6 @@ public static final int *;
 
 
     #================greendao==========================
-    -keep class org.greenrobot.greendao.**{*;}
-    -keep public interface org.greenrobot.greendao.**
-    -keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
-    public static java.lang.String TABLENAME;
-    }
-    -keep class **$Properties
-    -keep class net.sqlcipher.database.**{*;}
-    -keep public interface net.sqlcipher.database.**
-    -dontwarn net.sqlcipher.database.**
-    -dontwarn org.greenrobot.greendao.**
 
     #==============微信支付=================
     -keep class com.tencent.** { *;}
@@ -144,7 +135,7 @@ public static final int *;
 #----------------------------------------------------------------------------
 
 #---------------------------------默认保留区---------------------------------
--keep public class * extends android.app.Activity
+-keep public class * extends android.app.AppCompatActivity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
@@ -158,7 +149,7 @@ public static final int *;
 -keepclasseswithmembernames class * {
     native <methods>;
 }
--keepclassmembers class * extends android.app.Activity{
+-keepclassmembers class * extends android.app.AppCompatActivity{
     public void *(android.view.View);
 }
 -keepclassmembers enum * {

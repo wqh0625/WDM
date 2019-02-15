@@ -34,11 +34,11 @@
                 android:layout_below="@id/txt_screeningHall"
                 android:text="11.01"
                 android:textColor="#333"
-                android:textSize="16sp" />
+                android:textSize="24sp" />
 
             <View
                 android:layout_width="50dp"
-                android:layout_height="2dp"
+                android:layout_height="1.5dp"
                 android:layout_below="@id/txt_screeningHall"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
@@ -52,7 +52,7 @@
                 android:layout_below="@id/txt_screeningHall"
                 android:text="5.00"
                 android:textColor="#666"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="end"
                 android:textColor="#666"
-                android:textSize="10sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +78,7 @@
                 android:layout_alignParentBottom="true"
                 android:text="￥"
                 android:textColor="#666"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txt_price"

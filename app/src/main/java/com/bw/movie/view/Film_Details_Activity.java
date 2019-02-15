@@ -104,6 +104,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private String starring;
     private List<String> list = new ArrayList<>();
     private LikePresenter likePresenter;
+    private PopupWindow popupWindow4;
+    private View view4;
+    private View view1;
+    private View view2;
+    private PopupWindow popupWindow2;
+    private PopupWindow popupWindow3;
+    private View view3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +202,14 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         reviewAdapter = new ReviewAdapter(this);
         predictionAdapter = new PredictionAdapter(this);
         stillsAdapter = new StillsAdapter(this);
-
+        view1 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_details_popwindow, null);
+        popupWindow = new PopupWindow(view1);
+        view2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_prediction_popwindow, null, false);
+        popupWindow2 = new PopupWindow(view2);
+        view3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_stills_popwindow, null, false);
+        popupWindow3 = new PopupWindow(view3);
+        view4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_review_popwindow, null, false);
+        popupWindow4 = new PopupWindow(view4);
     }
 
     @Override
@@ -234,8 +248,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.details_btn_details:
                 //详情
                 View rootview = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-                View view1 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_details_popwindow, null);
-                popupWindow = new PopupWindow(view1);
+
                 //设置充满父窗体
                 popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -287,8 +300,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.details_btn_prediction:
                 //预告片
                 View rootview2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-                View view2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_prediction_popwindow, null, false);
-                final PopupWindow popupWindow2 = new PopupWindow(view2);
+
                 //设置充满父窗体
                 popupWindow2.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow2.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -317,8 +329,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.details_btn_stills:
                 //剧照
                 View rootview3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-                View view3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_stills_popwindow, null, false);
-                final PopupWindow popupWindow3 = new PopupWindow(view3);
+
                 //设置充满父窗体
                 popupWindow3.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow3.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -346,8 +357,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.details_btn_review:
                 //影评
                 View rootview4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-                View view4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_review_popwindow, null, false);
-                final PopupWindow popupWindow4 = new PopupWindow(view4);
+
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -357,7 +367,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityReviewPopwindowDown = view4.findViewById(R.id.activity_review_popwindow_down);
                 activityreviewpopwindowrecy = view4.findViewById(R.id.activity_review_popwindow_recy);
                 listImageBack = view4.findViewById(R.id.list_image_back);
-
 
                 popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
@@ -421,13 +430,32 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             mFlag = 1;
             //获取当前系统时间
             mTime1 = System.currentTimeMillis();
-
+            if (popupWindow.isShowing()||popupWindow2.isShowing()||popupWindow3.isShowing()||popupWindow4.isShowing()) {
+                popupWindow.dismiss();
+                popupWindow2.dismiss();
+                JZVideoPlayer.releaseAllVideos();
+                popupWindow3.dismiss();
+                popupWindow4.dismiss();
+            }else{
+                finish();
+                overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+            }
         } else if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 1) {
             mTime2 = System.currentTimeMillis();
-            if (mTime2 - mTime1 < 2000) {
+            if (mTime2 - mTime1 < 2500) {
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             } else {
+                if (popupWindow.isShowing()||popupWindow2.isShowing()||popupWindow3.isShowing()||popupWindow4.isShowing()) {
+                    popupWindow.dismiss();
+                    popupWindow2.dismiss();
+                    JZVideoPlayer.releaseAllVideos();
+                    popupWindow3.dismiss();
+                    popupWindow4.dismiss();
+                }else{
+                    finish();
+                    overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
+                }
             }
             mFlag = 0;
             mTime1 = 0;
