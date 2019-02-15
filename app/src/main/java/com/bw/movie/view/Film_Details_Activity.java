@@ -1,6 +1,7 @@
 package com.bw.movie.view;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -79,7 +81,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
     private ImageView activityPredictionPopwindowDown;
     private RecyclerView activityPredictionPopwindowRecyclerview;
-    private PopupWindow popupWindow;
     private PredictionAdapter predictionAdapter;
     private ImageView actvityImageDetails;
     private ImageView activityStillsPopwindowDown;
@@ -104,13 +105,16 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private String starring;
     private List<String> list = new ArrayList<>();
     private LikePresenter likePresenter;
-    private PopupWindow popupWindow4;
-    private View view4;
     private View view1;
     private View view2;
+    private View view3;
+    private View view4;
+    private PopupWindow popupWindow;
     private PopupWindow popupWindow2;
     private PopupWindow popupWindow3;
-    private View view3;
+    private PopupWindow popupWindow4;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,14 +206,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         reviewAdapter = new ReviewAdapter(this);
         predictionAdapter = new PredictionAdapter(this);
         stillsAdapter = new StillsAdapter(this);
-        view1 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_details_popwindow, null);
-        popupWindow = new PopupWindow(view1);
-        view2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_prediction_popwindow, null, false);
-        popupWindow2 = new PopupWindow(view2);
-        view3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_stills_popwindow, null, false);
-        popupWindow3 = new PopupWindow(view3);
-        view4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_review_popwindow, null, false);
-        popupWindow4 = new PopupWindow(view4);
     }
 
     @Override
@@ -246,17 +242,19 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 break;
             case R.id.details_btn_details:
-                //详情
-                View rootview = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-
+                //影片详情弹框
+                view1 = View.inflate(Film_Details_Activity.this, R.layout.activity_details_popwindow, null);
+                popupWindow = new PopupWindow(view1);
                 //设置充满父窗体
                 popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow.setHeight(1050);
                 popupWindow.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-                //设置布局
-                popupWindow.setContentView(view1);
-                popupWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
-
+                //点击外部关闭弹框
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setTouchable(true);
+                popupWindow.showAtLocation(view1, Gravity.BOTTOM, 0, 0);
+                popupWindow.showAsDropDown(detailsTxtDetails);
                 //获取PopupWindow获取控件
                 activityDetailsSimpledraweeview = view1.findViewById(R.id.activity_details_simpledraweeviewiiii);
                 activityDetailsRole = view1.findViewById(R.id.activity_details_role);
@@ -299,17 +297,21 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.details_btn_prediction:
                 //预告片
-                View rootview2 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-
+                view2 = View.inflate(Film_Details_Activity.this, R.layout.activity_prediction_popwindow, null);
+                popupWindow2 = new PopupWindow(view2);
                 //设置充满父窗体
                 popupWindow2.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow2.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow2.setHeight(1050);
                 popupWindow2.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-                //设置布局
-                popupWindow2.setContentView(view2);
+                //点击外部关闭弹框
+                popupWindow2.setBackgroundDrawable(new ColorDrawable());
+                popupWindow2.setOutsideTouchable(true);
+                popupWindow2.setTouchable(true);
+                popupWindow2.showAtLocation(view2, Gravity.BOTTOM, 0, 0);
+                popupWindow2.showAsDropDown(detailsTxtDetails);
+
                 activityPredictionPopwindowDown = view2.findViewById(R.id.activity_prediction_popwindow_down);
                 activityPredictionPopwindowRecyclerview = view2.findViewById(R.id.activity_prediction_popwindow_recyclerview);
-                popupWindow2.showAtLocation(rootview2, Gravity.BOTTOM, 0, 0);
 
 
                 activityPredictionPopwindowRecyclerview.setAdapter(predictionAdapter);
@@ -328,18 +330,21 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.details_btn_stills:
                 //剧照
-                View rootview3 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-
+                view3 = View.inflate(Film_Details_Activity.this, R.layout.activity_stills_popwindow, null);
+                popupWindow3 = new PopupWindow(view3);
                 //设置充满父窗体
                 popupWindow3.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow3.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow3.setHeight(1050);
                 popupWindow3.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-                //设置布局
-                popupWindow3.setContentView(view3);
+                //点击外部关闭弹框
+                popupWindow3.setBackgroundDrawable(new ColorDrawable());
+                popupWindow3.setOutsideTouchable(true);
+                popupWindow3.setTouchable(true);
+                popupWindow3.showAtLocation(view3, Gravity.BOTTOM, 0, 0);
+                popupWindow3.showAsDropDown(detailsTxtDetails);
 
                 activityStillsPopwindowDown = view3.findViewById(R.id.activity_stills_popwindow_down);
                 activityStillsPopwindowRecy = view3.findViewById(R.id.activity_stills_popwindow_recy);
-                popupWindow3.showAtLocation(rootview3, Gravity.BOTTOM, 0, 0);
 
                 activityStillsPopwindowRecy.setAdapter(stillsAdapter);
                 activityStillsPopwindowRecy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
@@ -356,19 +361,23 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.details_btn_review:
                 //影评
-                View rootview4 = LayoutInflater.from(Film_Details_Activity.this).inflate(R.layout.activity_film__details, null);
-
+                view4 = View.inflate(Film_Details_Activity.this, R.layout.activity_review_popwindow, null);
+                popupWindow4 = new PopupWindow(view4);
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow4.setHeight(1050);
                 popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
-                //设置布局
-                popupWindow4.setContentView(view4);
+                //点击外部关闭弹框
+                popupWindow4.setBackgroundDrawable(new ColorDrawable());
+                popupWindow4.setOutsideTouchable(true);
+                popupWindow4.setTouchable(true);
+                popupWindow4.showAtLocation(view4, Gravity.BOTTOM, 0, 0);
+                popupWindow4.showAsDropDown(detailsTxtDetails);
+
                 activityReviewPopwindowDown = view4.findViewById(R.id.activity_review_popwindow_down);
                 activityreviewpopwindowrecy = view4.findViewById(R.id.activity_review_popwindow_recy);
                 listImageBack = view4.findViewById(R.id.list_image_back);
 
-                popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
 
                 activityreviewpopwindowrecy.setAdapter(reviewAdapter);
                 activityreviewpopwindowrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -2,6 +2,7 @@ package com.bw.movie.view.cinemaactivity;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.view.Film_Details_Activity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -195,9 +197,6 @@ public class CinemaDetailActivity extends BaseActivity {
         rec.setAdapter(ticketDetailsAdapter);
         rec.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        rootview4 = LayoutInflater.from(CinemaDetailActivity.this).inflate(R.layout.fragment_cinema_pop_, null);
-
-        popupWindow4 = new PopupWindow(rootview4);
     }
 
     @OnClick({R.id.cinema_detail_image_back, R.id.cinema_detail_top})
@@ -208,11 +207,18 @@ public class CinemaDetailActivity extends BaseActivity {
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
             case R.id.cinema_detail_top:
-
-
+                rootview4 = View.inflate(CinemaDetailActivity.this, R.layout.fragment_cinema_pop_, null);
+                popupWindow4 = new PopupWindow(rootview4);
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow4.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+                popupWindow4.setHeight(900);
+                popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
+                //点击外部关闭弹框
+                popupWindow4.setBackgroundDrawable(new ColorDrawable());
+                popupWindow4.setOutsideTouchable(true);
+                popupWindow4.setTouchable(true);
+                popupWindow4.showAtLocation(rootview4, Gravity.BOTTOM, 0, 0);
+                popupWindow4.showAsDropDown(relativeLayout);
                 //设置布局
                 activityReviewPopwindowDown = rootview4.findViewById(R.id.fragment_review_popwindow_down);
                 vp = rootview4.findViewById(R.id.fragment_details_vp);
