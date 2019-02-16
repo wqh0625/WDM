@@ -199,19 +199,28 @@ public class CinemaDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.cinema_detail_image_back, R.id.cinema_detail_top})
+    @OnClick({R.id.cinema_detail_image_back, R.id.cinema_detail_address})
     void on(View view) {
         switch (view.getId()) {
             case R.id.cinema_detail_image_back:
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
                 break;
-            case R.id.cinema_detail_top:
+            case R.id.cinema_detail_address:
                 rootview4 = View.inflate(CinemaDetailActivity.this, R.layout.fragment_cinema_pop_, null);
                 popupWindow4 = new PopupWindow(rootview4);
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow4.setHeight(900);
+                int height4 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
+                if (height4 == 1920) {
+                    popupWindow4.setHeight(1920-300);
+                }else if(height4==1280){
+                    popupWindow4.setHeight(1280-230);
+                }else if(height4==2180){
+                    popupWindow4.setHeight(height4-350);
+                }else{
+                    popupWindow4.setHeight(height4 );
+                }
                 popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
                 popupWindow4.setBackgroundDrawable(new ColorDrawable());

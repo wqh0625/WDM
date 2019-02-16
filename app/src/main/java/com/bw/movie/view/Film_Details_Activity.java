@@ -51,8 +51,9 @@ import com.bw.movie.view.detailsactvity.ListofCinemaActivity;
 
 import cn.jzvd.JZVideoPlayer;
 import jaydenxiao.com.expandabletextview.ExpandableTextView;
+import me.jessyan.autosize.internal.CustomAdapt;
 
-public class Film_Details_Activity extends BaseActivity implements View.OnClickListener {
+public class Film_Details_Activity extends BaseActivity implements View.OnClickListener  {
 
     private ImageView imageDetails;
     private TextView txtDetails;
@@ -142,6 +143,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         }
 
     }
+
+
 
     // 取消关注
     class canCenGz implements DataCall<Result> {
@@ -244,10 +247,22 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             case R.id.details_btn_details:
                 //影片详情弹框
                 view1 = View.inflate(Film_Details_Activity.this, R.layout.activity_details_popwindow, null);
+
+
                 popupWindow = new PopupWindow(view1);
                 //设置充满父窗体
                 popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow.setHeight(1050);
+                int height1 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
+                if (height1 == 1920) {
+                    popupWindow.setHeight(1920-300);
+                }else if(height1==1280){
+                    popupWindow.setHeight(1280-230);
+                }else if(height1==2180){
+                    popupWindow.setHeight(height1-350);
+                }else{
+                    popupWindow.setHeight(height1 );
+                }
+
                 popupWindow.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
                 popupWindow.setBackgroundDrawable(new ColorDrawable());
@@ -301,7 +316,17 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow2 = new PopupWindow(view2);
                 //设置充满父窗体
                 popupWindow2.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow2.setHeight(1050);
+                int height2 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
+                if (height2 == 1920) {
+                    popupWindow2.setHeight(1920-300);
+                }else if(height2==1280){
+                    popupWindow2.setHeight(1280-230);
+                }else if(height2==2180){
+                    popupWindow2.setHeight(height2-350);
+                }else{
+                    popupWindow2.setHeight(height2 );
+                }
+
                 popupWindow2.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
                 popupWindow2.setBackgroundDrawable(new ColorDrawable());
@@ -334,7 +359,16 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow3 = new PopupWindow(view3);
                 //设置充满父窗体
                 popupWindow3.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow3.setHeight(1050);
+                int height3 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
+                if (height3 == 1920) {
+                    popupWindow3.setHeight(1920-300);
+                }else if(height3==1280){
+                    popupWindow3.setHeight(1280-230);
+                }else if(height3==2180){
+                    popupWindow3.setHeight(height3-350);
+                }else{
+                    popupWindow3.setHeight(height3 );
+                }
                 popupWindow3.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
                 popupWindow3.setBackgroundDrawable(new ColorDrawable());
@@ -365,7 +399,16 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow4 = new PopupWindow(view4);
                 //设置充满父窗体
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popupWindow4.setHeight(1050);
+                int height4 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
+                if (height4 == 1920) {
+                    popupWindow4.setHeight(1920-300);
+                }else if(height4==1280){
+                    popupWindow4.setHeight(1280-230);
+                }else if(height4==2180){
+                    popupWindow4.setHeight(height4-350);
+                }else{
+                    popupWindow4.setHeight(height4 );
+                }
                 popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
                 popupWindow4.setBackgroundDrawable(new ColorDrawable());
