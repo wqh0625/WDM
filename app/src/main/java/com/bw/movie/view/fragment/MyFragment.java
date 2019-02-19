@@ -290,6 +290,13 @@ public class MyFragment extends BaseFragment {
             if (student.size() == 0) {
                 s();
             } else {
+
+                String s = qdBtn.getText().toString();
+                if (s.equals("已签到")) {
+                    Toast.makeText(getContext(), "您今天已经签到过了", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 userSignInPresenter.requestNet(a.get(0).getUserId(), a.get(0).getSessionId());
             }
         } else if (v.getId() == R.id.my_image_icom) {

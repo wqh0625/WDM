@@ -61,7 +61,7 @@ public class ComingFragment extends BaseFragment {
                     if (carouselData.getFollowMovie() == 1) {
                         cancelConcernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), carouselData.getId(), position, i);
                     } else {
-                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position, i);
+                        concernPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(),  carouselData.getId(),position, i);
                     }
                 }
             }
@@ -71,6 +71,7 @@ public class ComingFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        cinemaxAdapter.notifyDataSetChanged();
     }
 
     class ComingCall implements DataCall<Result<List<CarouselData>>> {
@@ -96,7 +97,7 @@ public class ComingFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "0.0.0.0.0..0" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("9999")) {
                 Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
                 // 跳转
@@ -105,11 +106,9 @@ public class ComingFragment extends BaseFragment {
             }
 
             if (data.getStatus().equals("0000")) {
-                if (data.getStatus().equals("0000")) {
                     int o = (int) data.getArgs()[4];
                     cinemaxAdapter.getItem(o).setFollowMovie(1);
                     cinemaxAdapter.notifyDataSetChanged();
-                }
             }
         }
 
@@ -123,7 +122,7 @@ public class ComingFragment extends BaseFragment {
 
         @Override
         public void success(Result data) {
-            Toast.makeText(getActivity(), "00000" + data.getMessage(), Toast.LENGTH_SHORT).show();
+
             if (data.getStatus().equals("9999")) {
                 Intent intent = new Intent(MyApp.getContext(), LoginActivity.class);
                 // 跳转

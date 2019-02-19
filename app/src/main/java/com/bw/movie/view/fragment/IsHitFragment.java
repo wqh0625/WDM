@@ -148,6 +148,7 @@ public class IsHitFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        cinemaxAdapter.notifyDataSetChanged();
     }
 
     @Override
