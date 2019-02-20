@@ -52,7 +52,7 @@ public abstract class BasePresenter {
         }
         runing = true;
         if (!NetWorks.isNetworkConnected(MyApp.getContext())) {
-            consumer.fail(new ApiException(CustomException.NETWORK_ERROR,"网络错误"));
+            consumer.fail(new ApiException(CustomException.NETWORK_ERROR, "网络错误"));
             runing = false;
         } else {
             observable(args)

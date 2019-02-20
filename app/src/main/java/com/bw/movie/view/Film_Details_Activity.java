@@ -25,6 +25,7 @@ import com.bw.movie.presenter.CancelConcernPresenter;
 import com.bw.movie.presenter.LikePresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.j256.ormlite.dao.Dao;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.sql.SQLException;
@@ -53,11 +54,9 @@ import cn.jzvd.JZVideoPlayer;
 import jaydenxiao.com.expandabletextview.ExpandableTextView;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class Film_Details_Activity extends BaseActivity implements View.OnClickListener  {
+public class Film_Details_Activity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView imageDetails;
-    private TextView txtDetails;
-    private RelativeLayout top;
+
     private TextView detailsTxtName;
     private SimpleDraweeView detailsSdvImage;
     private Button detailsTxtDetails;
@@ -85,7 +84,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private PredictionAdapter predictionAdapter;
     private ImageView actvityImageDetails;
     private ImageView activityStillsPopwindowDown;
-    private RecyclerView activityStillsPopwindowRecy;
+    private XRecyclerView activityStillsPopwindowRecy;
     private ImageView activityReviewPopwindowDown;
     private RecyclerView activityreviewpopwindowrecy;
     private StillsAdapter stillsAdapter;
@@ -116,7 +115,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private PopupWindow popupWindow4;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +141,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         }
 
     }
-
 
 
     // 取消关注
@@ -187,10 +184,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private void init() {
         Intent intent = getIntent();
         position = intent.getExtras().getInt("position");
-        imageDetails = findViewById(R.id.image_details);
-        txtDetails = findViewById(R.id.txt_details);
         actvityImageDetails = findViewById(R.id.actvity_image_details);
-        top = findViewById(R.id.top);
         detailsTxtName = findViewById(R.id.details_txt_name);
         detailsSdvImage = findViewById(R.id.details_sdv_image);
         detailsTxtDetails = findViewById(R.id.details_btn_details);
@@ -248,19 +242,18 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 //影片详情弹框
                 view1 = View.inflate(Film_Details_Activity.this, R.layout.activity_details_popwindow, null);
 
-
                 popupWindow = new PopupWindow(view1);
                 //设置充满父窗体
                 popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 int height1 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
                 if (height1 == 1920) {
-                    popupWindow.setHeight(1920-300);
-                }else if(height1==1280){
-                    popupWindow.setHeight(1280-230);
-                }else if(height1==2180){
-                    popupWindow.setHeight(height1-350);
-                }else{
-                    popupWindow.setHeight(height1 );
+                    popupWindow.setHeight(1920 - 300);
+                } else if (height1 == 1280) {
+                    popupWindow.setHeight(1280 - 230);
+                } else if (height1 == 2180) {
+                    popupWindow.setHeight(height1 - 350);
+                } else {
+                    popupWindow.setHeight(height1);
                 }
 
                 popupWindow.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
@@ -318,13 +311,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow2.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 int height2 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
                 if (height2 == 1920) {
-                    popupWindow2.setHeight(1920-300);
-                }else if(height2==1280){
-                    popupWindow2.setHeight(1280-230);
-                }else if(height2==2180){
-                    popupWindow2.setHeight(height2-350);
-                }else{
-                    popupWindow2.setHeight(height2 );
+                    popupWindow2.setHeight(1920 - 300);
+                } else if (height2 == 1280) {
+                    popupWindow2.setHeight(1280 - 230);
+                } else if (height2 == 2180) {
+                    popupWindow2.setHeight(height2 - 350);
+                } else {
+                    popupWindow2.setHeight(height2);
                 }
 
                 popupWindow2.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
@@ -361,13 +354,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow3.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 int height3 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
                 if (height3 == 1920) {
-                    popupWindow3.setHeight(1920-300);
-                }else if(height3==1280){
-                    popupWindow3.setHeight(1280-230);
-                }else if(height3==2180){
-                    popupWindow3.setHeight(height3-350);
-                }else{
-                    popupWindow3.setHeight(height3 );
+                    popupWindow3.setHeight(1920 - 300);
+                } else if (height3 == 1280) {
+                    popupWindow3.setHeight(1280 - 230);
+                } else if (height3 == 2180) {
+                    popupWindow3.setHeight(height3 - 350);
+                } else {
+                    popupWindow3.setHeight(height3);
                 }
                 popupWindow3.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
@@ -401,13 +394,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 popupWindow4.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                 int height4 = getWindow().getWindowManager().getDefaultDisplay().getHeight();
                 if (height4 == 1920) {
-                    popupWindow4.setHeight(1920-300);
-                }else if(height4==1280){
-                    popupWindow4.setHeight(1280-230);
-                }else if(height4==2180){
-                    popupWindow4.setHeight(height4-350);
-                }else{
-                    popupWindow4.setHeight(height4 );
+                    popupWindow4.setHeight(1920 - 300);
+                } else if (height4 == 1280) {
+                    popupWindow4.setHeight(1280 - 230);
+                } else if (height4 == 2180) {
+                    popupWindow4.setHeight(height4 - 350);
+                } else {
+                    popupWindow4.setHeight(height4);
                 }
                 popupWindow4.setAnimationStyle(R.style.StyleNetChangedDialog_Animation);
                 //点击外部关闭弹框
@@ -420,6 +413,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityReviewPopwindowDown = view4.findViewById(R.id.activity_review_popwindow_down);
                 activityreviewpopwindowrecy = view4.findViewById(R.id.activity_review_popwindow_recy);
                 listImageBack = view4.findViewById(R.id.list_image_back);
+
 
 
                 activityreviewpopwindowrecy.setAdapter(reviewAdapter);
@@ -482,14 +476,14 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             mFlag = 1;
             //获取当前系统时间
             mTime1 = System.currentTimeMillis();
-            if (popupWindow.isShowing()||popupWindow2.isShowing()||popupWindow3.isShowing()||popupWindow4.isShowing()) {
+            if (popupWindow.isShowing() || popupWindow2.isShowing() || popupWindow3.isShowing() || popupWindow4.isShowing()) {
                 popupWindow.dismiss();
                 popupWindow2.dismiss();
                 JZVideoPlayer.releaseAllVideos();
                 Toast.makeText(this, "0.0.", Toast.LENGTH_SHORT).show();
                 popupWindow3.dismiss();
                 popupWindow4.dismiss();
-            }else{
+            } else {
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
@@ -542,7 +536,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         }
     }
 
-
     //关注
     class ConcernCall implements DataCall<Result> {
 
@@ -586,7 +579,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 int o = (int) data.getArgs()[3];
                 ReviewData item = reviewAdapter.getItem(o);
                 item.setIsGreat(1);
-                item.setGreatNum(item.getGreatNum()+1);
+                item.setGreatNum(item.getGreatNum() + 1);
                 reviewAdapter.notifyDataSetChanged();
             }
         }
@@ -611,6 +604,15 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
+        if (student.size() == 0) {
+            searchPresenter.requestNet(0, "", position);
+            filmDetailsPresenter.requestNet(0, "", position);
+        } else {
+            UserInfoBean userInfoBean = student.get(0);
+            searchPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
+            filmDetailsPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
+        }
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         MobclickAgent.onPageStart("影片详情页面");
         MobclickAgent.onResume(this);
     }

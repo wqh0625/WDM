@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,8 @@ public class CheckInActivity extends BaseActivity {
     private UploadPushTokenPresenter uploadPushTokenPresenter;
     private PopupWindow popWindow;
 
+    @BindView(R.id.rec_)
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +111,11 @@ public class CheckInActivity extends BaseActivity {
         api = WXAPIFactory.createWXAPI(this, "wxb3852e6a6b7d9516");
         api.registerApp("wxb3852e6a6b7d9516");
 
+        if (selectedTableCount == 0) {
+            relativeLayout.setVisibility(View.GONE);
+        }else{
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
         buyMovieTicketPresenter = new BuyMovieTicketPresenter(new buy());
         uploadPushTokenPresenter = new UploadPushTokenPresenter(new upload());
     }
@@ -162,6 +170,11 @@ public class CheckInActivity extends BaseActivity {
     //选中的座位计算价格
     private void changePriceWithSelected() {
         selectedTableCount++;
+        if (selectedTableCount == 0) {
+            relativeLayout.setVisibility(View.GONE);
+        }else{
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(2);
         String currentPrice = mPriceWithCalculate.multiply(new BigDecimal(String.valueOf(selectedTableCount))).toString();
@@ -172,6 +185,11 @@ public class CheckInActivity extends BaseActivity {
     //取消选座时价格联动
     private void changePriceWithUnSelected() {
         selectedTableCount--;
+        if (selectedTableCount == 0) {
+            relativeLayout.setVisibility(View.GONE);
+        }else{
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
         NumberFormat nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(2);
         BigDecimal bigDecimal = new BigDecimal(String.valueOf(selectedTableCount));

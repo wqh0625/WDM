@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.bean.MyMessageData;
+import com.bw.movie.core.service.DownLoadService;
 import com.bw.movie.core.utils.ToDate;
 import com.bw.movie.presenter.MyMessagePresenter;
 import com.bw.movie.presenter.VersionsPresenter;
@@ -83,11 +84,12 @@ public class MyFragment extends BaseFragment {
     private MyMessagePresenter myMessagePresenter;
     private String h = "";
     private int c = 0;
+    private VersionsPresenter versionsPresenter;
 
     @Override
     public void initView(View view) {
         findUserHomeInfoPresenter = new FindUserHomeInfoPresenter(new find());
-
+        versionsPresenter = new VersionsPresenter(new VersionsCall());
         myMessagePresenter = new MyMessagePresenter(new mymesage());
     }
 
@@ -230,12 +232,11 @@ public class MyFragment extends BaseFragment {
                 s();
             } else {
 
-                VersionsPresenter versionsPresenter = new VersionsPresenter(new VersionsCall());
+
                 try {
                     String versionName = getVersionName(getContext());
                     versionsPresenter.requestNet(userId, sessionId, versionName);
 
-                    versionsPresenter.requestNet(userId, sessionId, versionName);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -340,6 +341,7 @@ public class MyFragment extends BaseFragment {
         findUserHomeInfoPresenter.unBind();
         topPhotoPresenter.unBind();
         userSignInPresenter.unBind();
+        versionsPresenter.unBind();
     }
 
     @Override
@@ -474,16 +476,38 @@ public class MyFragment extends BaseFragment {
     class VersionsCall implements DataCall<Result> {
 
         @Override
-        public void success(Result data) {
+        public void success(final Result data) {
             if (data.getFlag() == 2) {
                 Toast.makeText(getActivity(), "当前已是最新版本!", Toast.LENGTH_SHORT).show();
             } else if (data.getFlag() == 1) {
-                Toast.makeText(getActivity(), "有新版本，请进行下载!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builer = new AlertDialog.Builder(getContext());
+                builer.setTitle("版本升级");
+                builer.setMessage("发现新版本");
+                //当点确定按钮时从服务器上下载 新的apk 然后安装
+                builer.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getContext(), DownLoadService.class);
+                        intent.putExtra("download_url", data.getDownloadUrl());
+                        getActivity().startService(intent);
+                    }
+                });
+                //当点取消按钮时进行登录
+                builer.setNegativeButton("稍后下载", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                        //LoginMain();
+                    }
+                });
+                AlertDialog dialog = builer.create();
+                dialog.show();
             }
         }
 
         @Override
         public void fail(ApiException a) {
+
         }
     }
 }

@@ -9,7 +9,6 @@
     tools:context=".view.Film_Details_Activity">
 
     <RelativeLayout
-        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
