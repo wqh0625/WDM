@@ -612,7 +612,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
             searchPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
             filmDetailsPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
         }
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         MobclickAgent.onPageStart("影片详情页面");
         MobclickAgent.onResume(this);
     }

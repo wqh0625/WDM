@@ -204,8 +204,7 @@ public class LoginActivity extends BaseActivity {
     class login implements DataCall<Result<LoginData>> {
         @Override
         public void success(Result<LoginData> data) {
-            Toast.makeText(LoginActivity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
-//            Log.v("登录数据", "" + data.getResult().getUserInfo().toString());
+            Toast.makeText(LoginActivity.this, "登录成功" , Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
 
                 UserInfoBean userInfoBean = data.getResult().getUserInfo();
