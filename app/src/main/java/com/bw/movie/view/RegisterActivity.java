@@ -1,17 +1,13 @@
 package com.bw.movie.view;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.umeng.analytics.MobclickAgent;
@@ -113,18 +109,19 @@ public class RegisterActivity extends BaseActivity {
         }
 
         boolean email = JavaUtils.isEmail(mail);
-        boolean password = JavaUtils.isPassword(pwd);
-        boolean username = JavaUtils.isChinese(name);
+        boolean password = JavaUtils.rexCheckPassword(pwd);
+        boolean username = JavaUtils.isUsername(name);
+        boolean mobile = JavaUtils.isMobile(phone);
+
         String s1 = date.replaceAll("年", "-");
         String s2 = s1.replaceAll("月", "-");
         String rs = s2.replace("日","  ");
         Log.v("-----",rs);
-        if (email && password && username) {
+        if (mobile&&email && password && username) {
             registerPresenter.requestNet(name, phone, pwdencrypt, pwdencrypt, s, rs, "123465", "手机", "5.0", "android", mail);
         }else{
-            Log.v("-----",email+""+password+""+username+"少时诵诗书水水水水所");
+            Log.v("-----",mobile+""+email+""+password+""+username+"少时诵诗书水水水水所");
         }
-
 
     }
 

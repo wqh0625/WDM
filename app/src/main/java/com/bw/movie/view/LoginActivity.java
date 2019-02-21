@@ -4,19 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.core.utils.JavaUtils;
 import com.bw.movie.core.utils.MyApp;
 import com.j256.ormlite.dao.Dao;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -83,9 +81,7 @@ public class LoginActivity extends BaseActivity {
             boolean reme_pwd = sp0123.getBoolean("reme_pwd", false);
             boolean reme_login = sp0123.getBoolean("reme_login", false);
 
-
             if (reme_pwd) {
-
 
                 Dao<UserInfoBean, String> userDao = new DbManager(getApplicationContext()).getUserDao();
                 List<UserInfoBean> userInfoBeans = userDao.queryForAll();
@@ -161,6 +157,7 @@ public class LoginActivity extends BaseActivity {
             case R.id.button_login:
                 //登录页面
                 String w = tel_pwd.getText().toString().trim();
+
                 String pwddd = EncryptUtil.encrypt(w);
                 String number = tel_number.getText().toString().trim();
                 if (number.length() > 0 && pwddd.length() > 0) {
@@ -176,7 +173,18 @@ public class LoginActivity extends BaseActivity {
                         edit.putBoolean("reme_login", b);
                     }
                     edit.commit();
-                    loginPresenter.requestNet(number, pwddd);
+
+                    boolean b1 = RegUtils.rexCheckPassword(w);
+                    boolean mobile = JavaUtils.isMobile(number);
+                    if (mobile) {
+                        if (b1) {
+                            loginPresenter.requestNet(number, pwddd);
+                        } else {
+                            Toast.makeText(this, "密码不正确", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "手机号不正确", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
             case R.id.tv_register:
@@ -204,7 +212,7 @@ public class LoginActivity extends BaseActivity {
     class login implements DataCall<Result<LoginData>> {
         @Override
         public void success(Result<LoginData> data) {
-            Toast.makeText(LoginActivity.this, "登录成功" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "登录成功"+data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")) {
 
                 UserInfoBean userInfoBean = data.getResult().getUserInfo();

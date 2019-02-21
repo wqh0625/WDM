@@ -236,7 +236,6 @@ public class MyFragment extends BaseFragment {
                 try {
                     String versionName = getVersionName(getContext());
                     versionsPresenter.requestNet(userId, sessionId, versionName);
-
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }

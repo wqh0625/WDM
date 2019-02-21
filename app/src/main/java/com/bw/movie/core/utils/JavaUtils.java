@@ -15,11 +15,6 @@ public class JavaUtils {
     public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{5,20}$";
 
     /**
-     * 正则表达式：验证手机号
-     */
-    public static final String REGEX_MOBILE = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\\\d{8}$";
-
-    /**
      * 正则表达式：验证邮箱
      */
     public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
@@ -64,17 +59,25 @@ public class JavaUtils {
         return Pattern.matches(REGEX_PASSWORD, password);
     }
 
-    /**
-     * 校验手机号
-     *
-     * @param mobile
-     * @return 校验通过返回true，否则返回false
-     */
-    public static boolean isMobile(String mobile) {
-        Pattern p = Pattern.compile(REGEX_MOBILE);
-        Matcher m = p.matcher(mobile);
+    public static boolean rexCheckPassword(String input) {
+        // 8-20 位，字母、数字、字符
+        //String reg = "^([A-Z]|[a-z]|[0-9]|[`-=[];,./~!@#$%^*()_+}{:?]){6,20}$";
+        String regStr = "^(?!^\\\\d+$)(?!^[a-zA-Z]+$)(?!^[._#@]+$).{6,20}$";
+        return input.matches(regStr);
+    }
 
-        return  m.matches();
+    // 手机号正则
+    public static boolean isMobile(String str) {
+        Pattern p = null;
+        Matcher m = null;
+        String s2 = "^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$";
+//        String s2 = "^1[3578]\\d{9}$";
+        // 验证手机号
+
+        p = Pattern.compile(s2);
+        m = p.matcher(str);
+        return m.matches();
+
     }
 
     /**

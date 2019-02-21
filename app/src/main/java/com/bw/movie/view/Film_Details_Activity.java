@@ -415,6 +415,12 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 listImageBack = view4.findViewById(R.id.list_image_back);
 
 
+                listImageBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
 
                 activityreviewpopwindowrecy.setAdapter(reviewAdapter);
                 activityreviewpopwindowrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -625,5 +631,3 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     }
 
 }
-
-
