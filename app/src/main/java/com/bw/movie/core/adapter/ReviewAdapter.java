@@ -43,6 +43,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     public interface ImagePraiseOnclickListener {
         void ImagePraiseOnclick(int i, int Id, ReviewData reviewData);
+        void ImageComment(String i);
     }
 
     public ImagePraiseOnclickListener mImagePraiseOnclickListener;
@@ -83,6 +84,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 }
             }
         });
+        viewHolder.imageComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mImagePraiseOnclickListener.ImageComment("@ "+list.get(i).getCommentUserName()+" 回复：");
+            }
+        });
 
     }
 
@@ -96,7 +103,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             list.addAll(result);
         }
     }
-
+    public void de( ) {
+        list.clear();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

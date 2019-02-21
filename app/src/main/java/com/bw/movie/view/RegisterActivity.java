@@ -110,13 +110,12 @@ public class RegisterActivity extends BaseActivity {
 
         boolean email = JavaUtils.isEmail(mail);
         boolean password = JavaUtils.rexCheckPassword(pwd);
-        boolean username = JavaUtils.isUsername(name);
+        boolean username = JavaUtils.isChinese(name);
         boolean mobile = JavaUtils.isMobile(phone);
 
         String s1 = date.replaceAll("年", "-");
         String s2 = s1.replaceAll("月", "-");
         String rs = s2.replace("日","  ");
-        Log.v("-----",rs);
         if (mobile&&email && password && username) {
             registerPresenter.requestNet(name, phone, pwdencrypt, pwdencrypt, s, rs, "123465", "手机", "5.0", "android", mail);
         }else{

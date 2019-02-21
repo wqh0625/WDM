@@ -116,7 +116,7 @@
         <service android:name=".core.service.DownLoadService" />
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="zmz.zhao.com.zmz.fileprovider"
+            android:authorities="fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

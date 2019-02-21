@@ -55,7 +55,9 @@ public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.ViewHolder
             list.addAll(posterList);
         }
     }
-
+    public void de( ) {
+        list.clear();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView sdvImage;

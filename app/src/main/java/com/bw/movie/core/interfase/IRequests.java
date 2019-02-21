@@ -133,4 +133,13 @@ public interface IRequests {
     Observable<Result> getLike(@Header("userId") int userId,
                                @Header("sessionId") String sessionId,
                                @Field("commentId") int commentId);
+
+    // 发布评论
+
+    @POST("movieApi/movie/v1/verify/movieComment")
+    @FormUrlEncoded
+    Observable<Result> discuss(@Header("userId") int userId,
+                               @Header("sessionId") String sessionId,
+                               @Field("movieId") int movieId,
+                               @Field("commentContent") String commentContent);
 }

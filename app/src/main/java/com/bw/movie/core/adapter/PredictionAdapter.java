@@ -64,7 +64,9 @@ public class PredictionAdapter extends RecyclerView.Adapter<PredictionAdapter.Vi
             list.addAll(shortFilmList);
         }
     }
-
+    public void de( ) {
+        list.clear();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final JZVideoPlayerStandard predictionJzplayer;

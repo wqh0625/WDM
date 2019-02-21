@@ -174,7 +174,7 @@ public class LoginActivity extends BaseActivity {
                     }
                     edit.commit();
 
-                    boolean b1 = RegUtils.rexCheckPassword(w);
+                    boolean b1 = JavaUtils.rexCheckPassword(w);
                     boolean mobile = JavaUtils.isMobile(number);
                     if (mobile) {
                         if (b1) {

@@ -1,5 +1,6 @@
 package com.bw.movie.view;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.bw.movie.core.dao.DbManager;
 import com.bw.movie.presenter.CancelConcernPresenter;
+import com.bw.movie.presenter.FbPresenter;
 import com.bw.movie.presenter.LikePresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.j256.ormlite.dao.Dao;
@@ -84,7 +87,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private PredictionAdapter predictionAdapter;
     private ImageView actvityImageDetails;
     private ImageView activityStillsPopwindowDown;
-    private XRecyclerView activityStillsPopwindowRecy;
+    private RecyclerView activityStillsPopwindowRecy;
     private ImageView activityReviewPopwindowDown;
     private RecyclerView activityreviewpopwindowrecy;
     private StillsAdapter stillsAdapter;
@@ -113,6 +116,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     private PopupWindow popupWindow2;
     private PopupWindow popupWindow3;
     private PopupWindow popupWindow4;
+    private FbPresenter fbPresenter;
 
 
     @Override
@@ -131,6 +135,8 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         reviewPresenter = new ReviewPresenter(new ReviewCall());
         likePresenter = new LikePresenter(new LikeCall());
 
+        // 发表
+        fbPresenter = new FbPresenter(new fbiao());
         if (student.size() == 0) {
             searchPresenter.requestNet(0, "", position);
             filmDetailsPresenter.requestNet(0, "", position);
@@ -376,7 +382,6 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 activityStillsPopwindowRecy.setAdapter(stillsAdapter);
                 activityStillsPopwindowRecy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
-
                 //设置关闭popupWindow的点击事件
                 activityStillsPopwindowDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -419,6 +424,40 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onClick(View v) {
 
+                        if (student.size() == 0) {
+                            s();
+                        } else {
+                            View inflate = View.inflate(Film_Details_Activity.this, R.layout.item_pingluns, null);
+
+                            final EditText editText = inflate.findViewById(R.id.discuss_text);
+                            Dialog builder = new Dialog(Film_Details_Activity.this, R.style.BottomDialog);
+                            builder.setContentView(inflate);
+                            builder.setCanceledOnTouchOutside(true);
+                            ViewGroup.LayoutParams layoutParamsthreefilmreview = inflate.getLayoutParams();
+                            layoutParamsthreefilmreview.width = getResources().getDisplayMetrics().widthPixels;
+                            inflate.setLayoutParams(layoutParamsthreefilmreview);
+                            builder.getWindow().setGravity(Gravity.BOTTOM);
+                            builder.show();
+
+                            TextView send = inflate.findViewById(R.id.send);
+                            send.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String s = editText.getText().toString().trim();
+
+                                    if (s.isEmpty()) {
+                                        Toast.makeText(Film_Details_Activity.this, "不能为空", Toast.LENGTH_SHORT).show();
+
+                                    } else {
+
+                                        fbPresenter.requestNet(student.get(0).getUserId(), student.get(0).getSessionId(), position, s);
+
+                                    }
+                                }
+                            });
+                        }
+
+
                     }
                 });
 
@@ -438,6 +477,40 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                                 likePresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), id, i);
                             }
 
+                        }
+                    }
+
+                    @Override
+                    public void ImageComment(final String aaai) {
+                        if (student.size() == 0) {
+                            s();
+                        } else {
+                            View inflate = View.inflate(Film_Details_Activity.this, R.layout.item_pingluns, null);
+                            final EditText editText = inflate.findViewById(R.id.discuss_text);
+                            editText.setHint(aaai);
+                            Dialog builder = new Dialog(Film_Details_Activity.this, R.style.BottomDialog);
+                            builder.setContentView(inflate);
+                            builder.setCanceledOnTouchOutside(true);
+                            ViewGroup.LayoutParams layoutParamsthreefilmreview = inflate.getLayoutParams();
+                            layoutParamsthreefilmreview.width = getResources().getDisplayMetrics().widthPixels;
+                            inflate.setLayoutParams(layoutParamsthreefilmreview);
+                            builder.getWindow().setGravity(Gravity.BOTTOM);
+                            builder.show();
+
+                            TextView send = inflate.findViewById(R.id.send);
+                            send.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String s = editText.getText().toString().trim();
+
+                                    if (s.isEmpty()) {
+                                        Toast.makeText(Film_Details_Activity.this, "不能为空", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        fbPresenter.requestNet(student.get(0).getUserId(), student.get(0).getSessionId(), position, aaai+s);
+
+                                    }
+                                }
+                            });
                         }
                     }
                 });
@@ -493,6 +566,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
                 finish();
                 overridePendingTransition(R.anim.ac_in, R.anim.ac_out);
             }
+            Toast.makeText(this, "关闭", Toast.LENGTH_SHORT).show();
         } else if (keyCode == KeyEvent.KEYCODE_BACK && mFlag == 1) {
             mTime2 = System.currentTimeMillis();
             if (mTime2 - mTime1 < 2500) {
@@ -527,11 +601,13 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
                 //预告
                 List<ShortFilmListBean> shortFilmList = result.getShortFilmList();
+                predictionAdapter.de();
                 predictionAdapter.addAll(shortFilmList);
                 predictionAdapter.notifyDataSetChanged();
 
                 //剧照
                 List<String> posterList = result.getPosterList();
+                stillsAdapter.de();
                 stillsAdapter.addAll(posterList);
                 stillsAdapter.notifyDataSetChanged();
             }
@@ -564,7 +640,9 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
 
         @Override
         public void success(Result<List<ReviewData>> data) {
+
             if ("0000".equals(data.getStatus())) {
+                reviewAdapter.de();
                 reviewAdapter.addAll(data.getResult());
                 reviewAdapter.notifyDataSetChanged();
             }
@@ -594,6 +672,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         public void fail(ApiException a) {
 
         }
+
     }
 
     @Override
@@ -603,6 +682,7 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         concernPresenter.unBind();
         filmDetailsPresenter.unBind();
         reviewPresenter.unBind();
+        fbPresenter.unBind();
         likePresenter.unBind();
         JZVideoPlayer.releaseAllVideos();
     }
@@ -610,16 +690,28 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        if (student.size() == 0) {
-            searchPresenter.requestNet(0, "", position);
-            filmDetailsPresenter.requestNet(0, "", position);
-        } else {
-            UserInfoBean userInfoBean = student.get(0);
-            searchPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
-            filmDetailsPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
+
+
+        try {
+            Dao<UserInfoBean, String> userDao = new DbManager(Film_Details_Activity.this).getUserDao();
+
+             student = userDao.queryForAll();
+            if (student != null && student.size() > 0) {
+                userInfoBean = student.get(0);
+            }
+            if (student.size() == 0) {
+                searchPresenter.requestNet(0, "", position);
+                filmDetailsPresenter.requestNet(0, "", position);
+            } else {
+                UserInfoBean userInfoBean = student.get(0);
+                searchPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
+                filmDetailsPresenter.requestNet(userInfoBean.getUserId(), userInfoBean.getSessionId(), position);
+            }
+            MobclickAgent.onPageStart("影片详情页面");
+            MobclickAgent.onResume(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        MobclickAgent.onPageStart("影片详情页面");
-        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -630,4 +722,21 @@ public class Film_Details_Activity extends BaseActivity implements View.OnClickL
         MobclickAgent.onPause(this);
     }
 
+    private class fbiao implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            Toast.makeText(Film_Details_Activity.this, "" + data.getMessage(), Toast.LENGTH_SHORT).show();
+            if (data.getStatus().equals("0000")) {
+                View inflate = View.inflate(Film_Details_Activity.this, R.layout.item_pingluns, null);
+                inflate.setVisibility(View.GONE);
+                reviewPresenter.requestNet(position, 1, 50);
+                onResume();
+            }
+        }
+
+        @Override
+        public void fail(ApiException a) {
+
+        }
+    }
 }
